@@ -4,7 +4,7 @@
 	Component	: DefaultComponent
 	Configuration 	: DefaultConfig
 	Model Element	: Gen_SN
-//!	Generated Date	: Tue, 8, Dec 2015 
+//!	Generated Date	: Mon, 14, Dec 2015 
 	File Path	: DefaultComponent/DefaultConfig/Default/Gen_SN.java
 *********************************************************************/
 
@@ -1198,9 +1198,6 @@ public class Gen_SN extends Gen_Neuron implements Animated {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             animInstance().notifyTransitionStarted("6");
             state_0_exit();
-            //#[ transition 6 
-            System.out.println("entering state 1 full");
-            //#]
             state_1_full_entDef();
             animInstance().notifyTransitionEnded("6");
             res = RiJStateReactive.TAKE_EVENT_COMPLETE;

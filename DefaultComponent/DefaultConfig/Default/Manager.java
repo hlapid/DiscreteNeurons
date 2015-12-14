@@ -4,7 +4,7 @@
 	Component	: DefaultComponent
 	Configuration 	: DefaultConfig
 	Model Element	: Manager
-//!	Generated Date	: Tue, 8, Dec 2015 
+//!	Generated Date	: Mon, 14, Dec 2015 
 	File Path	: DefaultComponent/DefaultConfig/Default/Manager.java
 *********************************************************************/
 
@@ -266,7 +266,9 @@ public class Manager implements RiJStateConcept, Animated {
          		motorNeurons[mn_count].setActivation(0);
          		motorNeurons[mn_count].setDecayTime(5);
          		motorNeurons[mn_count].setEJSynDelay(1);
-         		motorNeurons[mn_count].setCHSynDelay(2);
+         		motorNeurons[mn_count].setCHSynDelay(2); 
+         		motorNeurons[mn_count].setEJcoeff(0.1);
+         		motorNeurons[mn_count].setCHcoeff(0.4);
          		for(int j=0; j<N_of_neurons; j++){
          			motorNeurons[mn_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
          			motorNeurons[mn_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -286,7 +288,9 @@ public class Manager implements RiJStateConcept, Animated {
          		sensoryNeurons[sn_count].setActivation(0);
          		sensoryNeurons[sn_count].setDecayTime(5);
          		sensoryNeurons[sn_count].setEJSynDelay(1);
-         		sensoryNeurons[sn_count].setCHSynDelay(2);	
+         		sensoryNeurons[sn_count].setCHSynDelay(2);
+         		sensoryNeurons[sn_count].setEJcoeff(0.1);
+         		sensoryNeurons[sn_count].setCHcoeff(0.4);	
          		for(int j=0; j<N_of_neurons; j++){
          			sensoryNeurons[sn_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
          			sensoryNeurons[sn_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -306,7 +310,9 @@ public class Manager implements RiJStateConcept, Animated {
          		interNeurons[in_count].setActivation(0);
          		interNeurons[in_count].setDecayTime(5);
          		interNeurons[in_count].setEJSynDelay(1);
-         		interNeurons[in_count].setCHSynDelay(2);		
+         		interNeurons[in_count].setCHSynDelay(2);
+         		interNeurons[in_count].setEJcoeff(0.1);
+         		interNeurons[in_count].setCHcoeff(0.4);			
          		for(int j=0; j<N_of_neurons; j++){
          			interNeurons[in_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
          			interNeurons[in_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -1352,11 +1358,6 @@ public class Manager implements RiJStateConcept, Animated {
             sensoryNeurons[2].gen(new evExternalTrig());
             
             
-            /**     
-            outputFileP.println("(**) Event - activating & stimulating EX_SN");
-            itsEX_SN.setActivation(1);
-            itsEX_SN.gen(new evExternalTrig());
-            */
             //#]
         }
         

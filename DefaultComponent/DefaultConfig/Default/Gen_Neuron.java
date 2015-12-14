@@ -4,7 +4,7 @@
 	Component	: DefaultComponent
 	Configuration 	: DefaultConfig
 	Model Element	: Gen_Neuron
-//!	Generated Date	: Tue, 8, Dec 2015 
+//!	Generated Date	: Mon, 14, Dec 2015 
 	File Path	: DefaultComponent/DefaultConfig/Default/Gen_Neuron.java
 *********************************************************************/
 
@@ -42,7 +42,7 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
     
     protected int CHSynDelay;		//## attribute CHSynDelay 
     
-    protected double CHcoeff = 0.4;		//## attribute CHcoeff 
+    protected double CHcoeff;		//## attribute CHcoeff 
     
     protected ArrayList<String> CHsignalArrivalsList;		//## attribute CHsignalArrivalsList 
     
@@ -50,7 +50,7 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
     
     protected int EJSynDelay;		//## attribute EJSynDelay 
     
-    protected double EJcoeff = 0.1;		//## attribute EJcoeff 
+    protected double EJcoeff;		//## attribute EJcoeff 
     
     protected ArrayList<String> EJsignalArrivalsList;		//## attribute EJsignalArrivalsList 
     

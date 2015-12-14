@@ -4,7 +4,7 @@ I-Logix-RPY-Archive version 8.6.0 Java 4012249
 	- _myState = 8192;
 	- _name = "Default";
 	- _lastID = 10;
-	- weakCGTime = 12.8.2015::16:48:59;
+	- weakCGTime = 12.14.2015::16:54:39;
 	- strongCGTime = 1.2.1990::0:0:0;
 	- _defaultComposite = GUID 6a19d696-1e12-44bf-bbb4-470858baa3de;
 	- _eventsBaseID = 18616;
@@ -15,7 +15,7 @@ I-Logix-RPY-Archive version 8.6.0 Java 4012249
 			- _id = GUID 6a19d696-1e12-44bf-bbb4-470858baa3de;
 			- _myState = 40960;
 			- _name = "TopLevel";
-			- weakCGTime = 12.6.2015::14:23:27;
+			- weakCGTime = 12.8.2015::16:52:42;
 			- strongCGTime = 1.2.1990::0:0:0;
 			- _multiplicity = "";
 			- _itsStateChart = { IHandle 
@@ -91,7 +91,7 @@ I-Logix-RPY-Archive version 8.6.0 Java 4012249
 				- _id = GUID 0083ca22-d263-4ac5-aada-706c0c65dac5;
 			}
 			- _lastID = 5;
-			- weakCGTime = 12.8.2015::16:10:59;
+			- weakCGTime = 12.8.2015::16:56:7;
 			- strongCGTime = 11.24.2015::15:1:23;
 			- Operations = { IRPYRawContainer 
 				- size = 9;
@@ -460,7 +460,7 @@ while (it.hasNext())
 					- _myState = 10240;
 					- _name = "statechart_0";
 					- _lastID = 11;
-					- weakCGTime = 12.8.2015::15:51:14;
+					- weakCGTime = 12.8.2015::16:56:7;
 					- strongCGTime = 11.24.2015::15:1:23;
 					- _multiplicity = "";
 					- _itsStateChart = { IHandle 
@@ -651,10 +651,7 @@ sendCHtrigs();";
 									}
 								}
 								- _itsGuard = NULL;
-								- _itsAction = { IAction 
-									- _id = GUID ab876231-bb5c-4116-b5db-a353475e2ce0;
-									- _body = "System.out.println(\"entering state 1 full\");";
-								}
+								- _itsAction = NULL;
 							}
 							- _itsTarget = GUID a280d375-d8e2-445d-aad8-50e8675e0114;
 							- _staticReaction = 0;
@@ -786,7 +783,7 @@ gen(new evSendTrig());
 							}
 						}
 					}
-					- _version = 12.8.2015::17:51:14;
+					- _version = 12.8.2015::18:56:7;
 					- _baseVersion = 12.8.2015::17:51:14;
 					- _diagram = { IStateChartDiagram 
 						- _id = GUID 800ea5fd-fafe-4018-aad8-d9aaffb5b810;
@@ -859,7 +856,7 @@ gen(new evSendTrig());
 							}
 						}
 						- _name = "statechartdiagram_0";
-						- _lastModifiedTime = "12.8.2015::15:51:14";
+						- _lastModifiedTime = "12.8.2015::16:56:7";
 						- _graphicChart = { CGIStateChart 
 							- _id = GUID c3516157-77fd-4bbe-9d49-0bc119903a75;
 							- _myState = 2048;
@@ -2082,7 +2079,7 @@ EJsignalArrivalsList = new ArrayList<String>();";
 								- m_targetType = 'T';
 								- m_direction = ' ';
 								- m_rpn = { CGIText 
-									- m_str = "evExternalTrig/System.out.println(\"entering state 1 full\");";
+									- m_str = "evExternalTrig";
 									- m_style = "Arial" 10 0 0 0 1 ;
 									- m_color = { IColor 
 										- m_fgColor = 0;
@@ -2721,7 +2718,7 @@ while (it.hasNext())
 					- _myState = 10240;
 					- _name = "statechart_0";
 					- _lastID = 26;
-					- weakCGTime = 12.8.2015::15:51:14;
+					- weakCGTime = 12.8.2015::16:10:35;
 					- strongCGTime = 11.24.2015::14:23:21;
 					- _multiplicity = "";
 					- _itsStateChart = { IHandle 
@@ -6479,7 +6476,7 @@ while (it.hasNext())
 					- _myState = 10240;
 					- _name = "statechart_0";
 					- _lastID = 16;
-					- weakCGTime = 12.8.2015::15:51:14;
+					- weakCGTime = 12.8.2015::16:10:17;
 					- strongCGTime = 11.24.2015::14:23:29;
 					- _multiplicity = "";
 					- _itsStateChart = { IHandle 
@@ -9181,7 +9178,7 @@ EJsignalArrivalsList = new ArrayList<String>();";
 				- _id = GUID 0083ca22-d263-4ac5-aada-706c0c65dac5;
 			}
 			- _lastID = 33;
-			- weakCGTime = 12.8.2015::16:48:59;
+			- weakCGTime = 12.14.2015::16:54:39;
 			- strongCGTime = 11.24.2015::14:5:34;
 			- Operations = { IRPYRawContainer 
 				- size = 10;
@@ -9270,7 +9267,9 @@ for(int i = 0; i<N_of_neurons; i++){
  		motorNeurons[mn_count].setActivation(0);
  		motorNeurons[mn_count].setDecayTime(5);
  		motorNeurons[mn_count].setEJSynDelay(1);
- 		motorNeurons[mn_count].setCHSynDelay(2);
+ 		motorNeurons[mn_count].setCHSynDelay(2); 
+ 		motorNeurons[mn_count].setEJcoeff(0.1);
+ 		motorNeurons[mn_count].setCHcoeff(0.4);
  		for(int j=0; j<N_of_neurons; j++){
  			motorNeurons[mn_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
  			motorNeurons[mn_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -9290,7 +9289,9 @@ for(int i = 0; i<N_of_neurons; i++){
  		sensoryNeurons[sn_count].setActivation(0);
  		sensoryNeurons[sn_count].setDecayTime(5);
  		sensoryNeurons[sn_count].setEJSynDelay(1);
- 		sensoryNeurons[sn_count].setCHSynDelay(2);	
+ 		sensoryNeurons[sn_count].setCHSynDelay(2);
+ 		sensoryNeurons[sn_count].setEJcoeff(0.1);
+ 		sensoryNeurons[sn_count].setCHcoeff(0.4);	
  		for(int j=0; j<N_of_neurons; j++){
  			sensoryNeurons[sn_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
  			sensoryNeurons[sn_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -9310,7 +9311,9 @@ for(int i = 0; i<N_of_neurons; i++){
  		interNeurons[in_count].setActivation(0);
  		interNeurons[in_count].setDecayTime(5);
  		interNeurons[in_count].setEJSynDelay(1);
- 		interNeurons[in_count].setCHSynDelay(2);		
+ 		interNeurons[in_count].setCHSynDelay(2);
+ 		interNeurons[in_count].setEJcoeff(0.1);
+ 		interNeurons[in_count].setCHcoeff(0.4);			
  		for(int j=0; j<N_of_neurons; j++){
  			interNeurons[in_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
  			interNeurons[in_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -9992,8 +9995,8 @@ int double\\par
 						- size = 1;
 						- value = 
 						{ ILiteralSpecification 
-							- _id = GUID 15e207cc-f957-4e4e-9028-4d84ee0593d2;
-							- _value = "50";
+							- _id = GUID fd3ac266-85a7-4261-a693-0259869e73b3;
+							- _value = "100";
 						}
 					}
 					- _typeOf = { IHandle 
@@ -10261,7 +10264,7 @@ used only for construction of CHSynWeights vectors\\par
 					- _myState = 10240;
 					- _name = "statechart_1";
 					- _lastID = 7;
-					- weakCGTime = 12.6.2015::16:42:38;
+					- weakCGTime = 12.8.2015::16:55:43;
 					- strongCGTime = 11.24.2015::14:5:34;
 					- _multiplicity = "";
 					- _itsStateChart = { IHandle 
@@ -10404,16 +10407,11 @@ sensoryNeurons[0].gen(new evExternalTrig());
 sensoryNeurons[1].gen(new evExternalTrig());
 sensoryNeurons[2].gen(new evExternalTrig());
 
-
-/**     
-outputFileP.println(\"(**) Event - activating & stimulating EX_SN\");
-itsEX_SN.setActivation(1);
-itsEX_SN.gen(new evExternalTrig());
-*/";
+";
 							}
 						}
 					}
-					- _version = 12.6.2015::18:42:38;
+					- _version = 12.14.2015::18:52:19;
 					- _baseVersion = 1.2.1990::0:0:0;
 					- _diagram = { IStateChartDiagram 
 						- _id = GUID 85b60493-fe00-4d1b-96e6-5ebf3200a583;
@@ -10518,7 +10516,7 @@ itsEX_SN.gen(new evExternalTrig());
 							}
 						}
 						- _name = "statechartdiagram_0";
-						- _lastModifiedTime = "12.6.2015::16:42:38";
+						- _lastModifiedTime = "12.8.2015::16:55:43";
 						- _graphicChart = { CGIStateChart 
 							- _id = GUID f46bba95-a8b7-455e-9230-71c0ff810535;
 							- m_type = 0;
@@ -11224,7 +11222,7 @@ itsEX_SN.gen(new evExternalTrig());
 				- _id = GUID 0083ca22-d263-4ac5-aada-706c0c65dac5;
 			}
 			- _lastID = 27;
-			- weakCGTime = 12.8.2015::15:51:14;
+			- weakCGTime = 12.14.2015::16:52:56;
 			- strongCGTime = 11.24.2015::15:1:23;
 			- Operations = { IRPYRawContainer 
 				- size = 5;
@@ -11539,14 +11537,6 @@ itsEX_SN.gen(new evExternalTrig());
 				{ IAttribute 
 					- _id = GUID 074b9c64-4a79-4540-a6a8-63a5cba6065f;
 					- _name = "EJcoeff";
-					- ValueSpecifications = { IRPYRawContainer 
-						- size = 1;
-						- value = 
-						{ ILiteralSpecification 
-							- _id = GUID 069a955d-6185-440e-a106-88b4b21ba0d6;
-							- _value = "0.1";
-						}
-					}
 					- _typeOf = { IHandle 
 						- _m2Class = "IType";
 						- _filename = "PredefinedTypesJava.sbs";
@@ -11564,14 +11554,6 @@ itsEX_SN.gen(new evExternalTrig());
 				{ IAttribute 
 					- _id = GUID 78867972-ad31-4609-9815-456e4f758fc9;
 					- _name = "CHcoeff";
-					- ValueSpecifications = { IRPYRawContainer 
-						- size = 1;
-						- value = 
-						{ ILiteralSpecification 
-							- _id = GUID 6ee0a30d-4d9e-471c-adc8-5a6818c7d677;
-							- _value = "0.4";
-						}
-					}
 					- _typeOf = { IHandle 
 						- _m2Class = "IType";
 						- _filename = "PredefinedTypesJava.sbs";
