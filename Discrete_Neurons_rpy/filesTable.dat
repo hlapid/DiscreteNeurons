@@ -1,0 +1,14 @@
+I-Logix-RPY-Archive version 8.6.0 * 4012249
+
+- filesTable = { IRPYRawContainer 
+	- size = 7;
+	- value = "Discrete_Neurons.rpy" ""
+	"Discrete_Neurons_rpy\\Default.sbs" "Default"
+	"Discrete_Neurons_rpy\\DefaultComponent.cmp" "DefaultComponent"
+	"Discrete_Neurons_rpy\\io.sbs" "java::io"
+	"Discrete_Neurons_rpy\\java.sbs" "java"
+	"Discrete_Neurons_rpy\\text.sbs" "java::text"
+	"Discrete_Neurons_rpy\\util.sbs" "java::util"
+	
+}
+
