@@ -4,7 +4,7 @@ I-Logix-RPY-Archive version 8.6.0 Java 4012249
 	- _myState = 8192;
 	- _name = "Default";
 	- _lastID = 10;
-	- weakCGTime = 12.14.2015::17:0:23;
+	- weakCGTime = 12.14.2015::17:40:31;
 	- strongCGTime = 1.2.1990::0:0:0;
 	- _defaultComposite = GUID 6a19d696-1e12-44bf-bbb4-470858baa3de;
 	- _eventsBaseID = 18616;
@@ -9178,7 +9178,7 @@ EJsignalArrivalsList = new ArrayList<String>();";
 				- _id = GUID 0083ca22-d263-4ac5-aada-706c0c65dac5;
 			}
 			- _lastID = 33;
-			- weakCGTime = 12.14.2015::17:0:31;
+			- weakCGTime = 12.14.2015::17:40:31;
 			- strongCGTime = 11.24.2015::14:5:34;
 			- Operations = { IRPYRawContainer 
 				- size = 10;
@@ -10264,7 +10264,7 @@ used only for construction of CHSynWeights vectors\\par
 					- _myState = 10240;
 					- _name = "statechart_1";
 					- _lastID = 7;
-					- weakCGTime = 12.14.2015::17:0:31;
+					- weakCGTime = 12.14.2015::17:40:31;
 					- strongCGTime = 11.24.2015::14:5:34;
 					- _multiplicity = "";
 					- _itsStateChart = { IHandle 
@@ -10353,7 +10353,16 @@ tick();";
 								- _id = GUID 2e66af9b-88aa-4710-921d-36c890a756f8;
 								- _itsTrigger = NULL;
 								- _itsGuard = NULL;
-								- _itsAction = NULL;
+								- _itsAction = { IAction 
+									- _id = GUID ef85538c-c362-4d1c-ad68-ca1add8f9d6c;
+									- _body = "// triggering AVBL and AVBR at the beggining of the simulation
+
+interNeurons[6].setActivation(0.5);
+interNeurons[7].setActivation(0.5);
+
+interNeurons[6].gen(new evTrig());
+interNeurons[7].gen(new evTrig());";
+								}
 							}
 							- _itsTarget = GUID efb74327-ddce-48bb-bfa4-d1acb361ce33;
 							- _staticReaction = 0;
@@ -10411,7 +10420,7 @@ sensoryNeurons[2].gen(new evExternalTrig());
 							}
 						}
 					}
-					- _version = 12.14.2015::19:0:31;
+					- _version = 12.14.2015::19:40:31;
 					- _baseVersion = 1.2.1990::0:0:0;
 					- _diagram = { IStateChartDiagram 
 						- _id = GUID 85b60493-fe00-4d1b-96e6-5ebf3200a583;
@@ -10516,7 +10525,7 @@ sensoryNeurons[2].gen(new evExternalTrig());
 							}
 						}
 						- _name = "statechartdiagram_0";
-						- _lastModifiedTime = "12.14.2015::17:0:31";
+						- _lastModifiedTime = "12.14.2015::17:40:43";
 						- _graphicChart = { CGIStateChart 
 							- _id = GUID f46bba95-a8b7-455e-9230-71c0ff810535;
 							- m_type = 0;
@@ -11034,7 +11043,13 @@ sensoryNeurons[2].gen(new evExternalTrig());
 								- m_targetType = 'T';
 								- m_direction = ' ';
 								- m_rpn = { CGIText 
-									- m_str = "";
+									- m_str = "/// triggering AVBL and AVBR at the beggining of the simulation
+
+interNeurons[6].setActivation(0.5);
+interNeurons[7].setActivation(0.5);
+
+interNeurons[6].gen(new evTrig());
+interNeurons[7].gen(new evTrig());";
 									- m_style = "Arial" 10 0 0 0 1 ;
 									- m_color = { IColor 
 										- m_fgColor = 0;
@@ -11055,7 +11070,7 @@ sensoryNeurons[2].gen(new evExternalTrig());
 									- _m2Class = "";
 								}
 								- m_nInheritanceMask = 0;
-								- m_bShowName = 1;
+								- m_bShowName = 0;
 							}
 							
 							- m_access = 'Z';

@@ -1474,6 +1474,15 @@ public class Manager implements RiJStateConcept, Animated {
         //## statechart_method 
         public void rootStateEntDef() {
             animInstance().notifyTransitionStarted("3");
+            //#[ transition 3 
+            // triggering AVBL and AVBR at the beggining of the simulation
+            
+            interNeurons[6].setActivation(0.5);
+            interNeurons[7].setActivation(0.5);
+            
+            interNeurons[6].gen(new evTrig());
+            interNeurons[7].gen(new evTrig());
+            //#]
             manager_entDef();
             animInstance().notifyTransitionEnded("3");
         }

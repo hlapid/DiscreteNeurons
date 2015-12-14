@@ -142,8 +142,8 @@ I-Logix-RPY-Archive version 8.6.0 * 4012249
 				- _name = "StatechartDiagram";
 				- _id = GUID 85b60493-fe00-4d1b-96e6-5ebf3200a583;
 			}
-			- _UpLeft = 247 94 ;
-			- _DownRight = 1357 563 ;
+			- _UpLeft = 486 94 ;
+			- _DownRight = 1596 563 ;
 			- _instanceName = "";
 			- m_nDiagramIndex = 5;
 		}
