@@ -10,7 +10,7 @@ I-Logix-RPY-Archive version 8.6.0 * 4012249
 	"DefaultComponent/DefaultConfig/Default/Gen_MN.java" 12.8.2015::16:49:16
 	"DefaultComponent/DefaultConfig/Default/Gen_Neuron.java" 12.14.2015::16:54:18
 	"DefaultComponent/DefaultConfig/Default/Gen_SN.java" 12.14.2015::16:54:18
-	"DefaultComponent/DefaultConfig/Default/Manager.java" 12.14.2015::17:40:47
+	"DefaultComponent/DefaultConfig/Default/Manager.java" 12.14.2015::17:45:13
 	
 }
 - size = 7;
@@ -49,7 +49,7 @@ I-Logix-RPY-Archive version 8.6.0 * 4012249
 	- _name = "DefaultComponent\\DefaultConfig";
 	- _id = GUID 39bf935a-5c27-4ea8-b180-ba4b266663c0;
 }
-- genTime = 12.14.2015::17:40:47;
+- genTime = 12.14.2015::17:45:13;
 - hElement = { IHandle 
 	- _m2Class = "IClass";
 	- _filename = "Default.sbs";
@@ -58,7 +58,7 @@ I-Logix-RPY-Archive version 8.6.0 * 4012249
 	- _name = "Manager";
 	- _id = GUID 8ea5ddb9-7a45-47b3-a1ea-6f88be604479;
 }
-- genTime = 12.14.2015::17:40:47;
+- genTime = 12.14.2015::17:45:13;
 - hElement = { IHandle 
 	- _m2Class = "IClass";
 	- _filename = "Default.sbs";
@@ -76,5 +76,5 @@ I-Logix-RPY-Archive version 8.6.0 * 4012249
 	- _name = "Default";
 	- _id = GUID 23a4b28d-ce6f-4b87-9f41-e399dd327402;
 }
-- genTime = 12.14.2015::17:40:47;
+- genTime = 12.14.2015::17:45:13;
 
