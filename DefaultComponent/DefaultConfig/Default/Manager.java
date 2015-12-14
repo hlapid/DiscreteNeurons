@@ -121,7 +121,7 @@ public class Manager implements RiJStateConcept, Animated {
     /**
      * simRuntime is the final simulation time step, conditioned at manager loop for exiting the simulation
     */
-    protected int simRuntime = 100;		//## attribute simRuntime 
+    protected int simRuntime = 150;		//## attribute simRuntime 
     
     protected ArrayList<Gen_IN> itsGen_IN = itsGen_IN = new ArrayList<Gen_IN>();		//## link itsGen_IN 
     
@@ -1385,7 +1385,7 @@ public class Manager implements RiJStateConcept, Animated {
         public int managerTakeNull() {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             //## transition 1 
-            if((getClockTime() == 10) && !hitObs)
+            if((getClockTime() == 50) && !hitObs)
                 {
                     animInstance().notifyTransitionStarted("1");
                     manager_exit();

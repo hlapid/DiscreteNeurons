@@ -4,7 +4,7 @@ I-Logix-RPY-Archive version 8.6.0 Java 4012249
 	- _myState = 8192;
 	- _name = "Default";
 	- _lastID = 10;
-	- weakCGTime = 12.14.2015::16:54:39;
+	- weakCGTime = 12.14.2015::17:0:23;
 	- strongCGTime = 1.2.1990::0:0:0;
 	- _defaultComposite = GUID 6a19d696-1e12-44bf-bbb4-470858baa3de;
 	- _eventsBaseID = 18616;
@@ -9178,7 +9178,7 @@ EJsignalArrivalsList = new ArrayList<String>();";
 				- _id = GUID 0083ca22-d263-4ac5-aada-706c0c65dac5;
 			}
 			- _lastID = 33;
-			- weakCGTime = 12.14.2015::16:54:39;
+			- weakCGTime = 12.14.2015::17:0:31;
 			- strongCGTime = 11.24.2015::14:5:34;
 			- Operations = { IRPYRawContainer 
 				- size = 10;
@@ -9995,8 +9995,8 @@ int double\\par
 						- size = 1;
 						- value = 
 						{ ILiteralSpecification 
-							- _id = GUID fd3ac266-85a7-4261-a693-0259869e73b3;
-							- _value = "100";
+							- _id = GUID 1a300dc1-7d4b-4cb9-81ec-59e997cde538;
+							- _value = "150";
 						}
 					}
 					- _typeOf = { IHandle 
@@ -10264,7 +10264,7 @@ used only for construction of CHSynWeights vectors\\par
 					- _myState = 10240;
 					- _name = "statechart_1";
 					- _lastID = 7;
-					- weakCGTime = 12.8.2015::16:55:43;
+					- weakCGTime = 12.14.2015::17:0:31;
 					- strongCGTime = 11.24.2015::14:5:34;
 					- _multiplicity = "";
 					- _itsStateChart = { IHandle 
@@ -10316,7 +10316,7 @@ tick();";
 								- _itsTrigger = NULL;
 								- _itsGuard = { IGuard 
 									- _id = GUID 88ea548f-3bfe-4817-af63-e905bfdec8c1;
-									- _body = "(getClockTime() == 10) && !hitObs";
+									- _body = "(getClockTime() == 50) && !hitObs";
 								}
 								- _itsAction = NULL;
 							}
@@ -10411,7 +10411,7 @@ sensoryNeurons[2].gen(new evExternalTrig());
 							}
 						}
 					}
-					- _version = 12.14.2015::18:52:19;
+					- _version = 12.14.2015::19:0:31;
 					- _baseVersion = 1.2.1990::0:0:0;
 					- _diagram = { IStateChartDiagram 
 						- _id = GUID 85b60493-fe00-4d1b-96e6-5ebf3200a583;
@@ -10516,7 +10516,7 @@ sensoryNeurons[2].gen(new evExternalTrig());
 							}
 						}
 						- _name = "statechartdiagram_0";
-						- _lastModifiedTime = "12.8.2015::16:55:43";
+						- _lastModifiedTime = "12.14.2015::17:0:31";
 						- _graphicChart = { CGIStateChart 
 							- _id = GUID f46bba95-a8b7-455e-9230-71c0ff810535;
 							- m_type = 0;
@@ -10877,7 +10877,7 @@ sensoryNeurons[2].gen(new evExternalTrig());
 								- m_targetType = 'T';
 								- m_direction = ' ';
 								- m_rpn = { CGIText 
-									- m_str = "[(getClockTime() == 10) && !hitObs]";
+									- m_str = "[(getClockTime() == 50) && !hitObs]";
 									- m_style = "Arial" 10 0 0 0 1 ;
 									- m_color = { IColor 
 										- m_fgColor = 0;
