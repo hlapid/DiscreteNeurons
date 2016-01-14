@@ -4,7 +4,7 @@
 	Component	: DefaultComponent
 	Configuration 	: DefaultConfig
 	Model Element	: Manager
-//!	Generated Date	: Mon, 14, Dec 2015 
+//!	Generated Date	: Tue, 12, Jan 2016 
 	File Path	: DefaultComponent/DefaultConfig/Default/Manager.java
 *********************************************************************/
 
@@ -21,11 +21,7 @@ import java.util.*;
 //## auto_generated
 import com.ibm.rational.rhapsody.oxf.*;
 //## auto_generated
-import com.ibm.rational.rhapsody.animation.*;
-//## auto_generated
 import com.ibm.rational.rhapsody.oxf.states.*;
-//## auto_generated
-import com.ibm.rational.rhapsody.animcom.animMessages.*;
 
 //----------------------------------------------------------------------------
 // Default/Manager.java                                                                  
@@ -35,14 +31,7 @@ import com.ibm.rational.rhapsody.animcom.animMessages.*;
 
 
 //## class Manager 
-public class Manager implements RiJStateConcept, Animated {
-    
-    //#[ ignore
-    // Instrumentation attributes (Animation)
-    private Animate animate;
-    
-    public static AnimClass animClassManager = new AnimClass("Default.Manager",false);
-    //#]
+public class Manager implements RiJStateConcept {
     
     public Reactive reactive;		//## ignore 
     
@@ -114,6 +103,10 @@ public class Manager implements RiJStateConcept, Animated {
     */
     protected PrintStream outputFileP;		//## attribute outputFileP 
     
+    protected Map params_map;		//## attribute params_map 
+    
+    protected double propCoeff;		//## attribute propCoeff 
+    
     protected Gen_SN[] sensoryNeurons;		//## attribute sensoryNeurons 
     
     protected ArrayList<String> sensoryNeuronsList;		//## attribute sensoryNeuronsList 
@@ -121,7 +114,7 @@ public class Manager implements RiJStateConcept, Animated {
     /**
      * simRuntime is the final simulation time step, conditioned at manager loop for exiting the simulation
     */
-    protected int simRuntime = 150;		//## attribute simRuntime 
+    protected int simRuntime;		//## attribute simRuntime 
     
     protected ArrayList<Gen_IN> itsGen_IN = itsGen_IN = new ArrayList<Gen_IN>();		//## link itsGen_IN 
     
@@ -192,11 +185,6 @@ public class Manager implements RiJStateConcept, Animated {
     
     //## operation Manager() 
     public  Manager(RiJThread p_thread) {
-        try {
-            animInstance().notifyConstructorEntered(animClassManager.getUserClass(),
-               new ArgData[] {
-               });
-        
         reactive = new Reactive(p_thread);
         //#[ operation Manager() 
         
@@ -217,16 +205,23 @@ public class Manager implements RiJStateConcept, Animated {
          * creating objects
          */
         
-        // the map that conaints (name, number) pairs
-        neuron_names = new HashMap();
+        // the map that contains (name, number) pairs
+        neuron_names = new HashMap();  
+        
+        // the map that contains (param, value) pairs
+        params_map = new HashMap();  
         
         interNeuronsList = new ArrayList<String>();
         motorNeuronsList = new ArrayList<String>();
         sensoryNeuronsList = new ArrayList<String>();
         
-        // now fill in the HashMap - this is needed here because it defines N_of_neurons according to the input csv file
+        // now fill in the names HashMap - this is needed here because it defines N_of_neurons according to the input csv file
         cmdFileP.println("Creating (number,name) pairs:");
-        createNamesDict();
+        createNamesDict();     
+        
+        // now fill in the params HashMap
+        cmdFileP.println("Creating (param,value) pairs:");
+        readParamsFile();
         
         // the matrices of the input data - read from the CSV files in readInputFiles()
         distMatrix = new int[N_of_neurons][N_of_neurons];
@@ -238,8 +233,17 @@ public class Manager implements RiJStateConcept, Animated {
         sensoryNeurons = new Gen_SN[sensoryNeuronsList.size()];
         motorNeurons = new Gen_MN[motorNeuronsList.size()];
         
-        // read the csv files
-        readInputFiles();
+        // This is incredible ugly - it happens because the csv file saves everything, even ints, as 300.0 (for example),
+        // so we take only what is before the dot and parse it to an int.
+        setSimRuntime(Integer.parseInt(params_map.get("simRuntime").toString().split("\\.")[0]));
+        
+        // Read the propogation time coeffiecient:
+        setPropCoeff(Double.parseDouble(params_map.get("propCoeff").toString()));
+        
+        // read the csv files - chemical & electrical weights + distances
+        readInputFiles();        
+        
+        
         
         /**
          * after we created all the object, we move to insert the data into them
@@ -248,8 +252,15 @@ public class Manager implements RiJStateConcept, Animated {
         String neuron_name;
         int mn_count = 0;
         int sn_count = 0;
-        int in_count = 0;     
+        int in_count = 0;
         
+        int defaultActivation = Integer.parseInt(params_map.get("defaultActivation").toString().split("\\.")[0]);
+        int decayTime = Integer.parseInt(params_map.get("decayTime").toString().split("\\.")[0]);                
+        int ejSynDelay = Integer.parseInt(params_map.get("EJSynDelay").toString().split("\\.")[0]); 
+        int chSynDelay = Integer.parseInt(params_map.get("CHSynDelay").toString().split("\\.")[0]);  
+        double ejCoeff = Double.valueOf(params_map.get("EJCoeff").toString());
+        double chemCoeff = Double.valueOf(params_map.get("CHCoeff").toString());
+        double LeakyCoeff = Double.parseDouble(params_map.get("LeakyCoeff").toString());
         
         for(int i = 0; i<N_of_neurons; i++){
         	neuron_name = neuron_names.get(i+1).toString();
@@ -263,12 +274,13 @@ public class Manager implements RiJStateConcept, Animated {
          		motorNeurons[mn_count].setNeuronNumber(i+1);
          		motorNeurons[mn_count].setNeuronName(neuron_name);
          		motorNeurons[mn_count].setNeuronType("MN");
-         		motorNeurons[mn_count].setActivation(0);
-         		motorNeurons[mn_count].setDecayTime(5);
-         		motorNeurons[mn_count].setEJSynDelay(1);
-         		motorNeurons[mn_count].setCHSynDelay(2); 
-         		motorNeurons[mn_count].setEJcoeff(0.1);
-         		motorNeurons[mn_count].setCHcoeff(0.4);
+         		motorNeurons[mn_count].setActivation(defaultActivation);
+         		motorNeurons[mn_count].setDecayTime(decayTime); 
+         		motorNeurons[mn_count].setEJSynDelay(ejSynDelay);
+         		motorNeurons[mn_count].setCHSynDelay(chSynDelay); 
+         		motorNeurons[mn_count].setEJcoeff(ejCoeff);
+         		motorNeurons[mn_count].setCHcoeff(chemCoeff); 
+         		motorNeurons[mn_count].setLeakyCoeff(LeakyCoeff);  
          		for(int j=0; j<N_of_neurons; j++){
          			motorNeurons[mn_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
          			motorNeurons[mn_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -285,12 +297,13 @@ public class Manager implements RiJStateConcept, Animated {
          		sensoryNeurons[sn_count].setNeuronNumber(i+1);
          		sensoryNeurons[sn_count].setNeuronName(neuron_name);
          		sensoryNeurons[sn_count].setNeuronType("SN");
-         		sensoryNeurons[sn_count].setActivation(0);
-         		sensoryNeurons[sn_count].setDecayTime(5);
-         		sensoryNeurons[sn_count].setEJSynDelay(1);
-         		sensoryNeurons[sn_count].setCHSynDelay(2);
-         		sensoryNeurons[sn_count].setEJcoeff(0.1);
-         		sensoryNeurons[sn_count].setCHcoeff(0.4);	
+         		sensoryNeurons[sn_count].setActivation(defaultActivation);
+         		sensoryNeurons[sn_count].setDecayTime(decayTime); 
+         		sensoryNeurons[sn_count].setEJSynDelay(ejSynDelay);
+         		sensoryNeurons[sn_count].setCHSynDelay(chSynDelay); 
+         		sensoryNeurons[sn_count].setEJcoeff(ejCoeff);
+         		sensoryNeurons[sn_count].setCHcoeff(chemCoeff);
+         		sensoryNeurons[sn_count].setLeakyCoeff(LeakyCoeff);
          		for(int j=0; j<N_of_neurons; j++){
          			sensoryNeurons[sn_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
          			sensoryNeurons[sn_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -307,12 +320,12 @@ public class Manager implements RiJStateConcept, Animated {
          		interNeurons[in_count].setNeuronNumber(i+1);
          		interNeurons[in_count].setNeuronName(neuron_name);
          		interNeurons[in_count].setNeuronType("IN");
-         		interNeurons[in_count].setActivation(0);
-         		interNeurons[in_count].setDecayTime(5);
-         		interNeurons[in_count].setEJSynDelay(1);
-         		interNeurons[in_count].setCHSynDelay(2);
-         		interNeurons[in_count].setEJcoeff(0.1);
-         		interNeurons[in_count].setCHcoeff(0.4);			
+         		interNeurons[in_count].setActivation(defaultActivation);
+         		interNeurons[in_count].setDecayTime(decayTime); 
+         		interNeurons[in_count].setEJSynDelay(ejSynDelay);
+         		interNeurons[in_count].setCHSynDelay(chSynDelay); 
+         		interNeurons[in_count].setEJcoeff(ejCoeff);
+         		interNeurons[in_count].setLeakyCoeff(LeakyCoeff);    
          		for(int j=0; j<N_of_neurons; j++){
          			interNeurons[in_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
          			interNeurons[in_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -391,28 +404,15 @@ public class Manager implements RiJStateConcept, Animated {
         	}
         }    
         
-        	 
-        
-        
         
         startBehavior();
         
         
         //#]
-        }
-        finally {
-            animInstance().notifyMethodExit();
-        }
-        
     }
     
     //## operation createCHMatrix() 
     public void createCHMatrix() {
-        try {
-            animInstance().notifyMethodEntered("createCHMatrix",
-               new ArgData[] {
-               });
-        
         //#[ operation createCHMatrix() 
         String csvFile = "c:\\Users\\hlapid\\Desktop\\CSVFiles\\CHweights_normed.csv";
         BufferedReader br = null;
@@ -454,20 +454,10 @@ public class Manager implements RiJStateConcept, Animated {
         }
         cmdFileP.println("CHMatrix complete.");
         //#]
-        }
-        finally {
-            animInstance().notifyMethodExit();
-        }
-        
     }
     
     //## operation createDistMatrix() 
     public void createDistMatrix() {
-        try {
-            animInstance().notifyMethodEntered("createDistMatrix",
-               new ArgData[] {
-               });
-        
         //#[ operation createDistMatrix() 
         String csvFile = "c:\\Users\\hlapid\\Desktop\\CSVFiles\\distances_normed.csv";
         BufferedReader br = null;
@@ -481,7 +471,7 @@ public class Manager implements RiJStateConcept, Animated {
         		        // use comma as separator
         		String[] distances = line.split(cvsSplitBy);
         		for(int col=0; col<N_of_neurons; col++) {
-        			distMatrix[row][col] = Integer.parseInt(distances[col]);
+        			distMatrix[row][col] = (int) Math.round((getPropCoeff()*Double.parseDouble(distances[col])));
         		}
         		row++;
         	}
@@ -509,20 +499,10 @@ public class Manager implements RiJStateConcept, Animated {
         cmdFileP.println("distMatrix complete.");
         
         //#]
-        }
-        finally {
-            animInstance().notifyMethodExit();
-        }
-        
     }
     
     //## operation createEJMatrix() 
     public void createEJMatrix() {
-        try {
-            animInstance().notifyMethodEntered("createEJMatrix",
-               new ArgData[] {
-               });
-        
         //#[ operation createEJMatrix() 
         String csvFile = "c:\\Users\\hlapid\\Desktop\\CSVFiles\\EJweights_normed.csv";
         BufferedReader br = null;
@@ -563,20 +543,10 @@ public class Manager implements RiJStateConcept, Animated {
         }
         cmdFileP.println("EJMatrix complete.");
         //#]
-        }
-        finally {
-            animInstance().notifyMethodExit();
-        }
-        
     }
     
     //## operation createNamesDict() 
     public void createNamesDict() {
-        try {
-            animInstance().notifyMethodEntered("createNamesDict",
-               new ArgData[] {
-               });
-        
         //#[ operation createNamesDict() 
         String csvFile = "c:\\Users\\hlapid\\Desktop\\CSVFiles\\names.csv";
         BufferedReader br = null;
@@ -629,20 +599,10 @@ public class Manager implements RiJStateConcept, Animated {
         
         
         //#]
-        }
-        finally {
-            animInstance().notifyMethodExit();
-        }
-        
     }
     
     //## operation createNeurons() 
     public void createNeurons() {
-        try {
-            animInstance().notifyMethodEntered("createNeurons",
-               new ArgData[] {
-               });
-        
         //#[ operation createNeurons() 
          /**
          String neuron_name;
@@ -671,20 +631,10 @@ public class Manager implements RiJStateConcept, Animated {
          */
          
         //#]
-        }
-        finally {
-            animInstance().notifyMethodExit();
-        }
-        
     }
     
     //## operation createOutputFile() 
     public void createOutputFile() {
-        try {
-            animInstance().notifyMethodEntered("createOutputFile",
-               new ArgData[] {
-               });
-        
         //#[ operation createOutputFile() 
         //creating headers for the output CSV file
         outputFileP.print("Time");
@@ -694,20 +644,10 @@ public class Manager implements RiJStateConcept, Animated {
         outputFileP.println();
         
         //#]
-        }
-        finally {
-            animInstance().notifyMethodExit();
-        }
-        
     }
     
     //## operation outputCurrentStatus() 
     public void outputCurrentStatus() {
-        try {
-            animInstance().notifyMethodEntered("outputCurrentStatus",
-               new ArgData[] {
-               });
-        
         //#[ operation outputCurrentStatus() 
         outputFileP.print(getClockTime());
         
@@ -737,20 +677,10 @@ public class Manager implements RiJStateConcept, Animated {
         
         
         //#]
-        }
-        finally {
-            animInstance().notifyMethodExit();
-        }
-        
     }
     
     //## operation readInputFiles() 
     public void readInputFiles() {
-        try {
-            animInstance().notifyMethodEntered("readInputFiles",
-               new ArgData[] {
-               });
-        
         //#[ operation readInputFiles() 
         cmdFileP.println("Creating EJMatrix:");
         createEJMatrix();
@@ -766,20 +696,53 @@ public class Manager implements RiJStateConcept, Animated {
         
         
         //#]
-        }
-        finally {
-            animInstance().notifyMethodExit();
+    }
+    
+    //## operation readParamsFile() 
+    public void readParamsFile() {
+        //#[ operation readParamsFile() 
+        String csvFile = "c:\\Users\\hlapid\\Desktop\\CSVFiles\\params.csv";
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ",";
+        
+        try {
+        
+        	br = new BufferedReader(new FileReader(csvFile));
+        	while ((line = br.readLine()) != null) {
+        		// use comma as separator
+        		String[] params = line.split(cvsSplitBy);
+        		
+        		// each line in the file looks like: "param_name,param_value"
+        		String param = params[0];
+        		String value = params[1];
+        		
+                // add the (name, number) to the list
+                params_map.put(param, value);
+                cmdFileP.println("Adding the pair: " + param + ":" + value);	
+        		
+        	}
+        
+        } catch (FileNotFoundException e) {
+        	e.printStackTrace();
+        } catch (IOException e) {
+        	e.printStackTrace();
+        } finally {
+        	if (br != null) {
+        		try {
+        			br.close();
+        		} catch (IOException e) {
+        			e.printStackTrace();
+        		}
+        	}
         }
         
+        
+        //#]
     }
     
     //## operation tick() 
     public void tick() {
-        try {
-            animInstance().notifyMethodEntered("tick",
-               new ArgData[] {
-               });
-        
         //#[ operation tick() 
         setClockTime(getClockTime() + 1);
         
@@ -787,11 +750,6 @@ public class Manager implements RiJStateConcept, Animated {
         for (int i = 0; i < sensoryNeurons.length; i++){sensoryNeurons[i].gen(new evTick());}
         for (int i = 0; i < interNeurons.length; i++){interNeurons[i].gen(new evTick());}
         //#]
-        }
-        finally {
-            animInstance().notifyMethodExit();
-        }
-        
     }
     
     //## auto_generated 
@@ -945,6 +903,26 @@ public class Manager implements RiJStateConcept, Animated {
     }
     
     //## auto_generated 
+    public Map getParams_map() {
+        return params_map;
+    }
+    
+    //## auto_generated 
+    public void setParams_map(Map p_params_map) {
+        params_map = p_params_map;
+    }
+    
+    //## auto_generated 
+    public double getPropCoeff() {
+        return propCoeff;
+    }
+    
+    //## auto_generated 
+    public void setPropCoeff(double p_propCoeff) {
+        propCoeff = p_propCoeff;
+    }
+    
+    //## auto_generated 
     public Gen_SN getSensoryNeurons(int i1) {
         return sensoryNeurons[i1];
     }
@@ -982,14 +960,6 @@ public class Manager implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public void _addItsGen_IN(Gen_IN p_Gen_IN) {
-        if(p_Gen_IN != null)
-            {
-                animInstance().notifyRelationAdded("itsGen_IN", p_Gen_IN);
-            }
-        else
-            {
-                animInstance().notifyRelationCleared("itsGen_IN");
-            }
         itsGen_IN.add(0, p_Gen_IN);
     }
     
@@ -1004,7 +974,6 @@ public class Manager implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public void _removeItsGen_IN(Gen_IN p_Gen_IN) {
-        animInstance().notifyRelationRemoved("itsGen_IN", p_Gen_IN);
         itsGen_IN.remove(p_Gen_IN);
     }
     
@@ -1019,7 +988,6 @@ public class Manager implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public void _clearItsGen_IN() {
-        animInstance().notifyRelationCleared("itsGen_IN");
         itsGen_IN.clear();
     }
     
@@ -1041,14 +1009,6 @@ public class Manager implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public void _addItsGen_MN(Gen_MN p_Gen_MN) {
-        if(p_Gen_MN != null)
-            {
-                animInstance().notifyRelationAdded("itsGen_MN", p_Gen_MN);
-            }
-        else
-            {
-                animInstance().notifyRelationCleared("itsGen_MN");
-            }
         itsGen_MN.add(0, p_Gen_MN);
     }
     
@@ -1063,7 +1023,6 @@ public class Manager implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public void _removeItsGen_MN(Gen_MN p_Gen_MN) {
-        animInstance().notifyRelationRemoved("itsGen_MN", p_Gen_MN);
         itsGen_MN.remove(p_Gen_MN);
     }
     
@@ -1078,7 +1037,6 @@ public class Manager implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public void _clearItsGen_MN() {
-        animInstance().notifyRelationCleared("itsGen_MN");
         itsGen_MN.clear();
     }
     
@@ -1100,14 +1058,6 @@ public class Manager implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public void _addItsGen_Neuron(Gen_Neuron p_Gen_Neuron) {
-        if(p_Gen_Neuron != null)
-            {
-                animInstance().notifyRelationAdded("itsGen_Neuron", p_Gen_Neuron);
-            }
-        else
-            {
-                animInstance().notifyRelationCleared("itsGen_Neuron");
-            }
         itsGen_Neuron.add(0, p_Gen_Neuron);
     }
     
@@ -1122,7 +1072,6 @@ public class Manager implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public void _removeItsGen_Neuron(Gen_Neuron p_Gen_Neuron) {
-        animInstance().notifyRelationRemoved("itsGen_Neuron", p_Gen_Neuron);
         itsGen_Neuron.remove(p_Gen_Neuron);
     }
     
@@ -1137,7 +1086,6 @@ public class Manager implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public void _clearItsGen_Neuron() {
-        animInstance().notifyRelationCleared("itsGen_Neuron");
         itsGen_Neuron.clear();
     }
     
@@ -1159,14 +1107,6 @@ public class Manager implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public void _addItsGen_SN(Gen_SN p_Gen_SN) {
-        if(p_Gen_SN != null)
-            {
-                animInstance().notifyRelationAdded("itsGen_SN", p_Gen_SN);
-            }
-        else
-            {
-                animInstance().notifyRelationCleared("itsGen_SN");
-            }
         itsGen_SN.add(0, p_Gen_SN);
     }
     
@@ -1181,7 +1121,6 @@ public class Manager implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public void _removeItsGen_SN(Gen_SN p_Gen_SN) {
-        animInstance().notifyRelationRemoved("itsGen_SN", p_Gen_SN);
         itsGen_SN.remove(p_Gen_SN);
     }
     
@@ -1196,7 +1135,6 @@ public class Manager implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public void _clearItsGen_SN() {
-        animInstance().notifyRelationCleared("itsGen_SN");
         itsGen_SN.clear();
     }
     
@@ -1218,7 +1156,7 @@ public class Manager implements RiJStateConcept, Animated {
     }
     
     //## ignore 
-    public class Reactive extends RiJStateReactive implements AnimatedReactive {
+    public class Reactive extends RiJStateReactive {
         
         // Default constructor 
         public Reactive() {
@@ -1245,25 +1183,6 @@ public class Manager implements RiJStateConcept, Animated {
         //## statechart_method 
         public boolean isCompleted(int state) {
             return true;
-        }
-        
-        //## statechart_method 
-        public void rootState_add(AnimStates animStates) {
-            animStates.add("ROOT");
-            switch (rootState_subState) {
-                case manager:
-                {
-                    manager_add(animStates);
-                }
-                break;
-                case hit_obs:
-                {
-                    hit_obs_add(animStates);
-                }
-                break;
-                default:
-                    break;
-            }
         }
         
         //## statechart_method 
@@ -1294,16 +1213,6 @@ public class Manager implements RiJStateConcept, Animated {
             return res;
         }
         
-        //## statechart_method 
-        public void manager_add(AnimStates animStates) {
-            animStates.add("ROOT.manager");
-        }
-        
-        //## statechart_method 
-        public void hit_obs_add(AnimStates animStates) {
-            animStates.add("ROOT.hit_obs");
-        }
-        
         //## auto_generated 
         protected void initStatechart() {
             rootState_subState = RiJNonState;
@@ -1325,17 +1234,36 @@ public class Manager implements RiJStateConcept, Animated {
         public void managerExit() {
             itsRiJThread.unschedTimeout(Manager_Timeout_manager_id, this);
             //#[ state ROOT.manager.(Exit) 
+            if (((getClockTime() / 150) % 2) == 0) {
+            	// triggering AVBL and AVBR
+            	motorNeurons[35].setActivation(1);
+            	motorNeurons[35].gen(new evTrig());
+            	motorNeurons[14].setActivation(0);
+            	
+            }
+            else
+            {
+            	// triggering AVBL and AVBR
+            	motorNeurons[14].setActivation(1); 
+            	motorNeurons[14].gen(new evTrig());
+            	motorNeurons[35].setActivation(0);
+            }  
+            
+            
+            // write activations to log file
             outputCurrentStatus();
             
+            // end simulation when we pass simRuntime
             if (getSimRuntime() <= getClockTime())
             {
             	outputFileP.println("End of simulation");
             	System.exit(0);
             	
-            }
+            }  
             
-            	//debugging only
             System.out.println(getClockTime());
+            
+            
             //#]
         }
         
@@ -1385,12 +1313,13 @@ public class Manager implements RiJStateConcept, Animated {
         public int managerTakeNull() {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             //## transition 1 
-            if((getClockTime() == 50) && !hitObs)
+            if((getClockTime() == 50) && hitObs)
                 {
-                    animInstance().notifyTransitionStarted("1");
                     manager_exit();
+                    //#[ transition 1 
+                    // change the guard to !hitObs when we want to try with external event
+                    //#]
                     hit_obs_entDef();
-                    animInstance().notifyTransitionEnded("1");
                     res = RiJStateReactive.TAKE_EVENT_COMPLETE;
                 }
             return res;
@@ -1401,24 +1330,18 @@ public class Manager implements RiJStateConcept, Animated {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             if(event.getTimeoutId() == Manager_Timeout_manager_id)
                 {
-                    //## transition 0 
-                    if(getClockTime()<getSimRuntime())
-                        {
-                            animInstance().notifyTransitionStarted("0");
-                            manager_exit();
-                            //#[ transition 0 
-                            // the guard is to keep the simulation from running forever
-                            
-                            /*
-                            * advance the clock
-                            */
-                            
-                            tick();
-                            //#]
-                            manager_entDef();
-                            animInstance().notifyTransitionEnded("0");
-                            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-                        }
+                    manager_exit();
+                    //#[ transition 0 
+                    // the guard is to keep the simulation from running forever
+                    
+                    /*
+                    * advance the clock
+                    */
+                    
+                    tick();
+                    //#]
+                    manager_entDef();
+                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
                 }
             return res;
         }
@@ -1427,17 +1350,18 @@ public class Manager implements RiJStateConcept, Animated {
         public void hit_obs_exit() {
             popNullConfig();
             hit_obsExit();
-            animInstance().notifyStateExited("ROOT.hit_obs");
         }
         
         //## statechart_method 
         public void managerEnter() {
-            itsRiJThread.schedTimeout(200, Manager_Timeout_manager_id, this, "ROOT.manager");
+            //#[ state ROOT.manager.(Entry) 
+              
+            //#]
+            itsRiJThread.schedTimeout(1, Manager_Timeout_manager_id, this, null);
         }
         
         //## statechart_method 
         public void hit_obs_enter() {
-            animInstance().notifyStateEntered("ROOT.hit_obs");
             pushNullConfig();
             rootState_subState = hit_obs;
             rootState_active = hit_obs;
@@ -1454,12 +1378,10 @@ public class Manager implements RiJStateConcept, Animated {
         public void manager_exit() {
             popNullConfig();
             managerExit();
-            animInstance().notifyStateExited("ROOT.manager");
         }
         
         //## statechart_method 
         public void rootState_enter() {
-            animInstance().notifyStateEntered("ROOT");
             rootStateEnter();
         }
         
@@ -1473,18 +1395,12 @@ public class Manager implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void rootStateEntDef() {
-            animInstance().notifyTransitionStarted("3");
             //#[ transition 3 
-            // triggering AVBL and AVBR at the beggining of the simulation
-            
-            interNeurons[4].setActivation(1);
-            interNeurons[5].setActivation(1);
-            
-            interNeurons[4].gen(new evTrig());
-            interNeurons[5].gen(new evTrig());
+            //triggering AVBL and AVBR at the beggining of the simulation
+            motorNeurons[35].setActivation(1);
+            motorNeurons[35].gen(new evTrig());
             //#]
             manager_entDef();
-            animInstance().notifyTransitionEnded("3");
         }
         
         //## statechart_method 
@@ -1493,13 +1409,11 @@ public class Manager implements RiJStateConcept, Animated {
             //## transition 2 
             if(true)
                 {
-                    animInstance().notifyTransitionStarted("2");
                     hit_obs_exit();
                     //#[ transition 2 
                     tick();
                     //#]
                     manager_entDef();
-                    animInstance().notifyTransitionEnded("2");
                     res = RiJStateReactive.TAKE_EVENT_COMPLETE;
                 }
             return res;
@@ -1511,115 +1425,13 @@ public class Manager implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void manager_enter() {
-            animInstance().notifyStateEntered("ROOT.manager");
             pushNullConfig();
             rootState_subState = manager;
             rootState_active = manager;
             managerEnter();
         }
         
-        /**  methods added just for design level debugging instrumentation */
-        public boolean startBehavior() {
-            try {
-              animInstance().notifyBehavioralMethodEntered("startBehavior",
-                  new ArgData[] {
-                   });
-              return super.startBehavior();
-            }
-            finally {
-              animInstance().notifyMethodExit();
-            }
-        }
-        public int takeEvent(RiJEvent event) { 
-            try { 
-              //animInstance().notifyTakeEvent(new AnimEvent(event));
-              animInstance().notifyBehavioralMethodEntered("takeEvent",
-                  new ArgData[] { new ArgData(RiJEvent.class, "event", event.toString())
-                   });
-              return super.takeEvent(event); 
-            }
-            finally { 
-              animInstance().notifyMethodExit();
-            }
-        }
-        /**  see com.ibm.rational.rhapsody.animation.AnimatedReactive interface */
-        public AnimInstance animInstance() { 
-            return Manager.this.animInstance(); 
-        }
-        
     }
-    //#[ ignore
-    /**  see com.ibm.rational.rhapsody.animation.Animated interface */
-    public AnimClass getAnimClass() { 
-        return animClassManager; 
-    }
-    /**  see com.ibm.rational.rhapsody.animation.Animated interface */
-    public Object getFieldValue(java.lang.reflect.Field f, Object userInstance) { 
-         Object obj = null;
-         try {
-             obj = f.get(userInstance);
-         } catch(Exception e) {
-              java.lang.System.err.println("Exception: getting Field value: " + e);
-              e.printStackTrace();
-         }
-         return obj;
-    }
-    /**  see com.ibm.rational.rhapsody.animation.Animated interface */
-    public AnimInstance animInstance() {
-        if (animate == null) 
-            animate = new Animate(); 
-        return animate; 
-    } 
-    /**  see com.ibm.rational.rhapsody.animation.Animated interface */
-    public void addAttributes(AnimAttributes msg) {
-        
-        msg.add("clockTime", clockTime);
-        msg.add("outputFile", outputFile);
-        msg.add("outputFileP", outputFileP);
-        msg.add("hitObs", hitObs);
-        msg.add("simRuntime", simRuntime);
-        msg.add("neuron_names", neuron_names);
-        msg.add("N_of_neurons", N_of_neurons);
-        msg.add("distMatrix", distMatrix);
-        msg.add("EJweightsMatrix", EJweightsMatrix);
-        msg.add("CHweightsMatrix", CHweightsMatrix);
-        msg.add("cmdFile", cmdFile);
-        msg.add("cmdFileP", cmdFileP);
-        msg.add("motorNeuronsList", motorNeuronsList);
-        msg.add("interNeuronsList", interNeuronsList);
-        msg.add("sensoryNeuronsList", sensoryNeuronsList);
-        msg.add("interNeurons", interNeurons);
-        msg.add("motorNeurons", motorNeurons);
-        msg.add("sensoryNeurons", sensoryNeurons);
-    }
-    /**  see com.ibm.rational.rhapsody.animation.Animated interface */
-    public void addRelations(AnimRelations msg) {
-        
-        msg.add("itsGen_IN", false, false, itsGen_IN);
-        msg.add("itsGen_SN", false, false, itsGen_SN);
-        msg.add("itsGen_Neuron", false, false, itsGen_Neuron);
-        msg.add("itsGen_MN", false, false, itsGen_MN);
-    }
-    /** An inner class added as instrumentation for animation */
-    public class Animate extends AnimInstance { 
-        public  Animate() { 
-            super(Manager.this); 
-        } 
-        public void addAttributes(AnimAttributes msg) {
-            Manager.this.addAttributes(msg);
-        }
-        public void addRelations(AnimRelations msg) {
-            Manager.this.addRelations(msg);
-        }
-        
-        public void addStates(AnimStates msg) {
-            if ((reactive != null) && (reactive.isTerminated() == false))
-              reactive.rootState_add(msg);
-        }
-        
-    } 
-    //#]
-    
 }
 /*********************************************************************
 	File Path	: DefaultComponent/DefaultConfig/Default/Manager.java

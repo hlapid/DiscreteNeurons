@@ -4,7 +4,7 @@ I-Logix-RPY-Archive version 8.6.0 Java 4012249
 	- _myState = 8192;
 	- _name = "Default";
 	- _lastID = 10;
-	- weakCGTime = 12.14.2015::17:45:5;
+	- weakCGTime = 1.12.2016::15:29:16;
 	- strongCGTime = 1.2.1990::0:0:0;
 	- _defaultComposite = GUID 6a19d696-1e12-44bf-bbb4-470858baa3de;
 	- _eventsBaseID = 18616;
@@ -15,7 +15,7 @@ I-Logix-RPY-Archive version 8.6.0 Java 4012249
 			- _id = GUID 6a19d696-1e12-44bf-bbb4-470858baa3de;
 			- _myState = 40960;
 			- _name = "TopLevel";
-			- weakCGTime = 12.8.2015::16:52:42;
+			- weakCGTime = 12.29.2015::15:53:12;
 			- strongCGTime = 1.2.1990::0:0:0;
 			- _multiplicity = "";
 			- _itsStateChart = { IHandle 
@@ -91,7 +91,7 @@ I-Logix-RPY-Archive version 8.6.0 Java 4012249
 				- _id = GUID 0083ca22-d263-4ac5-aada-706c0c65dac5;
 			}
 			- _lastID = 5;
-			- weakCGTime = 12.8.2015::16:56:7;
+			- weakCGTime = 1.12.2016::12:18:26;
 			- strongCGTime = 11.24.2015::15:1:23;
 			- Operations = { IRPYRawContainer 
 				- size = 9;
@@ -214,7 +214,7 @@ for (int i = 0; i < itsGen_IN.size(); i++) {
 	if (CHsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_IN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",IN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",IN,\" + Double.toString(getActivation());
 		CHsignalArrivalsList.add(temp_str);
 	}		
 }
@@ -225,7 +225,7 @@ for (int i = 0; i < itsGen_SN.size(); i++) {
 	if (CHsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_SN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",SN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",SN,\" + Double.toString(getActivation());
 		CHsignalArrivalsList.add(temp_str);
 	}		
 }
@@ -236,7 +236,7 @@ for (int i = 0; i < itsGen_MN.size(); i++) {
 	if (CHsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_MN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",MN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",MN,\" + Double.toString(getActivation());
 		CHsignalArrivalsList.add(temp_str);
 	}		
 }  
@@ -275,7 +275,7 @@ for (int i = 0; i < itsGen_IN.size(); i++) {
 	if (EJsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_IN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",IN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",IN,\" + Double.toString(getActivation());
 		EJsignalArrivalsList.add(temp_str);
 	}		
 }
@@ -286,7 +286,7 @@ for (int i = 0; i < itsGen_SN.size(); i++) {
 	if (EJsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_SN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",SN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",SN,\" + Double.toString(getActivation());
 		EJsignalArrivalsList.add(temp_str);
 	}		
 }
@@ -297,7 +297,7 @@ for (int i = 0; i < itsGen_MN.size(); i++) {
 	if (EJsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_MN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",MN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",MN,\" + Double.toString(getActivation());
 		EJsignalArrivalsList.add(temp_str);
 	}		
 }                ";
@@ -335,7 +335,8 @@ while (it.hasNext())
 	String[] parsed = str.split(\",\");
 	int sendTime = Integer.parseInt(parsed[0]);
 	int destNeuron = Integer.parseInt(parsed[1]);
-	String neuronType = parsed[2];
+	String neuronType = parsed[2]; 
+	double originalActivation = Double.parseDouble(parsed[3]);
 	double targetActivation;
 	                                                                               
 	if (sendTime <= currTime)
@@ -402,14 +403,15 @@ while (it.hasNext())
 	String[] parsed = str.split(\",\");
 	int sendTime = Integer.parseInt(parsed[0]);
 	int destNeuron = Integer.parseInt(parsed[1]);
-	String neuronType = parsed[2];
+	String neuronType = parsed[2];     
+	double originalActivation = Double.parseDouble(parsed[3]);
 	double targetActivation;
 	
 	if (sendTime <= currTime)
 	{
 		it.remove();         // very important - delete the current command!
 		if (neuronType.equals(\"MN\")){
-			targetActivation = itsGen_MN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_MN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_MN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_MN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_MN.get(destNeuron).setActivation(targetActivation);
@@ -417,7 +419,7 @@ while (it.hasNext())
 			itsManager.cmdFileP.println(\"Time: \" +itsManager.getClockTime() + \": \"+ getNeuronName() + \" EJ-triggers \" + itsGen_MN.get(destNeuron).getNeuronName());
 		}
 		if (neuronType.equals(\"IN\")){
-			targetActivation = itsGen_IN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_IN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_IN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_IN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_IN.get(destNeuron).setActivation(targetActivation); 
@@ -425,7 +427,7 @@ while (it.hasNext())
 			itsManager.cmdFileP.println(\"Time: \" +itsManager.getClockTime() + \": \"+ getNeuronName() + \" EJ-triggers \" + itsGen_IN.get(destNeuron).getNeuronName());
 		}
 		if (neuronType.equals(\"SN\")){
-			targetActivation = itsGen_SN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_SN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_SN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_SN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_SN.get(destNeuron).setActivation(targetActivation); 
@@ -459,8 +461,8 @@ while (it.hasNext())
 					- _id = GUID 9054b17b-425a-4cfb-8fa2-23f26a3c7f45;
 					- _myState = 10240;
 					- _name = "statechart_0";
-					- _lastID = 11;
-					- weakCGTime = 12.8.2015::16:56:7;
+					- _lastID = 14;
+					- weakCGTime = 1.12.2016::12:18:26;
 					- strongCGTime = 11.24.2015::15:1:23;
 					- _multiplicity = "";
 					- _itsStateChart = { IHandle 
@@ -471,9 +473,9 @@ while (it.hasNext())
 						- _m2Class = "IStateChart";
 						- _id = GUID 37b4d1e6-22e2-4618-9a05-dcda1d94afcf;
 					}
-					- _defNumber = 10;
+					- _defNumber = 11;
 					- Transitions = { IRPYRawContainer 
-						- size = 8;
+						- size = 10;
 						- value = 
 						{ IDefaultDrvdTrans 
 							- _id = GUID 03c19c07-bda2-4197-8d85-f1f04978b781;
@@ -635,6 +637,54 @@ sendCHtrigs();";
 							- _staticReaction = 1;
 							- _itsSource = GUID 11d655ca-1203-48d9-b5cf-ecd190e1fb69;
 						}
+						{ IDefaultDrvdTrans 
+							- _id = GUID 06673f91-c050-4d84-8195-149d15aa718c;
+							- _myState = 2048;
+							- _name = "defaulttransition_12";
+							- _inheritsFromHandle = { IHandle 
+								- _m2Class = "ITransition";
+								- _id = GUID f0198984-ba28-43ab-89fa-2a0f0bb06847;
+							}
+							- _itsLabel = { ILabel 
+								- _id = GUID 85d8ea5d-dd4b-4c6f-9832-3a6892a9abbe;
+								- _itsTrigger = NULL;
+								- _itsGuard = NULL;
+								- _itsAction = NULL;
+							}
+							- _itsTarget = GUID 514f9f39-74f7-431e-9490-786171d1e9bf;
+							- _staticReaction = 0;
+							- _itsSource = ;
+							- _ofState = GUID e88ace38-3231-478c-9ec7-ba11216d11cf;
+						}
+						{ ITransition 
+							- _id = GUID ea7e1efc-9260-4dc9-a425-8b5164fab17f;
+							- _myState = 6144;
+							- _name = "transition_13";
+							- _inheritsFromHandle = { IHandle 
+								- _m2Class = "ITransition";
+								- _id = GUID 3628001a-a1b8-448a-8df7-8217e62d2a35;
+							}
+							- _itsLabel = { ILabel 
+								- _id = GUID 31b156a9-23b6-4f26-8bbc-323caa53c200;
+								- _itsTrigger = { IInterfaceItemTrigger 
+									- _id = GUID 82dd1e8d-523b-49e9-91d5-dc8d9a2ac480;
+									- _body = "evTick";
+									- _info = "";
+									- _itsInterfaceItem = { IHandle 
+										- _m2Class = "IEvent";
+										- _id = GUID 5b316adc-54f2-45b9-b9d3-5a7cedae0ff0;
+									}
+								}
+								- _itsGuard = NULL;
+								- _itsAction = { IAction 
+									- _id = GUID 3afec318-f740-4f3a-9351-5cfd255d8fbb;
+									- _body = "setActivation(getActivation() * getLeakyCoeff())";
+								}
+							}
+							- _itsTarget = GUID 514f9f39-74f7-431e-9490-786171d1e9bf;
+							- _staticReaction = 1;
+							- _itsSource = GUID 514f9f39-74f7-431e-9490-786171d1e9bf;
+						}
 						{ ITransition 
 							- _id = GUID 897cc5aa-0f6a-4c18-94f0-7c12c01027f7;
 							- _myState = 2048;
@@ -679,7 +729,7 @@ sendCHtrigs();";
 						}
 					}
 					- States = { IRPYRawContainer 
-						- size = 8;
+						- size = 10;
 						- value = 
 						{ IState 
 							- _id = GUID d48f6537-82bc-4b02-afa1-78cc757502fb;
@@ -782,9 +832,29 @@ gen(new evSendTrig());
 ";
 							}
 						}
+						{ IState 
+							- _id = GUID e88ace38-3231-478c-9ec7-ba11216d11cf;
+							- _name = "state_9";
+							- _inheritsFromHandle = { IHandle 
+								- _m2Class = "IState";
+								- _id = GUID 6ce82e13-8cc7-47f4-b8da-5365d4d184cc;
+							}
+							- _parent = GUID f6339e3f-b57a-49a3-9cd7-f060205148dc;
+							- _defaultTrans = GUID 06673f91-c050-4d84-8195-149d15aa718c;
+						}
+						{ IState 
+							- _id = GUID 514f9f39-74f7-431e-9490-786171d1e9bf;
+							- _name = "state_10";
+							- _inheritsFromHandle = { IHandle 
+								- _m2Class = "IState";
+								- _id = GUID f067649f-d6da-4890-984b-3152642f3af1;
+							}
+							- _parent = GUID e88ace38-3231-478c-9ec7-ba11216d11cf;
+							- _defaultTrans = ;
+						}
 					}
-					- _version = 12.8.2015::18:56:7;
-					- _baseVersion = 12.8.2015::17:51:14;
+					- _version = 1.12.2016::14:18:26;
+					- _baseVersion = 1.12.2016::14:18:26;
 					- _diagram = { IStateChartDiagram 
 						- _id = GUID 800ea5fd-fafe-4018-aad8-d9aaffb5b810;
 						- _myState = 10240;
@@ -795,7 +865,7 @@ gen(new evSendTrig());
 								{ IPropertySubject 
 									- _Name = "Format";
 									- Metaclasses = { IRPYRawContainer 
-										- size = 2;
+										- size = 4;
 										- value = 
 										{ IPropertyMetaclass 
 											- _Name = "DanglingTransition";
@@ -805,6 +875,38 @@ gen(new evSendTrig());
 												{ IProperty 
 													- _Name = "Line.LineWidth";
 													- _Value = "2";
+													- _Type = Int;
+												}
+											}
+										}
+										{ IPropertyMetaclass 
+											- _Name = "DefaultTransition";
+											- Properties = { IRPYRawContainer 
+												- size = 5;
+												- value = 
+												{ IProperty 
+													- _Name = "Font.Font";
+													- _Value = "Tahoma";
+													- _Type = String;
+												}
+												{ IProperty 
+													- _Name = "Font.FontColor";
+													- _Value = "0,0,0";
+													- _Type = Color;
+												}
+												{ IProperty 
+													- _Name = "Font.Size";
+													- _Value = "8";
+													- _Type = Int;
+												}
+												{ IProperty 
+													- _Name = "Line.LineColor";
+													- _Value = "128,128,128";
+													- _Type = Color;
+												}
+												{ IProperty 
+													- _Name = "Line.LineWidth";
+													- _Value = "1";
 													- _Type = Int;
 												}
 											}
@@ -851,12 +953,44 @@ gen(new evSendTrig());
 												}
 											}
 										}
+										{ IPropertyMetaclass 
+											- _Name = "Transition";
+											- Properties = { IRPYRawContainer 
+												- size = 5;
+												- value = 
+												{ IProperty 
+													- _Name = "Font.Font";
+													- _Value = "Tahoma";
+													- _Type = String;
+												}
+												{ IProperty 
+													- _Name = "Font.FontColor";
+													- _Value = "0,0,0";
+													- _Type = Color;
+												}
+												{ IProperty 
+													- _Name = "Font.Size";
+													- _Value = "8";
+													- _Type = Int;
+												}
+												{ IProperty 
+													- _Name = "Line.LineColor";
+													- _Value = "128,128,128";
+													- _Type = Color;
+												}
+												{ IProperty 
+													- _Name = "Line.LineWidth";
+													- _Value = "1";
+													- _Type = Int;
+												}
+											}
+										}
 									}
 								}
 							}
 						}
 						- _name = "statechartdiagram_0";
-						- _lastModifiedTime = "12.8.2015::16:56:7";
+						- _lastModifiedTime = "1.12.2016::12:18:26";
 						- _graphicChart = { CGIStateChart 
 							- _id = GUID c3516157-77fd-4bbe-9d49-0bc119903a75;
 							- _myState = 2048;
@@ -881,7 +1015,7 @@ gen(new evSendTrig());
 							}
 							- m_drawBehavior = 4096;
 							- m_bIsPreferencesInitialized = 1;
-							- elementList = 14;
+							- elementList = 17;
 							{ CGIState 
 								- _id = GUID 86638daa-65a2-453f-a07f-b7c379f284a3;
 								- _myState = 2048;
@@ -1066,8 +1200,10 @@ gen(new evSendTrig());
 								- Compartments = { IRPYRawContainer 
 									- size = 0;
 								}
-								- nAndLineCount = 1;
-								- andLinePoly = 2 858 0  858 1060  ;
+								- nAndLineCount = 3;
+								- andLinePoly = 2 858 1060  858 852  ;
+								- andLinePoly = 2 858 0  858 852  ;
+								- andLinePoly = 2 858 852  1096 852  ;
 								- m_pInheritsFrom = { IHandle 
 									- _m2Class = "SGEElement";
 									- _id = GUID dd176f01-b9eb-4c05-807c-349226fe20a2;
@@ -1239,14 +1375,14 @@ gen(new evSendTrig());
 										- m_bgColor = 0;
 										- m_bgFlag = 0;
 									}
-									- m_position = 1 977 530  ;
+									- m_position = 1 977 426  ;
 									- m_nIdent = 0;
 									- m_bImplicitSetRectPoints = 0;
 									- m_nOrientationCtrlPt = 1;
 								}
 								- m_drawBehavior = 0;
 								- m_bIsPreferencesInitialized = 0;
-								- m_polygon = 4 858 0  858 1060  1096 1060  1096 0  ;
+								- m_polygon = 4 1096 852  858 852  858 0  1096 0  ;
 								- m_nNameFormat = 0;
 								- m_nIsNameFormat = 0;
 								- Compartments = { IRPYRawContainer 
@@ -2182,6 +2318,314 @@ EJsignalArrivalsList = new ArrayList<String>();";
 								- m_nInheritanceMask = 0;
 								- m_bShowName = 1;
 							}
+							{ CGIState 
+								- _id = GUID 9d0d9968-c4c4-4fd2-b54d-dcb9827b7eb4;
+								- _myState = 2048;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 2;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "Format";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "CompState";
+													- Properties = { IRPYRawContainer 
+														- size = 3;
+														- value = 
+														{ IProperty 
+															- _Name = "Font.FontColor";
+															- _Value = "128,128,128";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Line.LineColor";
+															- _Value = "191,191,191";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Line.LineWidth";
+															- _Value = "0";
+															- _Type = Int;
+														}
+													}
+												}
+											}
+										}
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "GradientNameCompartment";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 9;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "IState";
+									- _id = GUID e88ace38-3231-478c-9ec7-ba11216d11cf;
+								}
+								- m_pParent = GUID 7c96c9b3-d276-4f3c-965f-84859d8c7226;
+								- m_name = { CGIText 
+									- m_str = "state_9";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 977 956  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 1;
+								}
+								- m_drawBehavior = 0;
+								- m_bIsPreferencesInitialized = 0;
+								- m_polygon = 4 1096 852  858 852  858 1060  1096 1060  ;
+								- m_nNameFormat = 0;
+								- m_nIsNameFormat = 0;
+								- Compartments = { IRPYRawContainer 
+									- size = 0;
+								}
+								- nAndLineCount = 0;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "SGEElement";
+									- _id = GUID bf941f10-ab7a-435e-9c90-5096542cbd0f;
+								}
+								- m_nInheritanceMask = 0;
+								- m_pDefaultComponentRelation = ;
+								- m_pVirtualParent = ;
+							}
+							{ CGIState 
+								- _id = GUID 33f96e20-4091-4439-9295-ab0f0ee094e6;
+								- _myState = 2048;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 2;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "Format";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "State";
+													- Properties = { IRPYRawContainer 
+														- size = 5;
+														- value = 
+														{ IProperty 
+															- _Name = "Font.Font";
+															- _Value = "Tahoma";
+															- _Type = String;
+														}
+														{ IProperty 
+															- _Name = "Font.FontColor";
+															- _Value = "128,128,128";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Font.Size";
+															- _Value = "8";
+															- _Type = Int;
+														}
+														{ IProperty 
+															- _Name = "Line.LineColor";
+															- _Value = "191,191,191";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Line.LineWidth";
+															- _Value = "1";
+															- _Type = Int;
+														}
+													}
+												}
+											}
+										}
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "GradientNameCompartment";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 8;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "IState";
+									- _id = GUID 514f9f39-74f7-431e-9490-786171d1e9bf;
+								}
+								- m_pParent = GUID 9d0d9968-c4c4-4fd2-b54d-dcb9827b7eb4;
+								- m_name = { CGIText 
+									- m_str = "state_10";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 5;
+								}
+								- m_drawBehavior = 0;
+								- m_transform = 0.0776053 0 0 0.076555 939.255 930.669 ;
+								- m_bIsPreferencesInitialized = 0;
+								- m_AdditionalLabel = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 1;
+								}
+								- m_polygon = 4 0 0  0 1060  1096 1060  1096 0  ;
+								- m_nNameFormat = 0;
+								- m_nIsNameFormat = 0;
+								- Compartments = { IRPYRawContainer 
+									- size = 0;
+								}
+								- nAndLineCount = 0;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "SGEElement";
+									- _id = GUID 25b66039-21dc-4f2b-86ba-b0ba878e9fa6;
+								}
+								- m_nInheritanceMask = 0;
+								- m_pDefaultComponentRelation = ;
+							}
+							{ CGITrans 
+								- _id = GUID b3912fae-49e3-4b6b-9e2e-772367cc73c3;
+								- _myState = 2048;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 1;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "Format";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "DefaultTransition";
+													- Properties = { IRPYRawContainer 
+														- size = 5;
+														- value = 
+														{ IProperty 
+															- _Name = "Font.Font";
+															- _Value = "Tahoma";
+															- _Type = String;
+														}
+														{ IProperty 
+															- _Name = "Font.FontColor";
+															- _Value = "128,128,128";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Font.Size";
+															- _Value = "8";
+															- _Type = Int;
+														}
+														{ IProperty 
+															- _Name = "Line.LineColor";
+															- _Value = "191,191,191";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Line.LineWidth";
+															- _Value = "1";
+															- _Type = Int;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 29;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "ITransition";
+									- _id = GUID 06673f91-c050-4d84-8195-149d15aa718c;
+								}
+								- m_pParent = ;
+								- m_name = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 8;
+								}
+								- m_drawBehavior = 0;
+								- m_bIsPreferencesInitialized = 0;
+								- m_pSource = GUID 9d0d9968-c4c4-4fd2-b54d-dcb9827b7eb4;
+								- m_sourceType = 'F';
+								- m_pTarget = GUID 33f96e20-4091-4439-9295-ab0f0ee094e6;
+								- m_targetType = 'T';
+								- m_direction = ' ';
+								- m_rpn = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 0;
+								}
+								- m_anglePoint1 = 0 0 ;
+								- m_anglePoint2 = 0 0 ;
+								- m_line_style = 1;
+								- m_SourcePort = 936 882 ;
+								- m_TargetPort = 532 66 ;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "SGEElement";
+									- _id = GUID 48583c82-2c2b-4175-8a62-68b6dd243932;
+								}
+								- m_nInheritanceMask = 0;
+								- m_bShowName = 1;
+							}
 							
 							- m_access = 'Z';
 							- m_modified = 'N';
@@ -2413,7 +2857,7 @@ EJsignalArrivalsList = new ArrayList<String>();";
 				- _id = GUID 0083ca22-d263-4ac5-aada-706c0c65dac5;
 			}
 			- _lastID = 6;
-			- weakCGTime = 12.8.2015::16:10:35;
+			- weakCGTime = 1.12.2016::12:18:27;
 			- strongCGTime = 11.24.2015::14:23:21;
 			- Operations = { IRPYRawContainer 
 				- size = 5;
@@ -2469,9 +2913,9 @@ int dest_neuron_number;
 for (int i = 0; i < itsGen_IN.size(); i++) {  
 	dest_neuron_number = itsGen_IN.get(i).getNeuronNumber();
 	if (CHsynWeights[dest_neuron_number-1] != 0) {
-		//add command string to list. the format is: arrivalTime, targetNeuron, type
+		//add command string to list. the format is: arrivalTime, targetNeuron, type, currentActivity
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_IN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",IN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",IN,\" + Double.toString(getActivation());
 		CHsignalArrivalsList.add(temp_str);
 	}		
 }
@@ -2480,9 +2924,9 @@ for (int i = 0; i < itsGen_IN.size(); i++) {
 for (int i = 0; i < itsGen_SN.size(); i++) {  
 	dest_neuron_number = itsGen_SN.get(i).getNeuronNumber();
 	if (CHsynWeights[dest_neuron_number-1] != 0) {
-		//add command string to list. the format is: arrivalTime, targetNeuron, type
+		//add command string to list. the format is: arrivalTime, targetNeuron, type, currentActivity
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_SN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",SN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",SN,\"  + Double.toString(getActivation());
 		CHsignalArrivalsList.add(temp_str);
 	}		
 }
@@ -2491,9 +2935,9 @@ for (int i = 0; i < itsGen_SN.size(); i++) {
 for (int i = 0; i < itsGen_MN.size(); i++) {  
 	dest_neuron_number = itsGen_MN.get(i).getNeuronNumber();
 	if (CHsynWeights[dest_neuron_number-1] != 0) {
-		//add command string to list. the format is: arrivalTime, targetNeuron, type
+		//add command string to list. the format is: arrivalTime, targetNeuron, type, currentActivity
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_MN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",MN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",MN,\"  + Double.toString(getActivation());
 		CHsignalArrivalsList.add(temp_str);
 	}		
 }  
@@ -2532,7 +2976,7 @@ for (int i = 0; i < itsGen_IN.size(); i++) {
 	if (EJsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_IN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",IN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",IN,\" + Double.toString(getActivation());
 		EJsignalArrivalsList.add(temp_str);
 	}		
 }
@@ -2543,7 +2987,7 @@ for (int i = 0; i < itsGen_SN.size(); i++) {
 	if (EJsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_SN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",SN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",SN,\" + Double.toString(getActivation());
 		EJsignalArrivalsList.add(temp_str);
 	}		
 }
@@ -2554,7 +2998,7 @@ for (int i = 0; i < itsGen_MN.size(); i++) {
 	if (EJsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_MN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",MN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",MN,\" + Double.toString(getActivation());
 		EJsignalArrivalsList.add(temp_str);
 	}		
 }                ";
@@ -2592,14 +3036,15 @@ while (it.hasNext())
 	String[] parsed = str.split(\",\");
 	int sendTime = Integer.parseInt(parsed[0]);
 	int destNeuron = Integer.parseInt(parsed[1]);
-	String neuronType = parsed[2];
+	String neuronType = parsed[2];   
+	double originalActivation = Double.parseDouble(parsed[3]);
 	double targetActivation;
 	
 	if (sendTime <= currTime)
 	{
 		it.remove();         // very important - delete the current command!
 		if (neuronType.equals(\"MN\")){
-			targetActivation = itsGen_MN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_MN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_MN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_MN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_MN.get(destNeuron).setActivation(targetActivation); 
@@ -2607,7 +3052,7 @@ while (it.hasNext())
 			itsManager.cmdFileP.println(\"Time: \" +itsManager.getClockTime() + \": \"+ getNeuronName() + \" EJ-triggers \" + itsGen_MN.get(destNeuron).getNeuronName());
 		}
 		if (neuronType.equals(\"IN\")){
-			targetActivation = itsGen_IN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_IN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_IN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_IN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_IN.get(destNeuron).setActivation(targetActivation); 
@@ -2616,7 +3061,7 @@ while (it.hasNext())
 			
 		}
 		if (neuronType.equals(\"SN\")){
-			targetActivation = itsGen_SN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_SN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_SN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_SN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_SN.get(destNeuron).setActivation(targetActivation); 
@@ -2660,14 +3105,15 @@ while (it.hasNext())
 	String[] parsed = str.split(\",\");
 	int sendTime = Integer.parseInt(parsed[0]);
 	int destNeuron = Integer.parseInt(parsed[1]);
-	String neuronType = parsed[2];
+	String neuronType = parsed[2];               
+	double originalActivation = Double.parseDouble(parsed[3]);
 	double targetActivation;
 	                                                                               
 	if (sendTime <= currTime)
 	{
 		it.remove();         // very important - delete the current command!
 		if (neuronType.equals(\"MN\")){
-			targetActivation = itsGen_MN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_MN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_MN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_MN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_MN.get(destNeuron).setActivation(targetActivation);  
@@ -2675,7 +3121,7 @@ while (it.hasNext())
 			itsManager.cmdFileP.println(\"Time: \" +itsManager.getClockTime() + \": \"+ getNeuronName() + \" triggers \" + itsGen_MN.get(destNeuron).getNeuronName());
 		}
 		if (neuronType.equals(\"IN\")){
-			targetActivation = itsGen_IN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_IN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_IN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_IN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_IN.get(destNeuron).setActivation(targetActivation);          
@@ -2683,7 +3129,7 @@ while (it.hasNext())
 			itsManager.cmdFileP.println(\"Time: \" +itsManager.getClockTime() + \": \"+ getNeuronName() + \" triggers \" + itsGen_IN.get(destNeuron).getNeuronName());
 		}
 		if (neuronType.equals(\"SN\")){
-			targetActivation = itsGen_SN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_SN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_SN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_SN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_SN.get(destNeuron).setActivation(targetActivation);
@@ -2717,8 +3163,8 @@ while (it.hasNext())
 					- _id = GUID 3da39f66-60bb-4427-8a9b-90645e131db9;
 					- _myState = 10240;
 					- _name = "statechart_0";
-					- _lastID = 26;
-					- weakCGTime = 12.8.2015::16:10:35;
+					- _lastID = 32;
+					- weakCGTime = 1.12.2016::12:18:27;
 					- strongCGTime = 11.24.2015::14:23:21;
 					- _multiplicity = "";
 					- _itsStateChart = { IHandle 
@@ -2729,9 +3175,9 @@ while (it.hasNext())
 						- _m2Class = "IStateChart";
 						- _id = GUID 37b4d1e6-22e2-4618-9a05-dcda1d94afcf;
 					}
-					- _defNumber = 13;
+					- _defNumber = 14;
 					- Transitions = { IRPYRawContainer 
-						- size = 19;
+						- size = 24;
 						- value = 
 						{ IDefaultDrvdTrans 
 							- _id = GUID 684bbb66-7749-4b3d-93e7-0e4b9295f978;
@@ -2892,6 +3338,54 @@ sendCHtrigs();";
 							- _itsTarget = GUID 9cc7f2f0-e646-41b4-b92a-7e0561cf1c15;
 							- _staticReaction = 1;
 							- _itsSource = GUID 9cc7f2f0-e646-41b4-b92a-7e0561cf1c15;
+						}
+						{ IDefaultDrvdTrans 
+							- _id = GUID db4d0398-def2-419c-8551-06235d0c2660;
+							- _myState = 2048;
+							- _name = "defaulttransition_30";
+							- _inheritsFromHandle = { IHandle 
+								- _m2Class = "ITransition";
+								- _id = GUID f0198984-ba28-43ab-89fa-2a0f0bb06847;
+							}
+							- _itsLabel = { ILabel 
+								- _id = GUID 35a734cc-99e4-4854-8e49-6bdedf589d7c;
+								- _itsTrigger = NULL;
+								- _itsGuard = NULL;
+								- _itsAction = NULL;
+							}
+							- _itsTarget = GUID 5f62159c-49dd-4098-b7f7-42d3575e72f8;
+							- _staticReaction = 0;
+							- _itsSource = ;
+							- _ofState = GUID 7d7e85eb-1898-4bc1-90f1-78cc0b69441c;
+						}
+						{ ITransition 
+							- _id = GUID 41b7e574-4074-4fb1-960b-96bb4bb684e7;
+							- _myState = 6144;
+							- _name = "transition_31";
+							- _inheritsFromHandle = { IHandle 
+								- _m2Class = "ITransition";
+								- _id = GUID 3628001a-a1b8-448a-8df7-8217e62d2a35;
+							}
+							- _itsLabel = { ILabel 
+								- _id = GUID 5a87274a-e5c1-40f2-bccb-025d98510afc;
+								- _itsTrigger = { IInterfaceItemTrigger 
+									- _id = GUID 8087a8d6-6ac0-47ec-bfc7-e0fe2ca5a0a9;
+									- _body = "evTick";
+									- _info = "";
+									- _itsInterfaceItem = { IHandle 
+										- _m2Class = "IEvent";
+										- _id = GUID 5b316adc-54f2-45b9-b9d3-5a7cedae0ff0;
+									}
+								}
+								- _itsGuard = NULL;
+								- _itsAction = { IAction 
+									- _id = GUID 0a9605b4-f0a0-4c00-9a3a-ab74dcb340b1;
+									- _body = "setActivation(getActivation() * getLeakyCoeff())";
+								}
+							}
+							- _itsTarget = GUID 5f62159c-49dd-4098-b7f7-42d3575e72f8;
+							- _staticReaction = 1;
+							- _itsSource = GUID 5f62159c-49dd-4098-b7f7-42d3575e72f8;
 						}
 						{ ITransition 
 							- _id = GUID fec8f4ff-4fe3-40a5-b968-1856d8c59615;
@@ -3166,9 +3660,73 @@ sendCHtrigs();";
 							- _staticReaction = 0;
 							- _itsSource = GUID 126124e2-42c5-40ff-85e9-cb51c24f60be;
 						}
+						{ ITransition 
+							- _id = GUID 54eac590-5131-4903-9c6f-0629ace00a89;
+							- _myState = 2048;
+							- _name = "transition_26";
+							- _itsLabel = { ILabel 
+								- _id = GUID 80c4036c-076f-42ce-8c98-52221fb064e2;
+								- _itsTrigger = NULL;
+								- _itsGuard = { IGuard 
+									- _id = GUID 01190a01-5e32-4cba-86c4-443dcdd1cfd5;
+									- _body = "getActivation() < 0";
+								}
+								- _itsAction = NULL;
+							}
+							- _itsTarget = GUID aa009024-c926-497f-a39c-ac24b64f828d;
+							- _staticReaction = 0;
+							- _itsSource = GUID 1b5b96ea-44c0-42bd-9a5b-84c43c0dbd00;
+						}
+						{ ITransition 
+							- _id = GUID 023418ae-7155-498d-a0cd-3b85840550ec;
+							- _myState = 2048;
+							- _name = "transition_27";
+							- _itsLabel = { ILabel 
+								- _id = GUID 49cf784d-6055-412a-a3e5-74f844bc7e98;
+								- _itsTrigger = { IInterfaceItemTrigger 
+									- _id = GUID 40d30135-2c43-4358-89ff-1792ca00c614;
+									- _body = "evTrig";
+									- _info = "";
+									- _itsInterfaceItem = { IHandle 
+										- _m2Class = "IEvent";
+										- _id = GUID 547d0ae1-d8b8-4b81-951b-3e546b710c68;
+									}
+								}
+								- _itsGuard = NULL;
+								- _itsAction = NULL;
+							}
+							- _itsTarget = GUID 1b5b96ea-44c0-42bd-9a5b-84c43c0dbd00;
+							- _staticReaction = 0;
+							- _itsSource = GUID aa009024-c926-497f-a39c-ac24b64f828d;
+						}
+						{ ITransition 
+							- _id = GUID 28aa8795-d3b4-41c8-8812-f57d6e2ec856;
+							- _myState = 2048;
+							- _name = "transition_28";
+							- _itsLabel = { ILabel 
+								- _id = GUID 0f5eed1c-e302-4e7e-8b80-d05f467bd75c;
+								- _itsTrigger = { IInterfaceItemTrigger 
+									- _id = GUID f668588e-bad9-4487-b2a7-7549e3da5973;
+									- _body = "evTick";
+									- _info = "";
+									- _itsInterfaceItem = { IHandle 
+										- _m2Class = "IEvent";
+										- _id = GUID 5b316adc-54f2-45b9-b9d3-5a7cedae0ff0;
+									}
+								}
+								- _itsGuard = { IGuard 
+									- _id = GUID eb04dcf7-cba7-41b7-8449-b33c26e98389;
+									- _body = "getTransTime() < itsManager.getClockTime()";
+								}
+								- _itsAction = NULL;
+							}
+							- _itsTarget = GUID 06c6c7fd-ceeb-41e8-85ec-81e453799dbc;
+							- _staticReaction = 0;
+							- _itsSource = GUID aa009024-c926-497f-a39c-ac24b64f828d;
+						}
 					}
 					- States = { IRPYRawContainer 
-						- size = 12;
+						- size = 15;
 						- value = 
 						{ IState 
 							- _id = GUID 46459f69-8ac9-4448-b0bf-147ea29bb4c6;
@@ -3310,9 +3868,40 @@ addEJlist();
 gen(new evSendTrig());";
 							}
 						}
+						{ IState 
+							- _id = GUID aa009024-c926-497f-a39c-ac24b64f828d;
+							- _name = "state_minus";
+							- _parent = GUID 7560a113-16cc-47be-b036-7a7f864422ee;
+							- _defaultTrans = ;
+							- _entryAction = { IAction 
+								- _id = GUID e28e805d-1b82-48d9-b28a-1eb21baed264;
+								- _myState = 4096;
+								- _body = "setTransTime(itsManager.getClockTime() + getDecayTime());";
+							}
+						}
+						{ IState 
+							- _id = GUID 7d7e85eb-1898-4bc1-90f1-78cc0b69441c;
+							- _name = "state_9";
+							- _inheritsFromHandle = { IHandle 
+								- _m2Class = "IState";
+								- _id = GUID 6ce82e13-8cc7-47f4-b8da-5365d4d184cc;
+							}
+							- _parent = GUID 74d2bca9-375e-4f3d-a7d5-af58a437b5a0;
+							- _defaultTrans = GUID db4d0398-def2-419c-8551-06235d0c2660;
+						}
+						{ IState 
+							- _id = GUID 5f62159c-49dd-4098-b7f7-42d3575e72f8;
+							- _name = "state_10";
+							- _inheritsFromHandle = { IHandle 
+								- _m2Class = "IState";
+								- _id = GUID f067649f-d6da-4890-984b-3152642f3af1;
+							}
+							- _parent = GUID 7d7e85eb-1898-4bc1-90f1-78cc0b69441c;
+							- _defaultTrans = ;
+						}
 					}
-					- _version = 12.8.2015::18:4:56;
-					- _baseVersion = 12.8.2015::17:51:14;
+					- _version = 1.12.2016::14:18:27;
+					- _baseVersion = 1.12.2016::14:18:26;
 					- _diagram = { IStateChartDiagram 
 						- _id = GUID 1d2a4565-d6a9-4716-bca5-dc08ae5b5fc6;
 						- _myState = 10240;
@@ -3485,7 +4074,7 @@ gen(new evSendTrig());";
 							}
 						}
 						- _name = "statechartdiagram_0";
-						- _lastModifiedTime = "12.8.2015::16:4:56";
+						- _lastModifiedTime = "1.12.2016::12:18:27";
 						- _graphicChart = { CGIStateChart 
 							- _id = GUID 2734a8d6-b6a4-4d64-938c-5b1f8c652f9e;
 							- _myState = 2048;
@@ -3510,7 +4099,7 @@ gen(new evSendTrig());";
 							}
 							- m_drawBehavior = 4096;
 							- m_bIsPreferencesInitialized = 1;
-							- elementList = 29;
+							- elementList = 36;
 							{ CGIState 
 								- _id = GUID 845a081e-6808-45a5-b348-a8ef691451a9;
 								- _myState = 2048;
@@ -3700,8 +4289,10 @@ gen(new evSendTrig());";
 								- Compartments = { IRPYRawContainer 
 									- size = 0;
 								}
-								- nAndLineCount = 1;
-								- andLinePoly = 2 858 1060  858 0  ;
+								- nAndLineCount = 3;
+								- andLinePoly = 2 858 852  858 0  ;
+								- andLinePoly = 2 858 852  858 1060  ;
+								- andLinePoly = 2 858 852  1096 852  ;
 								- m_pInheritsFrom = { IHandle 
 									- _m2Class = "SGEElement";
 									- _id = GUID dd176f01-b9eb-4c05-807c-349226fe20a2;
@@ -3873,14 +4464,14 @@ gen(new evSendTrig());";
 										- m_bgColor = 0;
 										- m_bgFlag = 0;
 									}
-									- m_position = 1 977 530  ;
+									- m_position = 1 977 426  ;
 									- m_nIdent = 0;
 									- m_bImplicitSetRectPoints = 0;
 									- m_nOrientationCtrlPt = 1;
 								}
 								- m_drawBehavior = 0;
 								- m_bIsPreferencesInitialized = 0;
-								- m_polygon = 4 858 0  858 1060  1096 1060  1096 0  ;
+								- m_polygon = 4 1096 852  858 852  858 0  1096 0  ;
 								- m_nNameFormat = 0;
 								- m_nIsNameFormat = 0;
 								- Compartments = { IRPYRawContainer 
@@ -3963,7 +4554,7 @@ gen(new evSendTrig());";
 									- m_nOrientationCtrlPt = 5;
 								}
 								- m_drawBehavior = 0;
-								- m_transform = 0.101996 0 0 0.160287 16.9732 403.215 ;
+								- m_transform = 0.101996 0 0 0.160287 262.409 426.478 ;
 								- m_bIsPreferencesInitialized = 0;
 								- m_AdditionalLabel = { CGIText 
 									- m_str = "";
@@ -4750,7 +5341,7 @@ EJsignalArrivalsList = new ArrayList<String>();";
 									- m_nOrientationCtrlPt = 5;
 								}
 								- m_drawBehavior = 4104;
-								- m_transform = 0.0831485 0 0 0.707737 191.666 76.8716 ;
+								- m_transform = 0.0831485 0 0 0.707737 445.566 150.891 ;
 								- m_bIsPreferencesInitialized = 1;
 								- m_AdditionalLabel = { CGIText 
 									- m_str = "";
@@ -5883,7 +6474,7 @@ EJsignalArrivalsList = new ArrayList<String>();";
 									- m_bImplicitSetRectPoints = 0;
 									- m_nOrientationCtrlPt = 0;
 								}
-								- m_arrow = 6 846 358  865 372  862 591  859 591  120 588  119 581  ;
+								- m_arrow = 6 867 367  865 372  866 504  859 504  366 519  360 516  ;
 								- m_anglePoint1 = 0 0 ;
 								- m_anglePoint2 = 0 0 ;
 								- m_line_style = 1;
@@ -5961,7 +6552,7 @@ EJsignalArrivalsList = new ArrayList<String>();";
 									- m_bImplicitSetRectPoints = 0;
 									- m_nOrientationCtrlPt = 0;
 								}
-								- m_arrow = 6 867 180  866 179  860 38  858 34  104 37  101 42  ;
+								- m_arrow = 6 867 180  866 179  860 38  1068 53  314 56  310 62  ;
 								- m_anglePoint1 = 0 0 ;
 								- m_anglePoint2 = 0 0 ;
 								- m_line_style = 1;
@@ -5969,6 +6560,620 @@ EJsignalArrivalsList = new ArrayList<String>();";
 								- m_TargetPort = 124 44 ;
 								- m_pInheritsFrom = { IHandle 
 									- _m2Class = "";
+								}
+								- m_nInheritanceMask = 0;
+								- m_bShowName = 1;
+							}
+							{ CGIState 
+								- _id = GUID 2fe90c5e-4f9b-4b64-bec3-6bb65b382951;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 1;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "FitBoxToItsTextuals";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 8;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "IState";
+									- _id = GUID aa009024-c926-497f-a39c-ac24b64f828d;
+								}
+								- m_pParent = GUID 651ee392-2556-4c55-a280-05ddcfc9b9ab;
+								- m_name = { CGIText 
+									- m_str = "state_minus";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 5;
+								}
+								- m_drawBehavior = 4104;
+								- m_transform = 0.1139 0 0 0.197519 44.4324 678.866 ;
+								- m_bIsPreferencesInitialized = 1;
+								- m_AdditionalLabel = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 1;
+								}
+								- m_polygon = 4 0 0  0 1060  1096 1060  1096 0  ;
+								- m_nNameFormat = 0;
+								- m_nIsNameFormat = 0;
+								- Compartments = { IRPYRawContainer 
+									- size = 0;
+								}
+								- nAndLineCount = 0;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "";
+								}
+								- m_nInheritanceMask = 0;
+								- m_pDefaultComponentRelation = ;
+							}
+							{ CGITrans 
+								- _id = GUID 111a2e94-647c-4d25-9fec-d6ef350be713;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 1;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "ShowLabels";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 28;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "ITransition";
+									- _id = GUID 54eac590-5131-4903-9c6f-0629ace00a89;
+								}
+								- m_pParent = ;
+								- m_name = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 8;
+								}
+								- m_drawBehavior = 0;
+								- m_bIsPreferencesInitialized = 1;
+								- m_pSource = GUID 684c0f13-e967-46aa-972e-4cae0558b96f;
+								- m_sourceType = 'F';
+								- m_pTarget = GUID 2fe90c5e-4f9b-4b64-bec3-6bb65b382951;
+								- m_targetType = 'T';
+								- m_direction = ' ';
+								- m_rpn = { CGIText 
+									- m_str = "[getActivation() < 0]";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 0;
+								}
+								- m_anglePoint1 = 0 0 ;
+								- m_anglePoint2 = 0 0 ;
+								- m_line_style = 1;
+								- m_SourcePort = 176 928 ;
+								- m_TargetPort = 749 782 ;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "";
+								}
+								- m_nInheritanceMask = 0;
+								- m_bShowName = 1;
+							}
+							{ CGITrans 
+								- _id = GUID 108f2bc5-eb58-4483-ac74-63993023a1c7;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 1;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "ShowLabels";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 28;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "ITransition";
+									- _id = GUID 023418ae-7155-498d-a0cd-3b85840550ec;
+								}
+								- m_pParent = ;
+								- m_name = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 8;
+								}
+								- m_drawBehavior = 0;
+								- m_bIsPreferencesInitialized = 1;
+								- m_pSource = GUID 2fe90c5e-4f9b-4b64-bec3-6bb65b382951;
+								- m_sourceType = 'F';
+								- m_pTarget = GUID 684c0f13-e967-46aa-972e-4cae0558b96f;
+								- m_targetType = 'T';
+								- m_direction = ' ';
+								- m_rpn = { CGIText 
+									- m_str = "evTrig";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 0;
+								}
+								- m_anglePoint1 = 0 0 ;
+								- m_anglePoint2 = 0 0 ;
+								- m_line_style = 1;
+								- m_SourcePort = 1087 557 ;
+								- m_TargetPort = 49 842 ;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "";
+								}
+								- m_nInheritanceMask = 0;
+								- m_bShowName = 1;
+							}
+							{ CGITrans 
+								- _id = GUID 330defba-cb97-4f4c-b54b-415af37eb9bf;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 1;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "ShowLabels";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 28;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "ITransition";
+									- _id = GUID 28aa8795-d3b4-41c8-8812-f57d6e2ec856;
+								}
+								- m_pParent = ;
+								- m_name = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 8;
+								}
+								- m_drawBehavior = 0;
+								- m_bIsPreferencesInitialized = 1;
+								- m_pSource = GUID 2fe90c5e-4f9b-4b64-bec3-6bb65b382951;
+								- m_sourceType = 'F';
+								- m_pTarget = GUID 683cbc6b-9c73-474f-a3f7-488af394e649;
+								- m_targetType = 'T';
+								- m_direction = ' ';
+								- m_rpn = { CGIText 
+									- m_str = "evTick[getTransTime() < itsManager.getClockTime()]";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 0;
+								}
+								- m_anglePoint1 = 0 0 ;
+								- m_anglePoint2 = 0 0 ;
+								- m_line_style = 1;
+								- m_SourcePort = 762 21 ;
+								- m_TargetPort = 176 836 ;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "";
+								}
+								- m_nInheritanceMask = 0;
+								- m_bShowName = 1;
+							}
+							{ CGIState 
+								- _id = GUID 361ceeb4-3af3-4f82-8976-61375d988405;
+								- _myState = 2048;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 2;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "Format";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "CompState";
+													- Properties = { IRPYRawContainer 
+														- size = 3;
+														- value = 
+														{ IProperty 
+															- _Name = "Font.FontColor";
+															- _Value = "128,128,128";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Line.LineColor";
+															- _Value = "191,191,191";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Line.LineWidth";
+															- _Value = "0";
+															- _Type = Int;
+														}
+													}
+												}
+											}
+										}
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "GradientNameCompartment";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 9;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "IState";
+									- _id = GUID 7d7e85eb-1898-4bc1-90f1-78cc0b69441c;
+								}
+								- m_pParent = GUID 8c33a1d3-4088-4a7e-8ff1-963f6af12515;
+								- m_name = { CGIText 
+									- m_str = "state_9";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 977 956  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 1;
+								}
+								- m_drawBehavior = 0;
+								- m_bIsPreferencesInitialized = 0;
+								- m_polygon = 4 1096 852  858 852  858 1060  1096 1060  ;
+								- m_nNameFormat = 0;
+								- m_nIsNameFormat = 0;
+								- Compartments = { IRPYRawContainer 
+									- size = 0;
+								}
+								- nAndLineCount = 0;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "SGEElement";
+									- _id = GUID bf941f10-ab7a-435e-9c90-5096542cbd0f;
+								}
+								- m_nInheritanceMask = 0;
+								- m_pDefaultComponentRelation = ;
+								- m_pVirtualParent = ;
+							}
+							{ CGIState 
+								- _id = GUID 5cb6831a-f9c6-47be-94ec-e65c3f9b50af;
+								- _myState = 2048;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 2;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "Format";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "State";
+													- Properties = { IRPYRawContainer 
+														- size = 5;
+														- value = 
+														{ IProperty 
+															- _Name = "Font.Font";
+															- _Value = "Tahoma";
+															- _Type = String;
+														}
+														{ IProperty 
+															- _Name = "Font.FontColor";
+															- _Value = "128,128,128";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Font.Size";
+															- _Value = "8";
+															- _Type = Int;
+														}
+														{ IProperty 
+															- _Name = "Line.LineColor";
+															- _Value = "191,191,191";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Line.LineWidth";
+															- _Value = "1";
+															- _Type = Int;
+														}
+													}
+												}
+											}
+										}
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "GradientNameCompartment";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 8;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "IState";
+									- _id = GUID 5f62159c-49dd-4098-b7f7-42d3575e72f8;
+								}
+								- m_pParent = GUID 361ceeb4-3af3-4f82-8976-61375d988405;
+								- m_name = { CGIText 
+									- m_str = "state_10";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 5;
+								}
+								- m_drawBehavior = 0;
+								- m_transform = 0.0776053 0 0 0.076555 939.255 930.669 ;
+								- m_bIsPreferencesInitialized = 0;
+								- m_AdditionalLabel = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 1;
+								}
+								- m_polygon = 4 0 0  0 1060  1096 1060  1096 0  ;
+								- m_nNameFormat = 0;
+								- m_nIsNameFormat = 0;
+								- Compartments = { IRPYRawContainer 
+									- size = 0;
+								}
+								- nAndLineCount = 0;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "SGEElement";
+									- _id = GUID 25b66039-21dc-4f2b-86ba-b0ba878e9fa6;
+								}
+								- m_nInheritanceMask = 0;
+								- m_pDefaultComponentRelation = ;
+							}
+							{ CGITrans 
+								- _id = GUID 1fab5a28-1f74-4b34-ade2-0b2895e05de1;
+								- _myState = 2048;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 1;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "Format";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "DefaultTransition";
+													- Properties = { IRPYRawContainer 
+														- size = 5;
+														- value = 
+														{ IProperty 
+															- _Name = "Font.Font";
+															- _Value = "Tahoma";
+															- _Type = String;
+														}
+														{ IProperty 
+															- _Name = "Font.FontColor";
+															- _Value = "128,128,128";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Font.Size";
+															- _Value = "8";
+															- _Type = Int;
+														}
+														{ IProperty 
+															- _Name = "Line.LineColor";
+															- _Value = "191,191,191";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Line.LineWidth";
+															- _Value = "1";
+															- _Type = Int;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 29;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "ITransition";
+									- _id = GUID db4d0398-def2-419c-8551-06235d0c2660;
+								}
+								- m_pParent = ;
+								- m_name = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 8;
+								}
+								- m_drawBehavior = 0;
+								- m_bIsPreferencesInitialized = 0;
+								- m_pSource = GUID 361ceeb4-3af3-4f82-8976-61375d988405;
+								- m_sourceType = 'F';
+								- m_pTarget = GUID 5cb6831a-f9c6-47be-94ec-e65c3f9b50af;
+								- m_targetType = 'T';
+								- m_direction = ' ';
+								- m_rpn = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 0;
+								}
+								- m_anglePoint1 = 0 0 ;
+								- m_anglePoint2 = 0 0 ;
+								- m_line_style = 1;
+								- m_SourcePort = 936 882 ;
+								- m_TargetPort = 532 66 ;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "SGEElement";
+									- _id = GUID 48583c82-2c2b-4175-8a62-68b6dd243932;
 								}
 								- m_nInheritanceMask = 0;
 								- m_bShowName = 1;
@@ -6172,7 +7377,7 @@ EJsignalArrivalsList = new ArrayList<String>();";
 				- _id = GUID 0083ca22-d263-4ac5-aada-706c0c65dac5;
 			}
 			- _lastID = 2;
-			- weakCGTime = 12.8.2015::16:10:17;
+			- weakCGTime = 1.12.2016::12:18:26;
 			- strongCGTime = 11.24.2015::14:23:29;
 			- Operations = { IRPYRawContainer 
 				- size = 5;
@@ -6230,7 +7435,7 @@ for (int i = 0; i < itsGen_IN.size(); i++) {
 	if (CHsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_IN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",IN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",IN,\" + Double.toString(getActivation());
 		CHsignalArrivalsList.add(temp_str);
 	}		
 }
@@ -6241,7 +7446,7 @@ for (int i = 0; i < itsGen_SN.size(); i++) {
 	if (CHsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_SN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",SN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",SN,\" + Double.toString(getActivation());
 		CHsignalArrivalsList.add(temp_str);
 	}		
 }
@@ -6252,7 +7457,7 @@ for (int i = 0; i < itsGen_MN.size(); i++) {
 	if (CHsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_MN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",MN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + \",\" + Integer.toString(i) + \",MN,\" + Double.toString(getActivation());
 		CHsignalArrivalsList.add(temp_str);
 	}		
 }  
@@ -6291,7 +7496,7 @@ for (int i = 0; i < itsGen_IN.size(); i++) {
 	if (EJsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_IN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",IN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",IN,\" + Double.toString(getActivation());
 		EJsignalArrivalsList.add(temp_str);
 	}		
 }
@@ -6302,7 +7507,7 @@ for (int i = 0; i < itsGen_SN.size(); i++) {
 	if (EJsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_SN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",SN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",SN,\" + Double.toString(getActivation());
 		EJsignalArrivalsList.add(temp_str);
 	}		
 }
@@ -6313,7 +7518,7 @@ for (int i = 0; i < itsGen_MN.size(); i++) {
 	if (EJsynWeights[dest_neuron_number-1] != 0) {
 		//add command string to list. the format is: arrivalTime, targetNeuron, type
 		//target neuron is NOT between 1,...,60 but it's the index in itsGen_MN array - easier this way, saves double checking...
-		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",MN\";
+		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getEJSynDelay()) + \",\" + Integer.toString(i) + \",MN,\" + Double.toString(getActivation());
 		EJsignalArrivalsList.add(temp_str);
 	}		
 }                ";
@@ -6351,14 +7556,15 @@ while (it.hasNext())
 	String[] parsed = str.split(\",\");
 	int sendTime = Integer.parseInt(parsed[0]);
 	int destNeuron = Integer.parseInt(parsed[1]);
-	String neuronType = parsed[2];
+	String neuronType = parsed[2];  
+	double originalActivation = Double.parseDouble(parsed[3]);
 	double targetActivation;
 	                                                                               
 	if (sendTime <= currTime)
 	{
 		it.remove();         // very important - delete the current command!
 		if (neuronType.equals(\"MN\")){
-			targetActivation = itsGen_MN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_MN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_MN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_MN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_MN.get(destNeuron).setActivation(targetActivation);  
@@ -6366,7 +7572,7 @@ while (it.hasNext())
 			itsManager.cmdFileP.println(\"Time: \" +itsManager.getClockTime() + \": \"+ getNeuronName() + \" triggers \" + itsGen_MN.get(destNeuron).getNeuronName());
 		}
 		if (neuronType.equals(\"IN\")){
-			targetActivation = itsGen_IN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_IN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_IN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_IN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_IN.get(destNeuron).setActivation(targetActivation);
@@ -6374,7 +7580,7 @@ while (it.hasNext())
 			itsManager.cmdFileP.println(\"Time: \" +itsManager.getClockTime() + \": \"+ getNeuronName() + \" triggers \" + itsGen_IN.get(destNeuron).getNeuronName());
 		}
 		if (neuronType.equals(\"SN\")){
-			targetActivation = itsGen_SN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_SN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_SN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_SN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_SN.get(destNeuron).setActivation(targetActivation);        
@@ -6418,14 +7624,15 @@ while (it.hasNext())
 	String[] parsed = str.split(\",\");
 	int sendTime = Integer.parseInt(parsed[0]);
 	int destNeuron = Integer.parseInt(parsed[1]);
-	String neuronType = parsed[2];
+	String neuronType = parsed[2];       
+    double originalActivation = Double.parseDouble(parsed[3]);
 	double targetActivation;
 	
 	if (sendTime <= currTime)
 	{
 		it.remove();         // very important - delete the current command!
 		if (neuronType.equals(\"MN\")){
-			targetActivation = itsGen_MN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_MN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_MN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_MN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_MN.get(destNeuron).setActivation(targetActivation);
@@ -6433,7 +7640,7 @@ while (it.hasNext())
 			itsManager.cmdFileP.println(\"Time: \" +itsManager.getClockTime() + \": \"+ getNeuronName() + \" EJ-triggers \" + itsGen_MN.get(destNeuron).getNeuronName());
 		}
 		if (neuronType.equals(\"IN\")){
-			targetActivation = itsGen_IN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_IN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_IN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_IN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_IN.get(destNeuron).setActivation(targetActivation);     
@@ -6441,7 +7648,7 @@ while (it.hasNext())
 			itsManager.cmdFileP.println(\"Time: \" +itsManager.getClockTime() + \": \"+ getNeuronName() + \" EJ-triggers \" + itsGen_IN.get(destNeuron).getNeuronName());
 		}
 		if (neuronType.equals(\"SN\")){
-			targetActivation = itsGen_SN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_SN.get(destNeuron).getNeuronNumber()-1) * getActivation();
+			targetActivation = itsGen_SN.get(destNeuron).getActivation() + getEJcoeff() * getEJsynWeights(itsGen_SN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
 			if (targetActivation > 1) {targetActivation = 1;}
 			if (targetActivation < -1) {targetActivation = -1;}
 			itsGen_SN.get(destNeuron).setActivation(targetActivation);         
@@ -6475,8 +7682,8 @@ while (it.hasNext())
 					- _id = GUID 4ccf7ec7-7114-47d6-956a-67f32d5270e6;
 					- _myState = 10240;
 					- _name = "statechart_0";
-					- _lastID = 16;
-					- weakCGTime = 12.8.2015::16:10:17;
+					- _lastID = 22;
+					- weakCGTime = 1.12.2016::12:18:26;
 					- strongCGTime = 11.24.2015::14:23:29;
 					- _multiplicity = "";
 					- _itsStateChart = { IHandle 
@@ -6487,9 +7694,9 @@ while (it.hasNext())
 						- _m2Class = "IStateChart";
 						- _id = GUID 37b4d1e6-22e2-4618-9a05-dcda1d94afcf;
 					}
-					- _defNumber = 12;
+					- _defNumber = 13;
 					- Transitions = { IRPYRawContainer 
-						- size = 13;
+						- size = 18;
 						- value = 
 						{ IDefaultDrvdTrans 
 							- _id = GUID 7c266b6f-839e-4b73-9743-8756b1f99909;
@@ -6651,6 +7858,54 @@ sendCHtrigs();";
 							- _staticReaction = 1;
 							- _itsSource = GUID e7aeacd3-3df0-42c5-a698-211f7b143326;
 						}
+						{ IDefaultDrvdTrans 
+							- _id = GUID 9f681238-ee49-49ec-a13f-4f2087041e20;
+							- _myState = 2048;
+							- _name = "defaulttransition_20";
+							- _inheritsFromHandle = { IHandle 
+								- _m2Class = "ITransition";
+								- _id = GUID f0198984-ba28-43ab-89fa-2a0f0bb06847;
+							}
+							- _itsLabel = { ILabel 
+								- _id = GUID 4939de3e-1b1e-4258-b85b-afbd8a3d2db1;
+								- _itsTrigger = NULL;
+								- _itsGuard = NULL;
+								- _itsAction = NULL;
+							}
+							- _itsTarget = GUID 76e4a6e5-090c-4261-8491-98b779abf971;
+							- _staticReaction = 0;
+							- _itsSource = ;
+							- _ofState = GUID f9929ccb-6128-4c50-87bc-61888d10ad97;
+						}
+						{ ITransition 
+							- _id = GUID e4bae237-2f6f-45da-ac52-ba404396c3e3;
+							- _myState = 6144;
+							- _name = "transition_21";
+							- _inheritsFromHandle = { IHandle 
+								- _m2Class = "ITransition";
+								- _id = GUID 3628001a-a1b8-448a-8df7-8217e62d2a35;
+							}
+							- _itsLabel = { ILabel 
+								- _id = GUID 4cd868cf-452d-4604-a954-8034952a35f5;
+								- _itsTrigger = { IInterfaceItemTrigger 
+									- _id = GUID 49aae93d-8d43-4d19-a1c1-b3908139d18c;
+									- _body = "evTick";
+									- _info = "";
+									- _itsInterfaceItem = { IHandle 
+										- _m2Class = "IEvent";
+										- _id = GUID 5b316adc-54f2-45b9-b9d3-5a7cedae0ff0;
+									}
+								}
+								- _itsGuard = NULL;
+								- _itsAction = { IAction 
+									- _id = GUID 0412d81d-84fc-4315-b89f-b112b37de125;
+									- _body = "setActivation(getActivation() * getLeakyCoeff())";
+								}
+							}
+							- _itsTarget = GUID 76e4a6e5-090c-4261-8491-98b779abf971;
+							- _staticReaction = 1;
+							- _itsSource = GUID 76e4a6e5-090c-4261-8491-98b779abf971;
+						}
 						{ ITransition 
 							- _id = GUID fcd7b5ea-cf5b-4929-b681-f859a44dc5e7;
 							- _myState = 2048;
@@ -6796,9 +8051,73 @@ sendCHtrigs();";
 							- _staticReaction = 0;
 							- _itsSource = GUID f337ed46-6fa7-4a13-b9cc-44b7d7fd95a3;
 						}
+						{ ITransition 
+							- _id = GUID 2f6adfe4-55b8-4bf2-8b03-e65cf7cd429a;
+							- _myState = 2048;
+							- _name = "transition_16";
+							- _itsLabel = { ILabel 
+								- _id = GUID d368ce02-0c25-4409-9f98-089542fda4ea;
+								- _itsTrigger = { IInterfaceItemTrigger 
+									- _id = GUID 583c2808-7ed4-410a-9f9e-331263973f8c;
+									- _body = "evTrig";
+									- _info = "";
+									- _itsInterfaceItem = { IHandle 
+										- _m2Class = "IEvent";
+										- _id = GUID 547d0ae1-d8b8-4b81-951b-3e546b710c68;
+									}
+								}
+								- _itsGuard = NULL;
+								- _itsAction = NULL;
+							}
+							- _itsTarget = GUID f337ed46-6fa7-4a13-b9cc-44b7d7fd95a3;
+							- _staticReaction = 0;
+							- _itsSource = GUID 3e162c50-2840-4a47-931e-4d0be953dbcf;
+						}
+						{ ITransition 
+							- _id = GUID e134e2af-795b-4713-bfbe-1314c9048448;
+							- _myState = 2048;
+							- _name = "transition_17";
+							- _itsLabel = { ILabel 
+								- _id = GUID 90735a0e-a577-4c87-a581-b07dd66369ee;
+								- _itsTrigger = { IInterfaceItemTrigger 
+									- _id = GUID 5ad3472a-407d-458b-870e-8b35e998f9e6;
+									- _body = "evTick";
+									- _info = "";
+									- _itsInterfaceItem = { IHandle 
+										- _m2Class = "IEvent";
+										- _id = GUID 5b316adc-54f2-45b9-b9d3-5a7cedae0ff0;
+									}
+								}
+								- _itsGuard = { IGuard 
+									- _id = GUID 4cc64a81-a282-4b3b-8efc-aa0f46380501;
+									- _body = "getTransTime() < itsManager.getClockTime()";
+								}
+								- _itsAction = NULL;
+							}
+							- _itsTarget = GUID 726ea9fb-38c3-4a3a-af99-1b251f1aa6a1;
+							- _staticReaction = 0;
+							- _itsSource = GUID 3e162c50-2840-4a47-931e-4d0be953dbcf;
+						}
+						{ ITransition 
+							- _id = GUID bf701000-d1ed-4044-ac8b-80f94feb0ea5;
+							- _myState = 2048;
+							- _name = "transition_18";
+							- _itsLabel = { ILabel 
+								- _id = GUID 75c53a1a-5b7a-49b7-b380-d0c74964d017;
+								- _itsTrigger = NULL;
+								- _itsGuard = { IGuard 
+									- _id = GUID 4925414e-0ddb-4fa3-9715-3a2a814ceb31;
+									- _body = "getActivation() < 0";
+								}
+								- _itsAction = NULL;
+							}
+							- _itsTarget = GUID 3e162c50-2840-4a47-931e-4d0be953dbcf;
+							- _staticReaction = 0;
+							- _itsSource = GUID f337ed46-6fa7-4a13-b9cc-44b7d7fd95a3;
+						}
 					}
 					- States = { IRPYRawContainer 
-						- size = 10;
+						- size = 13;
 						- value = 
 						{ IState 
 							- _id = GUID 62fe3eb1-297a-4095-a184-45b4ae2604a8;
@@ -6842,6 +8161,7 @@ sendCHtrigs();";
 						}
 						{ IState 
 							- _id = GUID 726ea9fb-38c3-4a3a-af99-1b251f1aa6a1;
+							- _myState = 16384;
 							- _name = "state_0";
 							- _inheritsFromHandle = { IHandle 
 								- _m2Class = "IState";
@@ -6849,6 +8169,11 @@ sendCHtrigs();";
 							}
 							- _parent = GUID 9a628611-7235-4963-a78b-ee3e218bfce5;
 							- _defaultTrans = ;
+							- _entryAction = { IAction 
+								- _id = GUID 9cd11ba1-6041-4d84-9c8c-0859bbcb7ab1;
+								- _myState = 4096;
+								- _body = "setActivation(0);";
+							}
 						}
 						{ IState 
 							- _id = GUID 6ba7525e-7a50-4060-be79-3d699b69af5e;
@@ -6911,9 +8236,40 @@ gen(new evSendTrig());";
 								- _body = "setActivation(0);";
 							}
 						}
+						{ IState 
+							- _id = GUID 3e162c50-2840-4a47-931e-4d0be953dbcf;
+							- _name = "state_minus";
+							- _parent = GUID 9a628611-7235-4963-a78b-ee3e218bfce5;
+							- _defaultTrans = ;
+							- _entryAction = { IAction 
+								- _id = GUID 74709382-4013-4006-bed9-4537b41ebe12;
+								- _myState = 4096;
+								- _body = "setTransTime(itsManager.getClockTime() + getDecayTime());";
+							}
+						}
+						{ IState 
+							- _id = GUID f9929ccb-6128-4c50-87bc-61888d10ad97;
+							- _name = "state_9";
+							- _inheritsFromHandle = { IHandle 
+								- _m2Class = "IState";
+								- _id = GUID 6ce82e13-8cc7-47f4-b8da-5365d4d184cc;
+							}
+							- _parent = GUID 29c8a9db-e66b-4542-9773-f9197c7c410b;
+							- _defaultTrans = GUID 9f681238-ee49-49ec-a13f-4f2087041e20;
+						}
+						{ IState 
+							- _id = GUID 76e4a6e5-090c-4261-8491-98b779abf971;
+							- _name = "state_10";
+							- _inheritsFromHandle = { IHandle 
+								- _m2Class = "IState";
+								- _id = GUID f067649f-d6da-4890-984b-3152642f3af1;
+							}
+							- _parent = GUID f9929ccb-6128-4c50-87bc-61888d10ad97;
+							- _defaultTrans = ;
+						}
 					}
-					- _version = 12.8.2015::17:51:14;
-					- _baseVersion = 12.8.2015::17:51:14;
+					- _version = 1.12.2016::14:18:26;
+					- _baseVersion = 1.12.2016::14:18:26;
 					- _diagram = { IStateChartDiagram 
 						- _id = GUID 58f11d82-ee23-4324-a14d-1f5a0fd05c60;
 						- _myState = 10240;
@@ -6924,7 +8280,7 @@ gen(new evSendTrig());";
 								{ IPropertySubject 
 									- _Name = "Format";
 									- Metaclasses = { IRPYRawContainer 
-										- size = 3;
+										- size = 4;
 										- value = 
 										{ IPropertyMetaclass 
 											- _Name = "DanglingTransition";
@@ -6934,6 +8290,38 @@ gen(new evSendTrig());";
 												{ IProperty 
 													- _Name = "Line.LineWidth";
 													- _Value = "2";
+													- _Type = Int;
+												}
+											}
+										}
+										{ IPropertyMetaclass 
+											- _Name = "DefaultTransition";
+											- Properties = { IRPYRawContainer 
+												- size = 5;
+												- value = 
+												{ IProperty 
+													- _Name = "Font.Font";
+													- _Value = "Tahoma";
+													- _Type = String;
+												}
+												{ IProperty 
+													- _Name = "Font.FontColor";
+													- _Value = "0,0,0";
+													- _Type = Color;
+												}
+												{ IProperty 
+													- _Name = "Font.Size";
+													- _Value = "8";
+													- _Type = Int;
+												}
+												{ IProperty 
+													- _Name = "Line.LineColor";
+													- _Value = "128,128,128";
+													- _Type = Color;
+												}
+												{ IProperty 
+													- _Name = "Line.LineWidth";
+													- _Value = "1";
 													- _Type = Int;
 												}
 											}
@@ -7017,7 +8405,7 @@ gen(new evSendTrig());";
 							}
 						}
 						- _name = "statechartdiagram_0";
-						- _lastModifiedTime = "12.8.2015::15:51:14";
+						- _lastModifiedTime = "1.12.2016::12:18:26";
 						- _graphicChart = { CGIStateChart 
 							- _id = GUID 6471c35c-7552-4415-a28c-8c927bfb8278;
 							- _myState = 2048;
@@ -7042,7 +8430,7 @@ gen(new evSendTrig());";
 							}
 							- m_drawBehavior = 4096;
 							- m_bIsPreferencesInitialized = 1;
-							- elementList = 21;
+							- elementList = 28;
 							{ CGIState 
 								- _id = GUID 3efc6faf-8957-4240-bf6d-4cf8d03b6c23;
 								- _myState = 2048;
@@ -7173,8 +8561,13 @@ gen(new evSendTrig());";
 												{ IPropertyMetaclass 
 													- _Name = "Graphics";
 													- Properties = { IRPYRawContainer 
-														- size = 1;
+														- size = 2;
 														- value = 
+														{ IProperty 
+															- _Name = "FitBoxToItsTextuals";
+															- _Value = "False";
+															- _Type = Bool;
+														}
 														{ IProperty 
 															- _Name = "GradientNameCompartment";
 															- _Value = "False";
@@ -7206,7 +8599,7 @@ gen(new evSendTrig());";
 									- m_nOrientationCtrlPt = 5;
 								}
 								- m_drawBehavior = 0;
-								- m_transform = 0.822993 0 0 0.39434 215 58 ;
+								- m_transform = 0.822993 0 0 0.516161 215 58 ;
 								- m_bIsPreferencesInitialized = 0;
 								- m_AdditionalLabel = { CGIText 
 									- m_str = "";
@@ -7227,13 +8620,15 @@ gen(new evSendTrig());";
 								- Compartments = { IRPYRawContainer 
 									- size = 0;
 								}
-								- nAndLineCount = 1;
-								- andLinePoly = 2 858 1060  858 0  ;
+								- nAndLineCount = 3;
+								- andLinePoly = 2 858 1060  858 852  ;
+								- andLinePoly = 2 858 0  858 852  ;
+								- andLinePoly = 2 1096 852  858 852  ;
 								- m_pInheritsFrom = { IHandle 
 									- _m2Class = "SGEElement";
 									- _id = GUID dd176f01-b9eb-4c05-807c-349226fe20a2;
 								}
-								- m_nInheritanceMask = 0;
+								- m_nInheritanceMask = 2097152;
 								- m_pDefaultComponentRelation = ;
 								- m_moveAndLineTimeStamp = 1.2.1990::0:0:0;
 							}
@@ -7402,14 +8797,14 @@ gen(new evSendTrig());";
 										- m_bgColor = 0;
 										- m_bgFlag = 0;
 									}
-									- m_position = 1 977 530  ;
+									- m_position = 1 977 426  ;
 									- m_nIdent = 0;
 									- m_bImplicitSetRectPoints = 0;
 									- m_nOrientationCtrlPt = 1;
 								}
 								- m_drawBehavior = 0;
 								- m_bIsPreferencesInitialized = 0;
-								- m_polygon = 4 858 0  858 1060  1096 1060  1096 0  ;
+								- m_polygon = 4 1096 852  858 852  858 0  1096 0  ;
 								- m_nNameFormat = 0;
 								- m_nIsNameFormat = 0;
 								- Compartments = { IRPYRawContainer 
@@ -7429,7 +8824,7 @@ gen(new evSendTrig());";
 								- _myState = 2048;
 								- _properties = { IPropertyContainer 
 									- Subjects = { IRPYRawContainer 
-										- size = 2;
+										- size = 1;
 										- value = 
 										{ IPropertySubject 
 											- _Name = "Format";
@@ -7458,32 +8853,13 @@ gen(new evSendTrig());";
 														}
 														{ IProperty 
 															- _Name = "Line.LineColor";
-															- _Value = "191,191,191";
+															- _Value = "109,163,217";
 															- _Type = Color;
 														}
 														{ IProperty 
 															- _Name = "Line.LineWidth";
 															- _Value = "1";
 															- _Type = Int;
-														}
-													}
-												}
-											}
-										}
-										{ IPropertySubject 
-											- _Name = "General";
-											- Metaclasses = { IRPYRawContainer 
-												- size = 1;
-												- value = 
-												{ IPropertyMetaclass 
-													- _Name = "Graphics";
-													- Properties = { IRPYRawContainer 
-														- size = 1;
-														- value = 
-														{ IProperty 
-															- _Name = "GradientNameCompartment";
-															- _Value = "False";
-															- _Type = Bool;
 														}
 													}
 												}
@@ -7537,7 +8913,7 @@ gen(new evSendTrig());";
 									- _m2Class = "SGEElement";
 									- _id = GUID 4159b76e-fef5-4424-ae30-d8a9349e3376;
 								}
-								- m_nInheritanceMask = 0;
+								- m_nInheritanceMask = 163840;
 								- m_pDefaultComponentRelation = ;
 							}
 							{ CGITrans 
@@ -8877,6 +10253,620 @@ EJsignalArrivalsList = new ArrayList<String>();";
 								- m_nInheritanceMask = 0;
 								- m_bShowName = 1;
 							}
+							{ CGIState 
+								- _id = GUID 21081f11-4811-499f-95b7-90d35e685649;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 1;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "FitBoxToItsTextuals";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 8;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "IState";
+									- _id = GUID 3e162c50-2840-4a47-931e-4d0be953dbcf;
+								}
+								- m_pParent = GUID 9d508cad-6c81-424b-b78e-61eed58de08d;
+								- m_name = { CGIText 
+									- m_str = "state_minus";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 5;
+								}
+								- m_drawBehavior = 4104;
+								- m_transform = 0.13082 0 0 0.180944 20.6563 650.959 ;
+								- m_bIsPreferencesInitialized = 1;
+								- m_AdditionalLabel = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 1;
+								}
+								- m_polygon = 4 0 0  0 1060  1096 1060  1096 0  ;
+								- m_nNameFormat = 0;
+								- m_nIsNameFormat = 0;
+								- Compartments = { IRPYRawContainer 
+									- size = 0;
+								}
+								- nAndLineCount = 0;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "";
+								}
+								- m_nInheritanceMask = 0;
+								- m_pDefaultComponentRelation = ;
+							}
+							{ CGITrans 
+								- _id = GUID 8b0fb7bb-65ab-45f9-8c79-74830e3e46cb;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 1;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "ShowLabels";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 28;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "ITransition";
+									- _id = GUID 2f6adfe4-55b8-4bf2-8b03-e65cf7cd429a;
+								}
+								- m_pParent = ;
+								- m_name = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 8;
+								}
+								- m_drawBehavior = 0;
+								- m_bIsPreferencesInitialized = 1;
+								- m_pSource = GUID 21081f11-4811-499f-95b7-90d35e685649;
+								- m_sourceType = 'F';
+								- m_pTarget = GUID da76975d-9dab-45a6-8598-bfe55a7ea78e;
+								- m_targetType = 'T';
+								- m_direction = ' ';
+								- m_rpn = { CGIText 
+									- m_str = "evTrig";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 0;
+								}
+								- m_anglePoint1 = 0 0 ;
+								- m_anglePoint2 = 0 0 ;
+								- m_line_style = 1;
+								- m_SourcePort = 1096 246 ;
+								- m_TargetPort = 352 1056 ;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "";
+								}
+								- m_nInheritanceMask = 0;
+								- m_bShowName = 1;
+							}
+							{ CGITrans 
+								- _id = GUID af3e3b61-b460-4de0-acfb-cd2c91baa750;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 1;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "ShowLabels";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 28;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "ITransition";
+									- _id = GUID e134e2af-795b-4713-bfbe-1314c9048448;
+								}
+								- m_pParent = ;
+								- m_name = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 8;
+								}
+								- m_drawBehavior = 0;
+								- m_bIsPreferencesInitialized = 1;
+								- m_pSource = GUID 21081f11-4811-499f-95b7-90d35e685649;
+								- m_sourceType = 'F';
+								- m_pTarget = GUID ccfbeba9-0c4f-4d43-9212-e63955c8c556;
+								- m_targetType = 'T';
+								- m_direction = ' ';
+								- m_rpn = { CGIText 
+									- m_str = "evTick[getTransTime() < itsManager.getClockTime()]";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 0;
+								}
+								- m_anglePoint1 = 0 0 ;
+								- m_anglePoint2 = 0 0 ;
+								- m_line_style = 1;
+								- m_SourcePort = 464 21 ;
+								- m_TargetPort = 36 779 ;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "";
+								}
+								- m_nInheritanceMask = 0;
+								- m_bShowName = 1;
+							}
+							{ CGITrans 
+								- _id = GUID 3656e5a6-b65b-49ee-a1d6-65ef98f13246;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 1;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "ShowLabels";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 28;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "ITransition";
+									- _id = GUID bf701000-d1ed-4044-ac8b-80f94feb0ea5;
+								}
+								- m_pParent = ;
+								- m_name = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 8;
+								}
+								- m_drawBehavior = 0;
+								- m_bIsPreferencesInitialized = 1;
+								- m_pSource = GUID da76975d-9dab-45a6-8598-bfe55a7ea78e;
+								- m_sourceType = 'F';
+								- m_pTarget = GUID 21081f11-4811-499f-95b7-90d35e685649;
+								- m_targetType = 'T';
+								- m_direction = ' ';
+								- m_rpn = { CGIText 
+									- m_str = "[getActivation() < 0]";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 0;
+								}
+								- m_anglePoint1 = 0 0 ;
+								- m_anglePoint2 = 0 0 ;
+								- m_line_style = 1;
+								- m_SourcePort = 509 1056 ;
+								- m_TargetPort = 1022 578 ;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "";
+								}
+								- m_nInheritanceMask = 0;
+								- m_bShowName = 1;
+							}
+							{ CGIState 
+								- _id = GUID 311bf4e5-d6ae-4f5f-9528-f74f961e38b6;
+								- _myState = 2048;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 2;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "Format";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "CompState";
+													- Properties = { IRPYRawContainer 
+														- size = 3;
+														- value = 
+														{ IProperty 
+															- _Name = "Font.FontColor";
+															- _Value = "128,128,128";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Line.LineColor";
+															- _Value = "191,191,191";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Line.LineWidth";
+															- _Value = "0";
+															- _Type = Int;
+														}
+													}
+												}
+											}
+										}
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "GradientNameCompartment";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 9;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "IState";
+									- _id = GUID f9929ccb-6128-4c50-87bc-61888d10ad97;
+								}
+								- m_pParent = GUID e4eb80a8-0989-4705-9bfc-36345841cbf8;
+								- m_name = { CGIText 
+									- m_str = "state_9";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 977 956  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 1;
+								}
+								- m_drawBehavior = 0;
+								- m_bIsPreferencesInitialized = 0;
+								- m_polygon = 4 1096 852  858 852  858 1060  1096 1060  ;
+								- m_nNameFormat = 0;
+								- m_nIsNameFormat = 0;
+								- Compartments = { IRPYRawContainer 
+									- size = 0;
+								}
+								- nAndLineCount = 0;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "SGEElement";
+									- _id = GUID bf941f10-ab7a-435e-9c90-5096542cbd0f;
+								}
+								- m_nInheritanceMask = 0;
+								- m_pDefaultComponentRelation = ;
+								- m_pVirtualParent = ;
+							}
+							{ CGIState 
+								- _id = GUID c13a4de3-44c9-498e-ac95-9decb9ae11fe;
+								- _myState = 2048;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 2;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "Format";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "State";
+													- Properties = { IRPYRawContainer 
+														- size = 5;
+														- value = 
+														{ IProperty 
+															- _Name = "Font.Font";
+															- _Value = "Tahoma";
+															- _Type = String;
+														}
+														{ IProperty 
+															- _Name = "Font.FontColor";
+															- _Value = "128,128,128";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Font.Size";
+															- _Value = "8";
+															- _Type = Int;
+														}
+														{ IProperty 
+															- _Name = "Line.LineColor";
+															- _Value = "191,191,191";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Line.LineWidth";
+															- _Value = "1";
+															- _Type = Int;
+														}
+													}
+												}
+											}
+										}
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "GradientNameCompartment";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 8;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "IState";
+									- _id = GUID 76e4a6e5-090c-4261-8491-98b779abf971;
+								}
+								- m_pParent = GUID 311bf4e5-d6ae-4f5f-9528-f74f961e38b6;
+								- m_name = { CGIText 
+									- m_str = "state_10";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 5;
+								}
+								- m_drawBehavior = 0;
+								- m_transform = 0.0776053 0 0 0.076555 939.255 930.669 ;
+								- m_bIsPreferencesInitialized = 0;
+								- m_AdditionalLabel = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 1;
+								}
+								- m_polygon = 4 0 0  0 1060  1096 1060  1096 0  ;
+								- m_nNameFormat = 0;
+								- m_nIsNameFormat = 0;
+								- Compartments = { IRPYRawContainer 
+									- size = 0;
+								}
+								- nAndLineCount = 0;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "SGEElement";
+									- _id = GUID 25b66039-21dc-4f2b-86ba-b0ba878e9fa6;
+								}
+								- m_nInheritanceMask = 0;
+								- m_pDefaultComponentRelation = ;
+							}
+							{ CGITrans 
+								- _id = GUID bc5d2b3e-c25b-43f9-8ec4-c026aa67f511;
+								- _myState = 2048;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 1;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "Format";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "DefaultTransition";
+													- Properties = { IRPYRawContainer 
+														- size = 5;
+														- value = 
+														{ IProperty 
+															- _Name = "Font.Font";
+															- _Value = "Tahoma";
+															- _Type = String;
+														}
+														{ IProperty 
+															- _Name = "Font.FontColor";
+															- _Value = "128,128,128";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Font.Size";
+															- _Value = "8";
+															- _Type = Int;
+														}
+														{ IProperty 
+															- _Name = "Line.LineColor";
+															- _Value = "191,191,191";
+															- _Type = Color;
+														}
+														{ IProperty 
+															- _Name = "Line.LineWidth";
+															- _Value = "1";
+															- _Type = Int;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 29;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "ITransition";
+									- _id = GUID 9f681238-ee49-49ec-a13f-4f2087041e20;
+								}
+								- m_pParent = ;
+								- m_name = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 8;
+								}
+								- m_drawBehavior = 0;
+								- m_bIsPreferencesInitialized = 0;
+								- m_pSource = GUID 311bf4e5-d6ae-4f5f-9528-f74f961e38b6;
+								- m_sourceType = 'F';
+								- m_pTarget = GUID c13a4de3-44c9-498e-ac95-9decb9ae11fe;
+								- m_targetType = 'T';
+								- m_direction = ' ';
+								- m_rpn = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 0;
+								}
+								- m_anglePoint1 = 0 0 ;
+								- m_anglePoint2 = 0 0 ;
+								- m_line_style = 1;
+								- m_SourcePort = 936 882 ;
+								- m_TargetPort = 532 66 ;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "SGEElement";
+									- _id = GUID 48583c82-2c2b-4175-8a62-68b6dd243932;
+								}
+								- m_nInheritanceMask = 0;
+								- m_bShowName = 1;
+							}
 							
 							- m_access = 'Z';
 							- m_modified = 'N';
@@ -9177,11 +11167,11 @@ EJsignalArrivalsList = new ArrayList<String>();";
 				- _name = "Model1";
 				- _id = GUID 0083ca22-d263-4ac5-aada-706c0c65dac5;
 			}
-			- _lastID = 33;
-			- weakCGTime = 12.14.2015::17:45:5;
+			- _lastID = 36;
+			- weakCGTime = 1.12.2016::16:22:59;
 			- strongCGTime = 11.24.2015::14:5:34;
 			- Operations = { IRPYRawContainer 
-				- size = 10;
+				- size = 11;
 				- value = 
 				{ IConstructor 
 					- _id = GUID 550feaf6-4703-4e1f-9a08-0b7ec9ab1e04;
@@ -9218,16 +11208,23 @@ catch (Exception e){
  * creating objects
  */
 
-// the map that conaints (name, number) pairs
-neuron_names = new HashMap();
+// the map that contains (name, number) pairs
+neuron_names = new HashMap();  
+
+// the map that contains (param, value) pairs
+params_map = new HashMap();  
 
 interNeuronsList = new ArrayList<String>();
 motorNeuronsList = new ArrayList<String>();
 sensoryNeuronsList = new ArrayList<String>();
 
-// now fill in the HashMap - this is needed here because it defines N_of_neurons according to the input csv file
+// now fill in the names HashMap - this is needed here because it defines N_of_neurons according to the input csv file
 cmdFileP.println(\"Creating (number,name) pairs:\");
-createNamesDict();
+createNamesDict();     
+
+// now fill in the params HashMap
+cmdFileP.println(\"Creating (param,value) pairs:\");
+readParamsFile();
 
 // the matrices of the input data - read from the CSV files in readInputFiles()
 distMatrix = new int[N_of_neurons][N_of_neurons];
@@ -9239,8 +11236,17 @@ interNeurons = new Gen_IN[interNeuronsList.size()];
 sensoryNeurons = new Gen_SN[sensoryNeuronsList.size()];
 motorNeurons = new Gen_MN[motorNeuronsList.size()];
 
-// read the csv files
-readInputFiles();
+// This is incredible ugly - it happens because the csv file saves everything, even ints, as 300.0 (for example),
+// so we take only what is before the dot and parse it to an int.
+setSimRuntime(Integer.parseInt(params_map.get(\"simRuntime\").toString().split(\"\\\\.\")[0]));
+
+// Read the propogation time coeffiecient:
+setPropCoeff(Double.parseDouble(params_map.get(\"propCoeff\").toString()));
+
+// read the csv files - chemical & electrical weights + distances
+readInputFiles();        
+
+
 
 /**
  * after we created all the object, we move to insert the data into them
@@ -9249,8 +11255,15 @@ readInputFiles();
 String neuron_name;
 int mn_count = 0;
 int sn_count = 0;
-int in_count = 0;     
+int in_count = 0;
 
+int defaultActivation = Integer.parseInt(params_map.get(\"defaultActivation\").toString().split(\"\\\\.\")[0]);
+int decayTime = Integer.parseInt(params_map.get(\"decayTime\").toString().split(\"\\\\.\")[0]);                
+int ejSynDelay = Integer.parseInt(params_map.get(\"EJSynDelay\").toString().split(\"\\\\.\")[0]); 
+int chSynDelay = Integer.parseInt(params_map.get(\"CHSynDelay\").toString().split(\"\\\\.\")[0]);  
+double ejCoeff = Double.valueOf(params_map.get(\"EJCoeff\").toString());
+double chemCoeff = Double.valueOf(params_map.get(\"CHCoeff\").toString());
+double LeakyCoeff = Double.parseDouble(params_map.get(\"LeakyCoeff\").toString());
 
 for(int i = 0; i<N_of_neurons; i++){
 	neuron_name = neuron_names.get(i+1).toString();
@@ -9264,12 +11277,13 @@ for(int i = 0; i<N_of_neurons; i++){
  		motorNeurons[mn_count].setNeuronNumber(i+1);
  		motorNeurons[mn_count].setNeuronName(neuron_name);
  		motorNeurons[mn_count].setNeuronType(\"MN\");
- 		motorNeurons[mn_count].setActivation(0);
- 		motorNeurons[mn_count].setDecayTime(5);
- 		motorNeurons[mn_count].setEJSynDelay(1);
- 		motorNeurons[mn_count].setCHSynDelay(2); 
- 		motorNeurons[mn_count].setEJcoeff(0.1);
- 		motorNeurons[mn_count].setCHcoeff(0.4);
+ 		motorNeurons[mn_count].setActivation(defaultActivation);
+ 		motorNeurons[mn_count].setDecayTime(decayTime); 
+ 		motorNeurons[mn_count].setEJSynDelay(ejSynDelay);
+ 		motorNeurons[mn_count].setCHSynDelay(chSynDelay); 
+ 		motorNeurons[mn_count].setEJcoeff(ejCoeff);
+ 		motorNeurons[mn_count].setCHcoeff(chemCoeff); 
+ 		motorNeurons[mn_count].setLeakyCoeff(LeakyCoeff);  
  		for(int j=0; j<N_of_neurons; j++){
  			motorNeurons[mn_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
  			motorNeurons[mn_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -9286,12 +11300,13 @@ for(int i = 0; i<N_of_neurons; i++){
  		sensoryNeurons[sn_count].setNeuronNumber(i+1);
  		sensoryNeurons[sn_count].setNeuronName(neuron_name);
  		sensoryNeurons[sn_count].setNeuronType(\"SN\");
- 		sensoryNeurons[sn_count].setActivation(0);
- 		sensoryNeurons[sn_count].setDecayTime(5);
- 		sensoryNeurons[sn_count].setEJSynDelay(1);
- 		sensoryNeurons[sn_count].setCHSynDelay(2);
- 		sensoryNeurons[sn_count].setEJcoeff(0.1);
- 		sensoryNeurons[sn_count].setCHcoeff(0.4);	
+ 		sensoryNeurons[sn_count].setActivation(defaultActivation);
+ 		sensoryNeurons[sn_count].setDecayTime(decayTime); 
+ 		sensoryNeurons[sn_count].setEJSynDelay(ejSynDelay);
+ 		sensoryNeurons[sn_count].setCHSynDelay(chSynDelay); 
+ 		sensoryNeurons[sn_count].setEJcoeff(ejCoeff);
+ 		sensoryNeurons[sn_count].setCHcoeff(chemCoeff);
+ 		sensoryNeurons[sn_count].setLeakyCoeff(LeakyCoeff);
  		for(int j=0; j<N_of_neurons; j++){
  			sensoryNeurons[sn_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
  			sensoryNeurons[sn_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -9308,12 +11323,12 @@ for(int i = 0; i<N_of_neurons; i++){
  		interNeurons[in_count].setNeuronNumber(i+1);
  		interNeurons[in_count].setNeuronName(neuron_name);
  		interNeurons[in_count].setNeuronType(\"IN\");
- 		interNeurons[in_count].setActivation(0);
- 		interNeurons[in_count].setDecayTime(5);
- 		interNeurons[in_count].setEJSynDelay(1);
- 		interNeurons[in_count].setCHSynDelay(2);
- 		interNeurons[in_count].setEJcoeff(0.1);
- 		interNeurons[in_count].setCHcoeff(0.4);			
+ 		interNeurons[in_count].setActivation(defaultActivation);
+ 		interNeurons[in_count].setDecayTime(decayTime); 
+ 		interNeurons[in_count].setEJSynDelay(ejSynDelay);
+ 		interNeurons[in_count].setCHSynDelay(chSynDelay); 
+ 		interNeurons[in_count].setEJcoeff(ejCoeff);
+ 		interNeurons[in_count].setLeakyCoeff(LeakyCoeff);    
  		for(int j=0; j<N_of_neurons; j++){
  			interNeurons[in_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
  			interNeurons[in_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -9391,9 +11406,6 @@ for (int i = 0; i<interNeurons.length; i++) {
 		}
 	}
 }    
-
-	 
-
 
 
 startBehavior();
@@ -9501,7 +11513,7 @@ try {
 		        // use comma as separator
 		String[] distances = line.split(cvsSplitBy);
 		for(int col=0; col<N_of_neurons; col++) {
-			distMatrix[row][col] = Integer.parseInt(distances[col]);
+			distMatrix[row][col] = (int) Math.round((getPropCoeff()*Double.parseDouble(distances[col])));
 		}
 		row++;
 	}
@@ -9871,9 +11883,71 @@ for (int i = 0; i < sensoryNeurons.length; i++){sensoryNeurons[i].gen(new evTick
 for (int i = 0; i < interNeurons.length; i++){interNeurons[i].gen(new evTick());}";
 					}
 				}
+				{ IPrimitiveOperation 
+					- _id = GUID 6cf8a20d-31a2-4121-8599-1a212559a1c4;
+					- _myState = 8192;
+					- _name = "readParamsFile";
+					- _virtual = 0;
+					- Args = { IRPYRawContainer 
+						- size = 0;
+					}
+					- _returnType = { IHandle 
+						- _m2Class = "IType";
+						- _filename = "PredefinedTypesJava.sbs";
+						- _subsystem = "PredefinedTypesJava";
+						- _class = "";
+						- _name = "void";
+						- _id = GUID 38d26ae8-de64-4b2e-8b3e-d6cbe8e0a76d;
+					}
+					- _abstract = 0;
+					- _final = 0;
+					- _concurrency = Sequential;
+					- _protection = iPublic;
+					- _static = 0;
+					- _constant = 0;
+					- _itsBody = { IBody 
+						- _bodyData = "String csvFile = \"c:\\\\Users\\\\hlapid\\\\Desktop\\\\CSVFiles\\\\params.csv\";
+BufferedReader br = null;
+String line = \"\";
+String cvsSplitBy = \",\";
+
+try {
+
+	br = new BufferedReader(new FileReader(csvFile));
+	while ((line = br.readLine()) != null) {
+		// use comma as separator
+		String[] params = line.split(cvsSplitBy);
+		
+		// each line in the file looks like: \"param_name,param_value\"
+		String param = params[0];
+		String value = params[1];
+		
+        // add the (name, number) to the list
+        params_map.put(param, value);
+        cmdFileP.println(\"Adding the pair: \" + param + \":\" + value);	
+		
+	}
+
+} catch (FileNotFoundException e) {
+	e.printStackTrace();
+} catch (IOException e) {
+	e.printStackTrace();
+} finally {
+	if (br != null) {
+		try {
+			br.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+";
+					}
+				}
 			}
 			- Attrs = { IRPYRawContainer 
-				- size = 18;
+				- size = 20;
 				- value = 
 				{ IAttribute 
 					- _id = GUID 130f6c31-216c-4a8c-9445-f79623a31083;
@@ -9990,14 +12064,6 @@ int double\\par
 \\viewkind4\\uc1\\pard\\ltrpar\\fs20 simRuntime is the final simulation time step, conditioned at manager loop for exiting the simulation\\par
 }
 ";
-					}
-					- ValueSpecifications = { IRPYRawContainer 
-						- size = 1;
-						- value = 
-						{ ILiteralSpecification 
-							- _id = GUID 1a300dc1-7d4b-4cb9-81ec-59e997cde538;
-							- _value = "150";
-						}
 					}
 					- _typeOf = { IHandle 
 						- _m2Class = "IType";
@@ -10254,6 +12320,38 @@ used only for construction of CHSynWeights vectors\\par
 					- _isReference = 0;
 					- _isConstant = 0;
 				}
+				{ IAttribute 
+					- _id = GUID 94e08773-0761-4fd7-b075-7c3a83c9e7c8;
+					- _name = "params_map";
+					- myTypeOf = { IType 
+						- _id = GUID 86ccdafb-14e4-4143-bee7-4467cb21801f;
+						- _myState = 8192;
+						- _declaration = "Map";
+						- _kind = Language;
+					}
+					- _isOrdered = 0;
+					- _protection = iPublic;
+					- _static = 0;
+					- _isReference = 0;
+					- _isConstant = 0;
+				}
+				{ IAttribute 
+					- _id = GUID 4c234a5f-cd3e-4d79-b71d-509380ab1714;
+					- _name = "propCoeff";
+					- _typeOf = { IHandle 
+						- _m2Class = "IType";
+						- _filename = "PredefinedTypesJava.sbs";
+						- _subsystem = "PredefinedTypesJava";
+						- _class = "";
+						- _name = "double";
+						- _id = GUID 19ff3e1d-dec7-4b90-a4ae-951a4e7c5e37;
+					}
+					- _isOrdered = 0;
+					- _protection = iPublic;
+					- _static = 0;
+					- _isReference = 0;
+					- _isConstant = 0;
+				}
 			}
 			- _multiplicity = "";
 			- StateCharts = { IRPYRawContainer 
@@ -10264,7 +12362,7 @@ used only for construction of CHSynWeights vectors\\par
 					- _myState = 10240;
 					- _name = "statechart_1";
 					- _lastID = 7;
-					- weakCGTime = 12.14.2015::17:45:5;
+					- weakCGTime = 1.12.2016::16:22:59;
 					- strongCGTime = 11.24.2015::14:5:34;
 					- _multiplicity = "";
 					- _itsStateChart = { IHandle 
@@ -10284,14 +12382,11 @@ used only for construction of CHSynWeights vectors\\par
 								- _id = GUID 7bd8ad26-335e-46d1-9b75-d5d410e818d7;
 								- _itsTrigger = { ITimeout 
 									- _id = GUID 7798c34f-3ee9-4278-83e3-f86a136c8a76;
-									- _body = "tm(200)";
+									- _body = "tm(1)";
 									- _info = "";
-									- _time = "200";
+									- _time = "1";
 								}
-								- _itsGuard = { IGuard 
-									- _id = GUID c197f2c0-96fa-4546-9f7a-d1564104eb95;
-									- _body = "getClockTime()<getSimRuntime()";
-								}
+								- _itsGuard = NULL;
 								- _itsAction = { IAction 
 									- _id = GUID 6e33e5f8-41b6-43fc-aca3-d5b956199b2c;
 									- _body = "// the guard is to keep the simulation from running forever
@@ -10316,9 +12411,12 @@ tick();";
 								- _itsTrigger = NULL;
 								- _itsGuard = { IGuard 
 									- _id = GUID 88ea548f-3bfe-4817-af63-e905bfdec8c1;
-									- _body = "(getClockTime() == 50) && !hitObs";
+									- _body = "(getClockTime() == 50) && hitObs";
 								}
-								- _itsAction = NULL;
+								- _itsAction = { IAction 
+									- _id = GUID 4559e3fa-ba6e-4fd5-b1f2-c6eadc0fee95;
+									- _body = "// change the guard to !hitObs when we want to try with external event";
+								}
 							}
 							- _itsTarget = GUID 5452d457-9d95-40b5-9a7f-970dc4d2f372;
 							- _staticReaction = 0;
@@ -10355,13 +12453,9 @@ tick();";
 								- _itsGuard = NULL;
 								- _itsAction = { IAction 
 									- _id = GUID ef85538c-c362-4d1c-ad68-ca1add8f9d6c;
-									- _body = "// triggering AVBL and AVBR at the beggining of the simulation
-
-interNeurons[4].setActivation(1);
-interNeurons[5].setActivation(1);
-
-interNeurons[4].gen(new evTrig());
-interNeurons[5].gen(new evTrig());";
+									- _body = "//triggering AVBL and AVBR at the beggining of the simulation
+motorNeurons[35].setActivation(1);
+motorNeurons[35].gen(new evTrig());";
 								}
 							}
 							- _itsTarget = GUID efb74327-ddce-48bb-bfa4-d1acb361ce33;
@@ -10383,19 +12477,43 @@ interNeurons[5].gen(new evTrig());";
 							- _name = "manager";
 							- _parent = GUID 604fc0e4-6697-4b06-b3a6-52ba1da18e57;
 							- _defaultTrans = ;
+							- _entryAction = { IAction 
+								- _id = GUID 15555094-8dd4-46cd-b0ef-0881f212c628;
+								- _myState = 4096;
+								- _body = "  ";
+							}
 							- _exitAction = { IAction 
 								- _id = GUID e7792e1b-23c4-4986-9d6c-7350ae70c1d7;
-								- _body = "outputCurrentStatus();
+								- _body = "if (((getClockTime() / 150) % 2) == 0) {
+	// triggering AVBL and AVBR
+	motorNeurons[35].setActivation(1);
+	motorNeurons[35].gen(new evTrig());
+	motorNeurons[14].setActivation(0);
+	
+}
+else
+{
+	// triggering AVBL and AVBR
+	motorNeurons[14].setActivation(1); 
+	motorNeurons[14].gen(new evTrig());
+	motorNeurons[35].setActivation(0);
+}  
 
+
+// write activations to log file
+outputCurrentStatus();
+
+// end simulation when we pass simRuntime
 if (getSimRuntime() <= getClockTime())
 {
 	outputFileP.println(\"End of simulation\");
 	System.exit(0);
 	
-}
+}  
 
-	//debugging only
-System.out.println(getClockTime());";
+System.out.println(getClockTime());
+
+";
 							}
 						}
 						{ IState 
@@ -10420,7 +12538,7 @@ sensoryNeurons[2].gen(new evExternalTrig());
 							}
 						}
 					}
-					- _version = 12.14.2015::19:45:5;
+					- _version = 1.12.2016::18:22:59;
 					- _baseVersion = 1.2.1990::0:0:0;
 					- _diagram = { IStateChartDiagram 
 						- _id = GUID 85b60493-fe00-4d1b-96e6-5ebf3200a583;
@@ -10525,7 +12643,7 @@ sensoryNeurons[2].gen(new evExternalTrig());
 							}
 						}
 						- _name = "statechartdiagram_0";
-						- _lastModifiedTime = "12.14.2015::17:45:5";
+						- _lastModifiedTime = "1.12.2016::16:22:59";
 						- _graphicChart = { CGIStateChart 
 							- _id = GUID f46bba95-a8b7-455e-9230-71c0ff810535;
 							- m_type = 0;
@@ -10886,7 +13004,7 @@ sensoryNeurons[2].gen(new evExternalTrig());
 								- m_targetType = 'T';
 								- m_direction = ' ';
 								- m_rpn = { CGIText 
-									- m_str = "[(getClockTime() == 50) && !hitObs]";
+									- m_str = "[(getClockTime() == 50) && hitObs]/// change the guard to !hitObs when we want to try with external event";
 									- m_style = "Arial" 10 0 0 0 1 ;
 									- m_color = { IColor 
 										- m_fgColor = 0;
@@ -11043,13 +13161,9 @@ sensoryNeurons[2].gen(new evExternalTrig());
 								- m_targetType = 'T';
 								- m_direction = ' ';
 								- m_rpn = { CGIText 
-									- m_str = "/// triggering AVBL and AVBR at the beggining of the simulation
-
-interNeurons[4].setActivation(1);
-interNeurons[5].setActivation(1);
-
-interNeurons[4].gen(new evTrig());
-interNeurons[5].gen(new evTrig());";
+									- m_str = "///triggering AVBL and AVBR at the beggining of the simulation
+motorNeurons[35].setActivation(1);
+motorNeurons[35].gen(new evTrig());";
 									- m_style = "Arial" 10 0 0 0 1 ;
 									- m_color = { IColor 
 										- m_fgColor = 0;
@@ -11064,8 +13178,8 @@ interNeurons[5].gen(new evTrig());";
 								- m_anglePoint1 = 0 0 ;
 								- m_anglePoint2 = 0 0 ;
 								- m_line_style = 1;
-								- m_SourcePort = 560 220 ;
-								- m_TargetPort = 8 485 ;
+								- m_SourcePort = 557 220 ;
+								- m_TargetPort = 0 485 ;
 								- m_pInheritsFrom = { IHandle 
 									- _m2Class = "";
 								}
@@ -11236,8 +13350,8 @@ interNeurons[5].gen(new evTrig());";
 				- _name = "Model1";
 				- _id = GUID 0083ca22-d263-4ac5-aada-706c0c65dac5;
 			}
-			- _lastID = 27;
-			- weakCGTime = 12.14.2015::16:52:56;
+			- _lastID = 28;
+			- weakCGTime = 1.12.2016::12:23:45;
 			- strongCGTime = 11.24.2015::15:1:23;
 			- Operations = { IRPYRawContainer 
 				- size = 5;
@@ -11516,23 +13630,6 @@ interNeurons[5].gen(new evTrig());";
 					- _isConstant = 0;
 				}
 				{ IAttribute 
-					- _id = GUID 77441c43-3d59-41f1-abbb-df09ec4c94f8;
-					- _name = "attribute_23";
-					- _typeOf = { IHandle 
-						- _m2Class = "IType";
-						- _filename = "PredefinedTypesJava.sbs";
-						- _subsystem = "PredefinedTypesJava";
-						- _class = "";
-						- _name = "int";
-						- _id = GUID 3b5a0555-e8e5-4b86-9ea1-95ae819b6564;
-					}
-					- _isOrdered = 0;
-					- _protection = iPublic;
-					- _static = 0;
-					- _isReference = 0;
-					- _isConstant = 0;
-				}
-				{ IAttribute 
 					- _id = GUID 8ed1fdcd-a901-42bc-abe6-7c68a2a8e035;
 					- _name = "neuronNumber";
 					- _typeOf = { IHandle 
@@ -11583,6 +13680,23 @@ interNeurons[5].gen(new evTrig());";
 					- _isReference = 0;
 					- _isConstant = 0;
 				}
+				{ IAttribute 
+					- _id = GUID db45fea9-9377-4821-b4ee-99086c4e607d;
+					- _name = "LeakyCoeff";
+					- _typeOf = { IHandle 
+						- _m2Class = "IType";
+						- _filename = "PredefinedTypesJava.sbs";
+						- _subsystem = "PredefinedTypesJava";
+						- _class = "";
+						- _name = "double";
+						- _id = GUID 19ff3e1d-dec7-4b90-a4ae-951a4e7c5e37;
+					}
+					- _isOrdered = 0;
+					- _protection = iPublic;
+					- _static = 0;
+					- _isReference = 0;
+					- _isConstant = 0;
+				}
 			}
 			- _multiplicity = "";
 			- StateCharts = { IRPYRawContainer 
@@ -11592,17 +13706,17 @@ interNeurons[5].gen(new evTrig());";
 					- _id = GUID 37b4d1e6-22e2-4618-9a05-dcda1d94afcf;
 					- _myState = 10240;
 					- _name = "statechart_0";
-					- _lastID = 8;
-					- weakCGTime = 12.8.2015::15:51:14;
+					- _lastID = 10;
+					- weakCGTime = 1.12.2016::12:23:45;
 					- strongCGTime = 11.24.2015::15:1:23;
 					- _multiplicity = "";
 					- _itsStateChart = { IHandle 
 						- _m2Class = "";
 					}
 					- _classModifier = Unspecified;
-					- _defNumber = 9;
+					- _defNumber = 11;
 					- Transitions = { IRPYRawContainer 
-						- size = 6;
+						- size = 8;
 						- value = 
 						{ IDefaultDrvdTrans 
 							- _id = GUID c9ea5678-62e7-45a0-9c6c-6a57bfbedc31;
@@ -11732,9 +13846,47 @@ EJsignalArrivalsList = new ArrayList<String>();";
 							- _staticReaction = 1;
 							- _itsSource = GUID b9eacb75-c1fa-4f7b-9fed-3d2603bebfe8;
 						}
+						{ IDefaultDrvdTrans 
+							- _id = GUID f0198984-ba28-43ab-89fa-2a0f0bb06847;
+							- _myState = 2048;
+							- _name = "defaulttransition_9";
+							- _itsLabel = { ILabel 
+								- _id = GUID ff9d7101-0f82-4cb6-8ef6-4bddb919e613;
+								- _itsTrigger = NULL;
+								- _itsGuard = NULL;
+								- _itsAction = NULL;
+							}
+							- _itsTarget = GUID f067649f-d6da-4890-984b-3152642f3af1;
+							- _staticReaction = 0;
+							- _itsSource = ;
+							- _ofState = GUID 6ce82e13-8cc7-47f4-b8da-5365d4d184cc;
+						}
+						{ ITransition 
+							- _id = GUID 3628001a-a1b8-448a-8df7-8217e62d2a35;
+							- _itsLabel = { ILabel 
+								- _id = GUID d910bbae-99c8-46be-838c-24c0729294a1;
+								- _itsTrigger = { IInterfaceItemTrigger 
+									- _id = GUID 27238e5b-4902-40ef-bf6e-2bdfab73de2a;
+									- _body = "evTick";
+									- _info = "";
+									- _itsInterfaceItem = { IHandle 
+										- _m2Class = "IEvent";
+										- _id = GUID 5b316adc-54f2-45b9-b9d3-5a7cedae0ff0;
+									}
+								}
+								- _itsGuard = NULL;
+								- _itsAction = { IAction 
+									- _id = GUID 44d6ae18-9e65-4681-a22d-260cdfa0ff5f;
+									- _body = "setActivation(getActivation() * getLeakyCoeff())";
+								}
+							}
+							- _itsTarget = GUID f067649f-d6da-4890-984b-3152642f3af1;
+							- _staticReaction = 1;
+							- _itsSource = GUID f067649f-d6da-4890-984b-3152642f3af1;
+						}
 					}
 					- States = { IRPYRawContainer 
-						- size = 7;
+						- size = 9;
 						- value = 
 						{ IState 
 							- _id = GUID faacb09c-1ed8-4e09-870d-e5d74331c0e5;
@@ -11780,8 +13932,22 @@ EJsignalArrivalsList = new ArrayList<String>();";
 							- _parent = GUID 916816a6-ecbc-4dbc-91e5-e8bae9d609c5;
 							- _defaultTrans = ;
 						}
+						{ IState 
+							- _id = GUID 6ce82e13-8cc7-47f4-b8da-5365d4d184cc;
+							- _myState = 2048;
+							- _name = "state_9";
+							- _parent = GUID c5a1ed51-db5f-41b9-82f2-7b1d6fb1fbf1;
+							- _defaultTrans = GUID f0198984-ba28-43ab-89fa-2a0f0bb06847;
+						}
+						{ IState 
+							- _id = GUID f067649f-d6da-4890-984b-3152642f3af1;
+							- _myState = 2048;
+							- _name = "state_10";
+							- _parent = GUID 6ce82e13-8cc7-47f4-b8da-5365d4d184cc;
+							- _defaultTrans = ;
+						}
 					}
-					- _version = 12.8.2015::17:51:14;
+					- _version = 1.12.2016::14:18:26;
 					- _baseVersion = 1.2.1990::0:0:0;
 					- _diagram = { IStateChartDiagram 
 						- _id = GUID d40ac4d7-3c16-479c-ab45-a2ae045d5500;
@@ -11854,7 +14020,7 @@ EJsignalArrivalsList = new ArrayList<String>();";
 							}
 						}
 						- _name = "statechartdiagram_0";
-						- _lastModifiedTime = "12.8.2015::15:51:14";
+						- _lastModifiedTime = "1.12.2016::12:23:45";
 						- _graphicChart = { CGIStateChart 
 							- _id = GUID 115cd53d-e837-4d4b-9a3b-733d2d33336d;
 							- m_type = 0;
@@ -11878,7 +14044,7 @@ EJsignalArrivalsList = new ArrayList<String>();";
 							}
 							- m_drawBehavior = 4096;
 							- m_bIsPreferencesInitialized = 1;
-							- elementList = 11;
+							- elementList = 14;
 							{ CGIState 
 								- _id = GUID 3c6f0a39-caef-462f-8e3e-48b13a377b30;
 								- m_type = 5;
@@ -11996,8 +14162,10 @@ EJsignalArrivalsList = new ArrayList<String>();";
 								- Compartments = { IRPYRawContainer 
 									- size = 0;
 								}
-								- nAndLineCount = 1;
-								- andLinePoly = 2 858 0  858 1060  ;
+								- nAndLineCount = 3;
+								- andLinePoly = 2 858 852  858 1060  ;
+								- andLinePoly = 2 1096 852  858 852  ;
+								- andLinePoly = 2 858 0  858 852  ;
 								- m_pInheritsFrom = { IHandle 
 									- _m2Class = "";
 								}
@@ -12064,7 +14232,7 @@ EJsignalArrivalsList = new ArrayList<String>();";
 								}
 								- m_drawBehavior = 4096;
 								- m_bIsPreferencesInitialized = 1;
-								- m_polygon = 4 858 0  858 1060  1096 1060  1096 0  ;
+								- m_polygon = 4 1096 852  858 852  858 0  1096 0  ;
 								- m_nNameFormat = 0;
 								- m_nIsNameFormat = 0;
 								- Compartments = { IRPYRawContainer 
@@ -12538,6 +14706,198 @@ EJsignalArrivalsList = new ArrayList<String>();";
 								- m_line_style = 1;
 								- m_SourcePort = 228 0 ;
 								- m_TargetPort = 155 874 ;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "";
+								}
+								- m_nInheritanceMask = 0;
+								- m_bShowName = 1;
+							}
+							{ CGIState 
+								- _id = GUID bf941f10-ab7a-435e-9c90-5096542cbd0f;
+								- m_type = 9;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "IState";
+									- _id = GUID 6ce82e13-8cc7-47f4-b8da-5365d4d184cc;
+								}
+								- m_pParent = GUID dd176f01-b9eb-4c05-807c-349226fe20a2;
+								- m_name = { CGIText 
+									- m_str = "state_9";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 1;
+								}
+								- m_drawBehavior = 4096;
+								- m_bIsPreferencesInitialized = 1;
+								- m_polygon = 4 1096 852  858 852  858 1060  1096 1060  ;
+								- m_nNameFormat = 0;
+								- m_nIsNameFormat = 0;
+								- Compartments = { IRPYRawContainer 
+									- size = 0;
+								}
+								- nAndLineCount = 0;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "";
+								}
+								- m_nInheritanceMask = 0;
+								- m_pDefaultComponentRelation = ;
+								- m_pVirtualParent = GUID a112e004-30c7-4739-b636-1db9fa3d5970;
+							}
+							{ CGIState 
+								- _id = GUID 25b66039-21dc-4f2b-86ba-b0ba878e9fa6;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 1;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "StatechartDiagram";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "State";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "ShowReactions";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 8;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "IState";
+									- _id = GUID f067649f-d6da-4890-984b-3152642f3af1;
+								}
+								- m_pParent = GUID bf941f10-ab7a-435e-9c90-5096542cbd0f;
+								- m_name = { CGIText 
+									- m_str = "state_10";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 5;
+								}
+								- m_drawBehavior = 4104;
+								- m_transform = 0.0776053 0 0 0.076555 939.255 930.669 ;
+								- m_bIsPreferencesInitialized = 1;
+								- m_AdditionalLabel = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 1;
+								}
+								- m_polygon = 4 0 0  0 1060  1096 1060  1096 0  ;
+								- m_nNameFormat = 0;
+								- m_nIsNameFormat = 0;
+								- frameset = "<frameset rows=50%,50%>
+<frame name=ReactionsCompartment>
+<frame name=StructureCompartment>";
+								- Compartments = { IRPYRawContainer 
+									- size = 0;
+								}
+								- nAndLineCount = 0;
+								- m_pInheritsFrom = { IHandle 
+									- _m2Class = "";
+								}
+								- m_nInheritanceMask = 0;
+								- m_pDefaultComponentRelation = ;
+							}
+							{ CGITrans 
+								- _id = GUID 48583c82-2c2b-4175-8a62-68b6dd243932;
+								- _properties = { IPropertyContainer 
+									- Subjects = { IRPYRawContainer 
+										- size = 1;
+										- value = 
+										{ IPropertySubject 
+											- _Name = "General";
+											- Metaclasses = { IRPYRawContainer 
+												- size = 1;
+												- value = 
+												{ IPropertyMetaclass 
+													- _Name = "Graphics";
+													- Properties = { IRPYRawContainer 
+														- size = 1;
+														- value = 
+														{ IProperty 
+															- _Name = "ShowLabels";
+															- _Value = "False";
+															- _Type = Bool;
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+								- m_type = 29;
+								- m_pModelObject = { IHandle 
+									- _m2Class = "ITransition";
+									- _id = GUID f0198984-ba28-43ab-89fa-2a0f0bb06847;
+								}
+								- m_pParent = ;
+								- m_name = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 8;
+								}
+								- m_drawBehavior = 0;
+								- m_bIsPreferencesInitialized = 1;
+								- m_pSource = GUID bf941f10-ab7a-435e-9c90-5096542cbd0f;
+								- m_sourceType = 'F';
+								- m_pTarget = GUID 25b66039-21dc-4f2b-86ba-b0ba878e9fa6;
+								- m_targetType = 'T';
+								- m_direction = ' ';
+								- m_rpn = { CGIText 
+									- m_str = "";
+									- m_style = "Arial" 10 0 0 0 1 ;
+									- m_color = { IColor 
+										- m_fgColor = 0;
+										- m_bgColor = 0;
+										- m_bgFlag = 0;
+									}
+									- m_position = 1 0 0  ;
+									- m_nIdent = 0;
+									- m_bImplicitSetRectPoints = 0;
+									- m_nOrientationCtrlPt = 0;
+								}
+								- m_anglePoint1 = 0 0 ;
+								- m_anglePoint2 = 0 0 ;
+								- m_line_style = 1;
+								- m_SourcePort = 936 882 ;
+								- m_TargetPort = 532 66 ;
 								- m_pInheritsFrom = { IHandle 
 									- _m2Class = "";
 								}

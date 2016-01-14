@@ -4,7 +4,7 @@
 	Component	: DefaultComponent
 	Configuration 	: DefaultConfig
 	Model Element	: Gen_Neuron
-//!	Generated Date	: Mon, 14, Dec 2015 
+//!	Generated Date	: Tue, 12, Jan 2016 
 	File Path	: DefaultComponent/DefaultConfig/Default/Gen_Neuron.java
 *********************************************************************/
 
@@ -15,11 +15,7 @@ import java.util.*;
 //## auto_generated
 import com.ibm.rational.rhapsody.oxf.*;
 //## auto_generated
-import com.ibm.rational.rhapsody.animation.*;
-//## auto_generated
 import com.ibm.rational.rhapsody.oxf.states.*;
-//## auto_generated
-import com.ibm.rational.rhapsody.animcom.animMessages.*;
 
 //----------------------------------------------------------------------------
 // Default/Gen_Neuron.java                                                                  
@@ -29,14 +25,7 @@ import com.ibm.rational.rhapsody.animcom.animMessages.*;
 
 
 //## class Gen_Neuron 
-public class Gen_Neuron implements RiJStateConcept, Animated {
-    
-    //#[ ignore
-    // Instrumentation attributes (Animation)
-    private Animate animate;
-    
-    public static AnimClass animClassGen_Neuron = new AnimClass("Default.Gen_Neuron",false);
-    //#]
+public class Gen_Neuron implements RiJStateConcept {
     
     public Reactive reactive;		//## ignore 
     
@@ -56,9 +45,9 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
     
     protected double[] EJsynWeights;		//## attribute EJsynWeights 
     
-    protected double activation;		//## attribute activation 
+    protected double LeakyCoeff;		//## attribute LeakyCoeff 
     
-    protected int attribute_23;		//## attribute attribute_23 
+    protected double activation;		//## attribute activation 
     
     protected int decayTime;		//## attribute decayTime 
     
@@ -79,15 +68,21 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
     //#[ ignore 
     public static final int RiJNonState=0;
     public static final int GenNeuronSC=1;
-    public static final int state_2=2;
-    public static final int transmitTrig=3;
-    public static final int noTransmission=4;
-    public static final int state_1=5;
-    public static final int state_0=6;
+    public static final int state_9=2;
+    public static final int state_10=3;
+    public static final int state_2=4;
+    public static final int transmitTrig=5;
+    public static final int noTransmission=6;
+    public static final int state_1=7;
+    public static final int state_0=8;
     //#]
     protected int rootState_subState;		//## ignore 
     
     protected int rootState_active;		//## ignore 
+    
+    protected int state_9_subState;		//## ignore 
+    
+    protected int state_9_active;		//## ignore 
     
     protected int state_2_subState;		//## ignore 
     
@@ -147,17 +142,7 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public  Gen_Neuron(RiJThread p_thread) {
-        try {
-            animInstance().notifyConstructorEntered(animClassGen_Neuron.getUserClass(),
-               new ArgData[] {
-               });
-        
         reactive = new Reactive(p_thread);
-        }
-        finally {
-            animInstance().notifyMethodExit();
-        }
-        
     }
     
     //## auto_generated 
@@ -241,6 +226,16 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
     }
     
     //## auto_generated 
+    public double getLeakyCoeff() {
+        return LeakyCoeff;
+    }
+    
+    //## auto_generated 
+    public void setLeakyCoeff(double p_LeakyCoeff) {
+        LeakyCoeff = p_LeakyCoeff;
+    }
+    
+    //## auto_generated 
     public double getActivation() {
         return activation;
     }
@@ -248,16 +243,6 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
     //## auto_generated 
     public void setActivation(double p_activation) {
         activation = p_activation;
-    }
-    
-    //## auto_generated 
-    public int getAttribute_23() {
-        return attribute_23;
-    }
-    
-    //## auto_generated 
-    public void setAttribute_23(int p_attribute_23) {
-        attribute_23 = p_attribute_23;
     }
     
     //## auto_generated 
@@ -338,14 +323,6 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
     //## auto_generated 
     public void __setItsManager(Manager p_Manager) {
         itsManager = p_Manager;
-        if(p_Manager != null)
-            {
-                animInstance().notifyRelationAdded("itsManager", p_Manager);
-            }
-        else
-            {
-                animInstance().notifyRelationCleared("itsManager");
-            }
     }
     
     //## auto_generated 
@@ -368,7 +345,6 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
     
     //## auto_generated 
     public void _clearItsManager() {
-        animInstance().notifyRelationCleared("itsManager");
         itsManager = null;
     }
     
@@ -380,7 +356,7 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
     }
     
     //## ignore 
-    public class Reactive extends RiJStateReactive implements AnimatedReactive {
+    public class Reactive extends RiJStateReactive {
         
         // Default constructor 
         public Reactive() {
@@ -413,6 +389,14 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
                 {
                     return true;
                 }
+            if(state_9 == state)
+                {
+                    return isIn(GenNeuronSC);
+                }
+            if(state_9_subState == state)
+                {
+                    return true;
+                }
             if(rootState_subState == state)
                 {
                     return true;
@@ -423,15 +407,6 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         //## statechart_method 
         public boolean isCompleted(int state) {
             return true;
-        }
-        
-        //## statechart_method 
-        public void rootState_add(AnimStates animStates) {
-            animStates.add("ROOT");
-            if(rootState_subState == GenNeuronSC)
-                {
-                    GenNeuronSC_add(animStates);
-                }
         }
         
         //## statechart_method 
@@ -453,13 +428,6 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
-        public void GenNeuronSC_add(AnimStates animStates) {
-            animStates.add("ROOT.GenNeuronSC");
-            state_1_add(animStates);
-            state_2_add(animStates);
-        }
-        
-        //## statechart_method 
         public int GenNeuronSC_dispatchEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             if(state_1_dispatchEvent(id) >= 0)
@@ -478,6 +446,14 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
                             return res;
                         }
                 }
+            if(state_9_dispatchEvent(id) >= 0)
+                {
+                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+                    if(!isIn(GenNeuronSC))
+                        {
+                            return res;
+                        }
+                }
             if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
                 {
                     res = GenNeuronSC_takeEvent(id);
@@ -486,22 +462,13 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
-        public void state_2_add(AnimStates animStates) {
-            animStates.add("ROOT.GenNeuronSC.state_2");
-            switch (state_2_subState) {
-                case noTransmission:
+        public int state_9_dispatchEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(state_9_active == state_10)
                 {
-                    noTransmission_add(animStates);
+                    res = state_10_takeEvent(id);
                 }
-                break;
-                case transmitTrig:
-                {
-                    transmitTrig_add(animStates);
-                }
-                break;
-                default:
-                    break;
-            }
+            return res;
         }
         
         //## statechart_method 
@@ -525,39 +492,17 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
-        public void transmitTrig_add(AnimStates animStates) {
-            animStates.add("ROOT.GenNeuronSC.state_2.transmitTrig");
-        }
-        
-        //## statechart_method 
-        public void noTransmission_add(AnimStates animStates) {
-            animStates.add("ROOT.GenNeuronSC.state_2.noTransmission");
-        }
-        
-        //## statechart_method 
-        public void state_1_add(AnimStates animStates) {
-            animStates.add("ROOT.GenNeuronSC.state_1");
-            if(state_1_subState == state_0)
-                {
-                    state_0_add(animStates);
-                }
-        }
-        
-        //## statechart_method 
         public int state_1_dispatchEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             return res;
-        }
-        
-        //## statechart_method 
-        public void state_0_add(AnimStates animStates) {
-            animStates.add("ROOT.GenNeuronSC.state_1.state_0");
         }
         
         //## auto_generated 
         protected void initStatechart() {
             rootState_subState = RiJNonState;
             rootState_active = RiJNonState;
+            state_9_subState = RiJNonState;
+            state_9_active = RiJNonState;
             state_2_subState = RiJNonState;
             state_2_active = RiJNonState;
             state_1_subState = RiJNonState;
@@ -588,7 +533,34 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
+        public int state_10TakeevTick() {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            //#[ transition 7 
+            setActivation(getActivation() * getLeakyCoeff());
+            //#]
+            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+            return res;
+        }
+        
+        //## statechart_method 
+        public void state_10_entDef() {
+            state_10_enter();
+        }
+        
+        //## statechart_method 
         public void state_1Enter() {
+        }
+        
+        //## statechart_method 
+        public void state_10_enter() {
+            state_9_subState = state_10;
+            state_9_active = state_10;
+            state_10Enter();
+        }
+        
+        //## statechart_method 
+        public void state_9_enter() {
+            state_9Enter();
         }
         
         //## statechart_method 
@@ -600,6 +572,12 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void state_0Enter() {
+        }
+        
+        //## statechart_method 
+        public void state_9_entDef() {
+            state_9_enter();
+            state_9EntDef();
         }
         
         //## statechart_method 
@@ -625,7 +603,12 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
             }
             state_2_subState = RiJNonState;
             state_2Exit();
-            animInstance().notifyStateExited("ROOT.GenNeuronSC.state_2");
+        }
+        
+        //## statechart_method 
+        public int state_9_takeEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            return res;
         }
         
         //## statechart_method 
@@ -636,7 +619,6 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
                 }
             state_1_subState = RiJNonState;
             state_1Exit();
-            animInstance().notifyStateExited("ROOT.GenNeuronSC.state_1");
         }
         
         //## statechart_method 
@@ -651,8 +633,6 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
             //## transition 4 
             if(!(CHsignalArrivalsList.isEmpty() && EJsignalArrivalsList.isEmpty()))
                 {
-                    animInstance().notifyTransitionStarted("4");
-                    animInstance().notifyTransitionEnded("4");
                     res = RiJStateReactive.TAKE_EVENT_COMPLETE;
                 }
             else
@@ -660,11 +640,9 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
                     //## transition 5 
                     if(CHsignalArrivalsList.isEmpty() && EJsignalArrivalsList.isEmpty())
                         {
-                            animInstance().notifyTransitionStarted("5");
                             //#[ transition 5 
                             gen(new evNoMoreTrigs());
                             //#]
-                            animInstance().notifyTransitionEnded("5");
                             res = RiJStateReactive.TAKE_EVENT_COMPLETE;
                         }
                 }
@@ -672,14 +650,22 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
+        public void state_9EntDef() {
+            state_10_entDef();
+        }
+        
+        //## statechart_method 
         public void state_0_exit() {
             state_0Exit();
-            animInstance().notifyStateExited("ROOT.GenNeuronSC.state_1.state_0");
         }
         
         //## statechart_method 
         public void transmitTrig_entDef() {
             transmitTrig_enter();
+        }
+        
+        //## statechart_method 
+        public void state_10Exit() {
         }
         
         //## statechart_method 
@@ -698,7 +684,6 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void noTransmission_enter() {
-            animInstance().notifyStateEntered("ROOT.GenNeuronSC.state_2.noTransmission");
             state_2_subState = noTransmission;
             state_2_active = noTransmission;
             noTransmissionEnter();
@@ -716,7 +701,6 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void rootState_enter() {
-            animInstance().notifyStateEntered("ROOT");
             rootStateEnter();
         }
         
@@ -729,10 +713,15 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
+        public void state_9Enter() {
+        }
+        
+        //## statechart_method 
         public void GenNeuronSC_entDef() {
             GenNeuronSC_enter();
             state_1_entDef();
             state_2_entDef();
+            state_9_entDef();
         }
         
         //## statechart_method 
@@ -746,12 +735,15 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         }
         
         //## statechart_method 
+        public void state_10Enter() {
+        }
+        
+        //## statechart_method 
         public void GenNeuronSCExit() {
         }
         
         //## statechart_method 
         public void state_0_enter() {
-            animInstance().notifyStateEntered("ROOT.GenNeuronSC.state_1.state_0");
             state_1_subState = state_0;
             state_1_active = state_0;
             state_0Enter();
@@ -760,12 +752,10 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         //## statechart_method 
         public void transmitTrig_exit() {
             transmitTrigExit();
-            animInstance().notifyStateExited("ROOT.GenNeuronSC.state_2.transmitTrig");
         }
         
         //## statechart_method 
         public void transmitTrig_enter() {
-            animInstance().notifyStateEntered("ROOT.GenNeuronSC.state_2.transmitTrig");
             state_2_subState = transmitTrig;
             state_2_active = transmitTrig;
             transmitTrigEnter();
@@ -788,19 +778,26 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void state_1_enter() {
-            animInstance().notifyStateEntered("ROOT.GenNeuronSC.state_1");
             state_1Enter();
         }
         
         //## statechart_method 
         public int transmitTrigTakeevNoMoreTrigs() {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            animInstance().notifyTransitionStarted("3");
             transmitTrig_exit();
             noTransmission_entDef();
-            animInstance().notifyTransitionEnded("3");
             res = RiJStateReactive.TAKE_EVENT_COMPLETE;
             return res;
+        }
+        
+        //## statechart_method 
+        public void state_9_exit() {
+            if(state_9_subState == state_10)
+                {
+                    state_10_exit();
+                }
+            state_9_subState = RiJNonState;
+            state_9Exit();
         }
         
         //## statechart_method 
@@ -812,18 +809,35 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         //## statechart_method 
         public void noTransmission_exit() {
             noTransmissionExit();
-            animInstance().notifyStateExited("ROOT.GenNeuronSC.state_2.noTransmission");
         }
         
         //## statechart_method 
         public void state_2_enter() {
-            animInstance().notifyStateEntered("ROOT.GenNeuronSC.state_2");
             state_2Enter();
         }
         
         //## statechart_method 
+        public int state_10_takeEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(event.isTypeOf(evTick.evTick_Default_id))
+                {
+                    res = state_10TakeevTick();
+                }
+            
+            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
+                {
+                    res = state_9_takeEvent(id);
+                }
+            return res;
+        }
+        
+        //## statechart_method 
+        public void state_10_exit() {
+            state_10Exit();
+        }
+        
+        //## statechart_method 
         public void GenNeuronSC_enter() {
-            animInstance().notifyStateEntered("ROOT.GenNeuronSC");
             rootState_subState = GenNeuronSC;
             rootState_active = GenNeuronSC;
             GenNeuronSCEnter();
@@ -841,8 +855,8 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         public void GenNeuronSC_exit() {
             state_1_exit();
             state_2_exit();
+            state_9_exit();
             GenNeuronSCExit();
-            animInstance().notifyStateExited("ROOT.GenNeuronSC");
         }
         
         //## statechart_method 
@@ -856,9 +870,7 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         
         //## statechart_method 
         public void state_1EntDef() {
-            animInstance().notifyTransitionStarted("0");
             state_0_entDef();
-            animInstance().notifyTransitionEnded("0");
         }
         
         //## statechart_method 
@@ -879,124 +891,27 @@ public class Gen_Neuron implements RiJStateConcept, Animated {
         //## statechart_method 
         public int noTransmissionTakeevSendTrig() {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            animInstance().notifyTransitionStarted("1");
             noTransmission_exit();
             transmitTrig_entDef();
-            animInstance().notifyTransitionEnded("1");
             res = RiJStateReactive.TAKE_EVENT_COMPLETE;
             return res;
         }
         
         //## statechart_method 
         public void state_2EntDef() {
-            animInstance().notifyTransitionStarted("2");
             //#[ transition 2 
             //signalArrivalsList = new ArrayList<String>();
             CHsignalArrivalsList = new ArrayList<String>();
             EJsignalArrivalsList = new ArrayList<String>();
             //#]
             noTransmission_entDef();
-            animInstance().notifyTransitionEnded("2");
         }
         
-        /**  methods added just for design level debugging instrumentation */
-        public boolean startBehavior() {
-            try {
-              animInstance().notifyBehavioralMethodEntered("startBehavior",
-                  new ArgData[] {
-                   });
-              return super.startBehavior();
-            }
-            finally {
-              animInstance().notifyMethodExit();
-            }
-        }
-        public int takeEvent(RiJEvent event) { 
-            try { 
-              //animInstance().notifyTakeEvent(new AnimEvent(event));
-              animInstance().notifyBehavioralMethodEntered("takeEvent",
-                  new ArgData[] { new ArgData(RiJEvent.class, "event", event.toString())
-                   });
-              return super.takeEvent(event); 
-            }
-            finally { 
-              animInstance().notifyMethodExit();
-            }
-        }
-        /**  see com.ibm.rational.rhapsody.animation.AnimatedReactive interface */
-        public AnimInstance animInstance() { 
-            return Gen_Neuron.this.animInstance(); 
+        //## statechart_method 
+        public void state_9Exit() {
         }
         
     }
-    //#[ ignore
-    /**  see com.ibm.rational.rhapsody.animation.Animated interface */
-    public AnimClass getAnimClass() { 
-        return animClassGen_Neuron; 
-    }
-    /**  see com.ibm.rational.rhapsody.animation.Animated interface */
-    public Object getFieldValue(java.lang.reflect.Field f, Object userInstance) { 
-         Object obj = null;
-         try {
-             obj = f.get(userInstance);
-         } catch(Exception e) {
-              java.lang.System.err.println("Exception: getting Field value: " + e);
-              e.printStackTrace();
-         }
-         return obj;
-    }
-    /**  see com.ibm.rational.rhapsody.animation.Animated interface */
-    public AnimInstance animInstance() {
-        if (animate == null) 
-            animate = new Animate(); 
-        return animate; 
-    } 
-    /**  see com.ibm.rational.rhapsody.animation.Animated interface */
-    public void addAttributes(AnimAttributes msg) {
-        
-        msg.add("propTimes", propTimes);
-        msg.add("EJsynWeights", EJsynWeights);
-        msg.add("decayTime", decayTime);
-        msg.add("signalArrivalsList", signalArrivalsList);
-        msg.add("transTime", transTime);
-        msg.add("activation", activation);
-        msg.add("neuronName", neuronName);
-        msg.add("neuronType", neuronType);
-        msg.add("CHsynWeights", CHsynWeights);
-        msg.add("EJSynDelay", EJSynDelay);
-        msg.add("CHSynDelay", CHSynDelay);
-        msg.add("CHsignalArrivalsList", CHsignalArrivalsList);
-        msg.add("EJsignalArrivalsList", EJsignalArrivalsList);
-        msg.add("attribute_23", attribute_23);
-        msg.add("neuronNumber", neuronNumber);
-        msg.add("EJcoeff", EJcoeff);
-        msg.add("CHcoeff", CHcoeff);
-    }
-    /**  see com.ibm.rational.rhapsody.animation.Animated interface */
-    public void addRelations(AnimRelations msg) {
-        
-        msg.add("itsManager", false, true, itsManager);
-    }
-    /** An inner class added as instrumentation for animation */
-    public class Animate extends AnimInstance { 
-        public  Animate() { 
-            super(Gen_Neuron.this); 
-        } 
-        public void addAttributes(AnimAttributes msg) {
-            Gen_Neuron.this.addAttributes(msg);
-        }
-        public void addRelations(AnimRelations msg) {
-            Gen_Neuron.this.addRelations(msg);
-        }
-        
-        public void addStates(AnimStates msg) {
-            if ((reactive != null) && (reactive.isTerminated() == false))
-              reactive.rootState_add(msg);
-        }
-        
-    } 
-    //#]
-    
 }
 /*********************************************************************
 	File Path	: DefaultComponent/DefaultConfig/Default/Gen_Neuron.java

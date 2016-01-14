@@ -62,7 +62,7 @@ I-Logix-RPY-Archive version 8.6.0 Java 4012249
 			- _standardHeaders = "";
 			- _includePath = "";
 			- _targetMain = "";
-			- _instrumentation = Animation;
+			- _instrumentation = None;
 			- _timeModel = RealTime;
 			- m_generateActors = 1;
 			- _statechartImplementation = Flat;
@@ -95,8 +95,8 @@ I-Logix-RPY-Archive version 8.6.0 Java 4012249
 					- size = 0;
 				}
 			}
-			- weakCGTime = 11.24.2015::15:30:11;
-			- strongCGTime = 11.24.2015::15:30:11;
+			- weakCGTime = 12.23.2015::14:36:3;
+			- strongCGTime = 12.23.2015::14:36:3;
 			- AnimScopeElements = { IRPYRawContainer 
 				- size = 0;
 			}
@@ -105,7 +105,7 @@ I-Logix-RPY-Archive version 8.6.0 Java 4012249
 		}
 	}
 	- HandlesInMe = { IRPYRawContainer 
-		- size = 4;
+		- size = 6;
 		- value = 
 		{ IHandle 
 			- _m2Class = "ISubsystem";
@@ -132,6 +132,22 @@ I-Logix-RPY-Archive version 8.6.0 Java 4012249
 			- _id = GUID 03f194d4-868a-4527-94f8-20430c61a08c;
 		}
 		{ IHandle 
+			- _m2Class = "ISubsystem";
+			- _filename = "io.sbs";
+			- _subsystem = "java";
+			- _class = "";
+			- _name = "io";
+			- _id = GUID 3b98d95c-209e-4876-b6a7-80a9ff87c0ec;
+		}
+		{ IHandle 
+			- _m2Class = "ISubsystem";
+			- _filename = "text.sbs";
+			- _subsystem = "java";
+			- _class = "";
+			- _name = "text";
+			- _id = GUID 72c4a470-ec88-428d-8fd0-c313d0c9ee9f;
+		}
+		{ IHandle 
 			- _m2Class = "IProfile";
 			- _filename = "$OMROOT\\Profiles\\JavaDoc\\\\JavaDocProfile.sbs";
 			- _subsystem = "";
@@ -146,7 +162,7 @@ I-Logix-RPY-Archive version 8.6.0 Java 4012249
 	- SelectedVariants = { IRPYRawContainer 
 		- size = 0;
 	}
-	- weakCGTime = 11.24.2015::13:59:57;
+	- weakCGTime = 12.23.2015::14:35:44;
 	- strongCGTime = 1.2.1990::0:0:0;
 }
 
