@@ -4,7 +4,7 @@
 	Component	: DefaultComponent
 	Configuration 	: DefaultConfig
 	Model Element	: Manager
-//!	Generated Date	: Tue, 12, Jan 2016 
+//!	Generated Date	: Mon, 18, Jan 2016 
 	File Path	: DefaultComponent/DefaultConfig/Default/Manager.java
 *********************************************************************/
 
@@ -260,7 +260,8 @@ public class Manager implements RiJStateConcept {
         int chSynDelay = Integer.parseInt(params_map.get("CHSynDelay").toString().split("\\.")[0]);  
         double ejCoeff = Double.valueOf(params_map.get("EJCoeff").toString());
         double chemCoeff = Double.valueOf(params_map.get("CHCoeff").toString());
-        double LeakyCoeff = Double.parseDouble(params_map.get("LeakyCoeff").toString());
+        double LeakyCoeff = Double.parseDouble(params_map.get("LeakyCoeff").toString()); 
+        double SignalAttenuation = Double.parseDouble(params_map.get("SignalAttenuation").toString());
         
         for(int i = 0; i<N_of_neurons; i++){
         	neuron_name = neuron_names.get(i+1).toString();
@@ -280,7 +281,8 @@ public class Manager implements RiJStateConcept {
          		motorNeurons[mn_count].setCHSynDelay(chSynDelay); 
          		motorNeurons[mn_count].setEJcoeff(ejCoeff);
          		motorNeurons[mn_count].setCHcoeff(chemCoeff); 
-         		motorNeurons[mn_count].setLeakyCoeff(LeakyCoeff);  
+         		motorNeurons[mn_count].setLeakyCoeff(LeakyCoeff);
+         		motorNeurons[mn_count].setSignalAttenuation(SignalAttenuation);   
          		for(int j=0; j<N_of_neurons; j++){
          			motorNeurons[mn_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
          			motorNeurons[mn_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -304,6 +306,7 @@ public class Manager implements RiJStateConcept {
          		sensoryNeurons[sn_count].setEJcoeff(ejCoeff);
          		sensoryNeurons[sn_count].setCHcoeff(chemCoeff);
          		sensoryNeurons[sn_count].setLeakyCoeff(LeakyCoeff);
+         		sensoryNeurons[sn_count].setSignalAttenuation(SignalAttenuation);  
          		for(int j=0; j<N_of_neurons; j++){
          			sensoryNeurons[sn_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
          			sensoryNeurons[sn_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -325,7 +328,8 @@ public class Manager implements RiJStateConcept {
          		interNeurons[in_count].setEJSynDelay(ejSynDelay);
          		interNeurons[in_count].setCHSynDelay(chSynDelay); 
          		interNeurons[in_count].setEJcoeff(ejCoeff);
-         		interNeurons[in_count].setLeakyCoeff(LeakyCoeff);    
+         		interNeurons[in_count].setLeakyCoeff(LeakyCoeff);
+         		interNeurons[in_count].setSignalAttenuation(SignalAttenuation);      
          		for(int j=0; j<N_of_neurons; j++){
          			interNeurons[in_count].setEJsynWeights(j, EJweightsMatrix[i][j]);
          			interNeurons[in_count].setCHsynWeights(j, CHweightsMatrix[i][j]);
@@ -1236,17 +1240,17 @@ public class Manager implements RiJStateConcept {
             //#[ state ROOT.manager.(Exit) 
             if (((getClockTime() / 150) % 2) == 0) {
             	// triggering AVBL and AVBR
-            	motorNeurons[35].setActivation(1);
-            	motorNeurons[35].gen(new evTrig());
-            	motorNeurons[14].setActivation(0);
+            	//motorNeurons[35].setActivation(1);
+            	//motorNeurons[35].gen(new evTrig());
+            	//motorNeurons[14].setActivation(0);
             	
             }
             else
             {
             	// triggering AVBL and AVBR
-            	motorNeurons[14].setActivation(1); 
-            	motorNeurons[14].gen(new evTrig());
-            	motorNeurons[35].setActivation(0);
+            	//motorNeurons[14].setActivation(1); 
+            	//motorNeurons[14].gen(new evTrig());
+            	//motorNeurons[35].setActivation(0);
             }  
             
             
@@ -1281,9 +1285,9 @@ public class Manager implements RiJStateConcept {
             sensoryNeurons[2].setActivation(1);
             
             
-            sensoryNeurons[0].gen(new evExternalTrig());
-            sensoryNeurons[1].gen(new evExternalTrig());
-            sensoryNeurons[2].gen(new evExternalTrig());
+            sensoryNeurons[0].gen(new evTrig());
+            sensoryNeurons[1].gen(new evTrig());
+            sensoryNeurons[2].gen(new evTrig());
             
             
             //#]
@@ -1313,7 +1317,7 @@ public class Manager implements RiJStateConcept {
         public int managerTakeNull() {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             //## transition 1 
-            if((getClockTime() == 50) && hitObs)
+            if((getClockTime() == 150) && !hitObs)
                 {
                     manager_exit();
                     //#[ transition 1 
@@ -1338,7 +1342,12 @@ public class Manager implements RiJStateConcept {
                     * advance the clock
                     */
                     
-                    tick();
+                    tick();                                         
+                    
+                    // update electrical coupling deltas
+                    for (int i = 0; i<motorNeurons.length; i++) {motorNeurons[i].updateDeltaActivation();}
+                    for (int i = 0; i<sensoryNeurons.length; i++) {sensoryNeurons[i].updateDeltaActivation();}
+                    for (int i = 0; i<interNeurons.length; i++) {interNeurons[i].updateDeltaActivation();}
                     //#]
                     manager_entDef();
                     res = RiJStateReactive.TAKE_EVENT_COMPLETE;
@@ -1397,8 +1406,37 @@ public class Manager implements RiJStateConcept {
         public void rootStateEntDef() {
             //#[ transition 3 
             //triggering AVBL and AVBR at the beggining of the simulation
-            motorNeurons[35].setActivation(1);
-            motorNeurons[35].gen(new evTrig());
+            interNeurons[4].setActivation(1);
+            interNeurons[4].gen(new evTrig());
+            
+            interNeurons[5].setActivation(1);
+            interNeurons[5].gen(new evTrig());
+              
+            /**
+            //triggering AVM and ALM at the beggining of the simulation
+            sensoryNeurons[0].setActivation(1);
+            sensoryNeurons[1].setActivation(1);
+            sensoryNeurons[2].setActivation(1);
+            
+            
+            sensoryNeurons[0].gen(new evTrig());
+            sensoryNeurons[1].gen(new evTrig());
+            sensoryNeurons[2].gen(new evTrig());
+            
+            //triggering AVAL and AVAR at the beggining of the simulation
+            interNeurons[3].setActivation(1);
+            interNeurons[3].gen(new evTrig());
+            
+            interNeurons[2].setActivation(1);
+            interNeurons[2].gen(new evTrig());  */
+            
+            //triggering VB11 at the beggining of the simulation
+            //motorNeurons[38].setActivation(1);
+            //motorNeurons[38].gen(new evTrig());
+            
+            //triggering DB07 at the beggining of the simulation
+            //motorNeurons[15].setActivation(1);
+            //motorNeurons[15].gen(new evTrig());
             //#]
             manager_entDef();
         }

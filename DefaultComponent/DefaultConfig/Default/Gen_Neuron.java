@@ -4,7 +4,7 @@
 	Component	: DefaultComponent
 	Configuration 	: DefaultConfig
 	Model Element	: Gen_Neuron
-//!	Generated Date	: Tue, 12, Jan 2016 
+//!	Generated Date	: Tue, 19, Jan 2016 
 	File Path	: DefaultComponent/DefaultConfig/Default/Gen_Neuron.java
 *********************************************************************/
 
@@ -47,9 +47,13 @@ public class Gen_Neuron implements RiJStateConcept {
     
     protected double LeakyCoeff;		//## attribute LeakyCoeff 
     
+    protected double SignalAttenuation;		//## attribute SignalAttenuation 
+    
     protected double activation;		//## attribute activation 
     
     protected int decayTime;		//## attribute decayTime 
+    
+    protected double deltaActivation;		//## attribute deltaActivation 
     
     protected String neuronName;		//## attribute neuronName 
     
@@ -69,12 +73,15 @@ public class Gen_Neuron implements RiJStateConcept {
     public static final int RiJNonState=0;
     public static final int GenNeuronSC=1;
     public static final int state_9=2;
-    public static final int state_10=3;
+    public static final int cellBodyLeakage=3;
     public static final int state_2=4;
     public static final int transmitTrig=5;
     public static final int noTransmission=6;
-    public static final int state_1=7;
-    public static final int state_0=8;
+    public static final int state_12=7;
+    public static final int EJCoupling=8;
+    public static final int state_1=9;
+    public static final int nonFiringState=10;
+    public static final int firingState=11;
     //#]
     protected int rootState_subState;		//## ignore 
     
@@ -87,6 +94,10 @@ public class Gen_Neuron implements RiJStateConcept {
     protected int state_2_subState;		//## ignore 
     
     protected int state_2_active;		//## ignore 
+    
+    protected int state_12_subState;		//## ignore 
+    
+    protected int state_12_active;		//## ignore 
     
     protected int state_1_subState;		//## ignore 
     
@@ -236,6 +247,16 @@ public class Gen_Neuron implements RiJStateConcept {
     }
     
     //## auto_generated 
+    public double getSignalAttenuation() {
+        return SignalAttenuation;
+    }
+    
+    //## auto_generated 
+    public void setSignalAttenuation(double p_SignalAttenuation) {
+        SignalAttenuation = p_SignalAttenuation;
+    }
+    
+    //## auto_generated 
     public double getActivation() {
         return activation;
     }
@@ -253,6 +274,16 @@ public class Gen_Neuron implements RiJStateConcept {
     //## auto_generated 
     public void setDecayTime(int p_decayTime) {
         decayTime = p_decayTime;
+    }
+    
+    //## auto_generated 
+    public double getDeltaActivation() {
+        return deltaActivation;
+    }
+    
+    //## auto_generated 
+    public void setDeltaActivation(double p_deltaActivation) {
+        deltaActivation = p_deltaActivation;
     }
     
     //## auto_generated 
@@ -381,6 +412,14 @@ public class Gen_Neuron implements RiJStateConcept {
                 {
                     return true;
                 }
+            if(state_12 == state)
+                {
+                    return isIn(GenNeuronSC);
+                }
+            if(state_12_subState == state)
+                {
+                    return true;
+                }
             if(state_2 == state)
                 {
                     return isIn(GenNeuronSC);
@@ -454,6 +493,14 @@ public class Gen_Neuron implements RiJStateConcept {
                             return res;
                         }
                 }
+            if(state_12_dispatchEvent(id) >= 0)
+                {
+                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+                    if(!isIn(GenNeuronSC))
+                        {
+                            return res;
+                        }
+                }
             if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
                 {
                     res = GenNeuronSC_takeEvent(id);
@@ -464,9 +511,9 @@ public class Gen_Neuron implements RiJStateConcept {
         //## statechart_method 
         public int state_9_dispatchEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            if(state_9_active == state_10)
+            if(state_9_active == cellBodyLeakage)
                 {
-                    res = state_10_takeEvent(id);
+                    res = cellBodyLeakage_takeEvent(id);
                 }
             return res;
         }
@@ -492,8 +539,32 @@ public class Gen_Neuron implements RiJStateConcept {
         }
         
         //## statechart_method 
+        public int state_12_dispatchEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(state_12_active == EJCoupling)
+                {
+                    res = EJCoupling_takeEvent(id);
+                }
+            return res;
+        }
+        
+        //## statechart_method 
         public int state_1_dispatchEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            switch (state_1_active) {
+                case nonFiringState:
+                {
+                    res = nonFiringState_takeEvent(id);
+                }
+                break;
+                case firingState:
+                {
+                    res = firingState_takeEvent(id);
+                }
+                break;
+                default:
+                    break;
+            }
             return res;
         }
         
@@ -505,8 +576,39 @@ public class Gen_Neuron implements RiJStateConcept {
             state_9_active = RiJNonState;
             state_2_subState = RiJNonState;
             state_2_active = RiJNonState;
+            state_12_subState = RiJNonState;
+            state_12_active = RiJNonState;
             state_1_subState = RiJNonState;
             state_1_active = RiJNonState;
+        }
+        
+        //## statechart_method 
+        public void firingState_entDef() {
+            firingState_enter();
+        }
+        
+        //## statechart_method 
+        public int nonFiringStateTakeNull() {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            //## transition 8 
+            if((getActivation() >= 0.75))
+                {
+                    nonFiringState_exit();
+                    firingState_entDef();
+                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+                }
+            return res;
+        }
+        
+        //## statechart_method 
+        public void nonFiringState_exit() {
+            popNullConfig();
+            nonFiringStateExit();
+        }
+        
+        //## statechart_method 
+        public void nonFiringState_entDef() {
+            nonFiringState_enter();
         }
         
         //## statechart_method 
@@ -533,18 +635,31 @@ public class Gen_Neuron implements RiJStateConcept {
         }
         
         //## statechart_method 
-        public int state_10TakeevTick() {
+        public int cellBodyLeakage_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            //#[ transition 7 
-            setActivation(getActivation() * getLeakyCoeff());
-            //#]
-            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+            if(event.isTypeOf(evTick.evTick_Default_id))
+                {
+                    res = cellBodyLeakageTakeevTick();
+                }
+            
+            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
+                {
+                    res = state_9_takeEvent(id);
+                }
             return res;
         }
         
         //## statechart_method 
-        public void state_10_entDef() {
-            state_10_enter();
+        public int firingStateTakeevTick() {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            //## transition 9 
+            if(getTransTime() < itsManager.getClockTime())
+                {
+                    firingState_exit();
+                    nonFiringState_entDef();
+                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+                }
+            return res;
         }
         
         //## statechart_method 
@@ -552,10 +667,12 @@ public class Gen_Neuron implements RiJStateConcept {
         }
         
         //## statechart_method 
-        public void state_10_enter() {
-            state_9_subState = state_10;
-            state_9_active = state_10;
-            state_10Enter();
+        public void cellBodyLeakageExit() {
+        }
+        
+        //## statechart_method 
+        public void cellBodyLeakage_entDef() {
+            cellBodyLeakage_enter();
         }
         
         //## statechart_method 
@@ -564,20 +681,44 @@ public class Gen_Neuron implements RiJStateConcept {
         }
         
         //## statechart_method 
-        public int state_0_takeEvent(short id) {
+        public int state_12_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            res = state_1_takeEvent(id);
             return res;
         }
         
         //## statechart_method 
-        public void state_0Enter() {
+        public void state_12_enter() {
+            state_12Enter();
         }
         
         //## statechart_method 
         public void state_9_entDef() {
             state_9_enter();
             state_9EntDef();
+        }
+        
+        //## statechart_method 
+        public void firingState_enter() {
+            state_1_subState = firingState;
+            state_1_active = firingState;
+            firingStateEnter();
+        }
+        
+        //## statechart_method 
+        public int EJCouplingTakeevTick() {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            //#[ transition 11 
+            double targetActivation = getActivation() + getDeltaActivation();
+            if (targetActivation > 1) {targetActivation = 1;}
+            else if (targetActivation < -1) {targetActivation = -1;}
+            setActivation(targetActivation);
+            //#]
+            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+            return res;
+        }
+        
+        //## statechart_method 
+        public void EJCouplingEnter() {
         }
         
         //## statechart_method 
@@ -606,6 +747,16 @@ public class Gen_Neuron implements RiJStateConcept {
         }
         
         //## statechart_method 
+        public int cellBodyLeakageTakeevTick() {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            //#[ transition 7 
+            setActivation(getActivation() * getLeakyCoeff());
+            //#]
+            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+            return res;
+        }
+        
+        //## statechart_method 
         public int state_9_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             return res;
@@ -613,10 +764,20 @@ public class Gen_Neuron implements RiJStateConcept {
         
         //## statechart_method 
         public void state_1_exit() {
-            if(state_1_subState == state_0)
+            switch (state_1_subState) {
+                case nonFiringState:
                 {
-                    state_0_exit();
+                    nonFiringState_exit();
                 }
+                break;
+                case firingState:
+                {
+                    firingState_exit();
+                }
+                break;
+                default:
+                    break;
+            }
             state_1_subState = RiJNonState;
             state_1Exit();
         }
@@ -628,17 +789,22 @@ public class Gen_Neuron implements RiJStateConcept {
         }
         
         //## statechart_method 
+        public void EJCoupling_entDef() {
+            EJCoupling_enter();
+        }
+        
+        //## statechart_method 
         public int transmitTrigTakeevTick() {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             //## transition 4 
-            if(!(CHsignalArrivalsList.isEmpty() && EJsignalArrivalsList.isEmpty()))
+            if(!(CHsignalArrivalsList.isEmpty()))
                 {
                     res = RiJStateReactive.TAKE_EVENT_COMPLETE;
                 }
             else
                 {
                     //## transition 5 
-                    if(CHsignalArrivalsList.isEmpty() && EJsignalArrivalsList.isEmpty())
+                    if(CHsignalArrivalsList.isEmpty())
                         {
                             //#[ transition 5 
                             gen(new evNoMoreTrigs());
@@ -651,21 +817,25 @@ public class Gen_Neuron implements RiJStateConcept {
         
         //## statechart_method 
         public void state_9EntDef() {
-            state_10_entDef();
+            cellBodyLeakage_entDef();
         }
         
         //## statechart_method 
-        public void state_0_exit() {
-            state_0Exit();
+        public void state_12EntDef() {
+            //#[ transition 10 
+            setDeltaActivation(0);
+            //#]
+            EJCoupling_entDef();
+        }
+        
+        //## statechart_method 
+        public void EJCoupling_exit() {
+            EJCouplingExit();
         }
         
         //## statechart_method 
         public void transmitTrig_entDef() {
             transmitTrig_enter();
-        }
-        
-        //## statechart_method 
-        public void state_10Exit() {
         }
         
         //## statechart_method 
@@ -675,11 +845,27 @@ public class Gen_Neuron implements RiJStateConcept {
         }
         
         //## statechart_method 
-        public void state_0Exit() {
+        public void nonFiringState_enter() {
+            pushNullConfig();
+            state_1_subState = nonFiringState;
+            state_1_active = nonFiringState;
+            nonFiringStateEnter();
         }
         
         //## statechart_method 
         public void state_1Exit() {
+        }
+        
+        //## statechart_method 
+        public void EJCouplingExit() {
+        }
+        
+        //## statechart_method 
+        public void state_12Exit() {
+        }
+        
+        //## statechart_method 
+        public void state_12Enter() {
         }
         
         //## statechart_method 
@@ -722,6 +908,11 @@ public class Gen_Neuron implements RiJStateConcept {
             state_1_entDef();
             state_2_entDef();
             state_9_entDef();
+            state_12_entDef();
+        }
+        
+        //## statechart_method 
+        public void firingStateExit() {
         }
         
         //## statechart_method 
@@ -735,18 +926,17 @@ public class Gen_Neuron implements RiJStateConcept {
         }
         
         //## statechart_method 
-        public void state_10Enter() {
-        }
-        
-        //## statechart_method 
         public void GenNeuronSCExit() {
         }
         
         //## statechart_method 
-        public void state_0_enter() {
-            state_1_subState = state_0;
-            state_1_active = state_0;
-            state_0Enter();
+        public void state_12_exit() {
+            if(state_12_subState == EJCoupling)
+                {
+                    EJCoupling_exit();
+                }
+            state_12_subState = RiJNonState;
+            state_12Exit();
         }
         
         //## statechart_method 
@@ -777,8 +967,36 @@ public class Gen_Neuron implements RiJStateConcept {
         }
         
         //## statechart_method 
+        public int nonFiringState_takeEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(event.isTypeOf(RiJEvent.NULL_EVENT_ID))
+                {
+                    res = nonFiringStateTakeNull();
+                }
+            
+            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
+                {
+                    res = state_1_takeEvent(id);
+                }
+            return res;
+        }
+        
+        //## statechart_method 
         public void state_1_enter() {
             state_1Enter();
+        }
+        
+        //## statechart_method 
+        public void EJCoupling_enter() {
+            state_12_subState = EJCoupling;
+            state_12_active = EJCoupling;
+            EJCouplingEnter();
+        }
+        
+        //## statechart_method 
+        public void state_12_entDef() {
+            state_12_enter();
+            state_12EntDef();
         }
         
         //## statechart_method 
@@ -791,13 +1009,28 @@ public class Gen_Neuron implements RiJStateConcept {
         }
         
         //## statechart_method 
+        public void cellBodyLeakageEnter() {
+        }
+        
+        //## statechart_method 
         public void state_9_exit() {
-            if(state_9_subState == state_10)
+            if(state_9_subState == cellBodyLeakage)
                 {
-                    state_10_exit();
+                    cellBodyLeakage_exit();
                 }
             state_9_subState = RiJNonState;
             state_9Exit();
+        }
+        
+        //## statechart_method 
+        public void firingStateEnter() {
+            //#[ state ROOT.GenNeuronSC.state_1.firingState.(Entry) 
+            setTransTime(itsManager.getClockTime() + getDecayTime());
+            //addEJlist();
+            //addCHlist();
+            gen(new evSendTrig());
+            
+            //#]
         }
         
         //## statechart_method 
@@ -817,30 +1050,29 @@ public class Gen_Neuron implements RiJStateConcept {
         }
         
         //## statechart_method 
-        public int state_10_takeEvent(short id) {
+        public void GenNeuronSC_enter() {
+            rootState_subState = GenNeuronSC;
+            rootState_active = GenNeuronSC;
+            GenNeuronSCEnter();
+        }
+        
+        //## statechart_method 
+        public int firingState_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             if(event.isTypeOf(evTick.evTick_Default_id))
                 {
-                    res = state_10TakeevTick();
+                    res = firingStateTakeevTick();
                 }
             
             if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
                 {
-                    res = state_9_takeEvent(id);
+                    res = state_1_takeEvent(id);
                 }
             return res;
         }
         
         //## statechart_method 
-        public void state_10_exit() {
-            state_10Exit();
-        }
-        
-        //## statechart_method 
-        public void GenNeuronSC_enter() {
-            rootState_subState = GenNeuronSC;
-            rootState_active = GenNeuronSC;
-            GenNeuronSCEnter();
+        public void nonFiringStateEnter() {
         }
         
         //## statechart_method 
@@ -856,6 +1088,7 @@ public class Gen_Neuron implements RiJStateConcept {
             state_1_exit();
             state_2_exit();
             state_9_exit();
+            state_12_exit();
             GenNeuronSCExit();
         }
         
@@ -864,13 +1097,12 @@ public class Gen_Neuron implements RiJStateConcept {
         }
         
         //## statechart_method 
-        public void state_0_entDef() {
-            state_0_enter();
+        public void nonFiringStateExit() {
         }
         
         //## statechart_method 
         public void state_1EntDef() {
-            state_0_entDef();
+            nonFiringState_entDef();
         }
         
         //## statechart_method 
@@ -889,6 +1121,31 @@ public class Gen_Neuron implements RiJStateConcept {
         }
         
         //## statechart_method 
+        public void cellBodyLeakage_exit() {
+            cellBodyLeakageExit();
+        }
+        
+        //## statechart_method 
+        public void firingState_exit() {
+            firingStateExit();
+        }
+        
+        //## statechart_method 
+        public int EJCoupling_takeEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(event.isTypeOf(evTick.evTick_Default_id))
+                {
+                    res = EJCouplingTakeevTick();
+                }
+            
+            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
+                {
+                    res = state_12_takeEvent(id);
+                }
+            return res;
+        }
+        
+        //## statechart_method 
         public int noTransmissionTakeevSendTrig() {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             noTransmission_exit();
@@ -900,11 +1157,16 @@ public class Gen_Neuron implements RiJStateConcept {
         //## statechart_method 
         public void state_2EntDef() {
             //#[ transition 2 
-            //signalArrivalsList = new ArrayList<String>();
             CHsignalArrivalsList = new ArrayList<String>();
-            EJsignalArrivalsList = new ArrayList<String>();
             //#]
             noTransmission_entDef();
+        }
+        
+        //## statechart_method 
+        public void cellBodyLeakage_enter() {
+            state_9_subState = cellBodyLeakage;
+            state_9_active = cellBodyLeakage;
+            cellBodyLeakageEnter();
         }
         
         //## statechart_method 

@@ -4,7 +4,7 @@
 	Component	: DefaultComponent
 	Configuration 	: DefaultConfig
 	Model Element	: Gen_IN
-//!	Generated Date	: Tue, 12, Jan 2016 
+//!	Generated Date	: Tue, 19, Jan 2016 
 	File Path	: DefaultComponent/DefaultConfig/Default/Gen_IN.java
 *********************************************************************/
 
@@ -43,14 +43,7 @@ public class Gen_IN extends Gen_Neuron {
     
     protected Manager itsManager;		//## link itsManager 
     
-    //#[ ignore 
-    public static final int state_two_EJ=9;
-    public static final int state_three_EJ=10;
-    public static final int state_one_EJ=11;
-    public static final int state_minus=12;
-    public static final int state_five_Chem=13;
-    public static final int cond_state=14;
-    //#]
+    
     
     //## statechart_method 
     public RiJThread getThread() {
@@ -113,14 +106,14 @@ public class Gen_IN extends Gen_Neuron {
         //#[ operation addCHlist() 
         String temp_str;
         int dest_neuron_number;
+        double attenuatedActivation;
         
         // go through all the interneurons I'm connected to:
         for (int i = 0; i < itsGen_IN.size(); i++) {  
         	dest_neuron_number = itsGen_IN.get(i).getNeuronNumber();
         	if (CHsynWeights[dest_neuron_number-1] != 0) {
-        		//add command string to list. the format is: arrivalTime, targetNeuron, type, currentActivity
-        		//target neuron is NOT between 1,...,60 but it's the index in itsGen_IN array - easier this way, saves double checking...
-        		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + "," + Integer.toString(i) + ",IN," + Double.toString(getActivation());
+        		attenuatedActivation = getActivation() * Math.pow(getSignalAttenuation(), getPropTimes(dest_neuron_number-1));
+        		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + "," + Integer.toString(i) + ",IN," + Double.toString(attenuatedActivation);
         		CHsignalArrivalsList.add(temp_str);
         	}		
         }
@@ -129,9 +122,8 @@ public class Gen_IN extends Gen_Neuron {
         for (int i = 0; i < itsGen_SN.size(); i++) {  
         	dest_neuron_number = itsGen_SN.get(i).getNeuronNumber();
         	if (CHsynWeights[dest_neuron_number-1] != 0) {
-        		//add command string to list. the format is: arrivalTime, targetNeuron, type, currentActivity
-        		//target neuron is NOT between 1,...,60 but it's the index in itsGen_SN array - easier this way, saves double checking...
-        		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + "," + Integer.toString(i) + ",SN,"  + Double.toString(getActivation());
+        		attenuatedActivation = getActivation() * Math.pow(getSignalAttenuation(), getPropTimes(dest_neuron_number-1));
+        		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + "," + Integer.toString(i) + ",SN,"  + Double.toString(attenuatedActivation);
         		CHsignalArrivalsList.add(temp_str);
         	}		
         }
@@ -140,9 +132,8 @@ public class Gen_IN extends Gen_Neuron {
         for (int i = 0; i < itsGen_MN.size(); i++) {  
         	dest_neuron_number = itsGen_MN.get(i).getNeuronNumber();
         	if (CHsynWeights[dest_neuron_number-1] != 0) {
-        		//add command string to list. the format is: arrivalTime, targetNeuron, type, currentActivity
-        		//target neuron is NOT between 1,...,60 but it's the index in itsGen_MN array - easier this way, saves double checking...
-        		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + "," + Integer.toString(i) + ",MN,"  + Double.toString(getActivation());
+        		attenuatedActivation = getActivation() * Math.pow(getSignalAttenuation(), getPropTimes(dest_neuron_number-1));
+        		temp_str = Integer.toString(itsManager.getClockTime() + getPropTimes(dest_neuron_number-1) + getCHSynDelay()) + "," + Integer.toString(i) + ",MN,"  + Double.toString(attenuatedActivation);
         		CHsignalArrivalsList.add(temp_str);
         	}		
         }  
@@ -216,7 +207,7 @@ public class Gen_IN extends Gen_Neuron {
         			if (targetActivation < -1) {targetActivation = -1;}
         			itsGen_MN.get(destNeuron).setActivation(targetActivation);  
         			itsGen_MN.get(destNeuron).gen(new evTrig());
-        			itsManager.cmdFileP.println("Time: " +itsManager.getClockTime() + ": "+ getNeuronName() + " triggers " + itsGen_MN.get(destNeuron).getNeuronName());
+        			itsManager.cmdFileP.println("Time: " +itsManager.getClockTime() + ": "+ getNeuronName() + " chem-triggers " + itsGen_MN.get(destNeuron).getNeuronName() + " targetActivation: " + targetActivation);
         		}
         		if (neuronType.equals("IN")){
         			targetActivation = itsGen_IN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_IN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
@@ -224,7 +215,7 @@ public class Gen_IN extends Gen_Neuron {
         			if (targetActivation < -1) {targetActivation = -1;}
         			itsGen_IN.get(destNeuron).setActivation(targetActivation);          
         			itsGen_IN.get(destNeuron).gen(new evTrig());
-        			itsManager.cmdFileP.println("Time: " +itsManager.getClockTime() + ": "+ getNeuronName() + " triggers " + itsGen_IN.get(destNeuron).getNeuronName());
+        			itsManager.cmdFileP.println("Time: " +itsManager.getClockTime() + ": "+ getNeuronName() + " chem-triggers " + itsGen_IN.get(destNeuron).getNeuronName() + " targetActivation: " + targetActivation);
         		}
         		if (neuronType.equals("SN")){
         			targetActivation = itsGen_SN.get(destNeuron).getActivation() + getCHcoeff() * getCHsynWeights(itsGen_SN.get(destNeuron).getNeuronNumber()-1) * originalActivation;
@@ -232,7 +223,7 @@ public class Gen_IN extends Gen_Neuron {
         			if (targetActivation < -1) {targetActivation = -1;}
         			itsGen_SN.get(destNeuron).setActivation(targetActivation);
         			itsGen_SN.get(destNeuron).gen(new evTrig());
-        			itsManager.cmdFileP.println("Time: " +itsManager.getClockTime() + ": "+ getNeuronName() + " triggers " + itsGen_SN.get(destNeuron).getNeuronName());
+        			itsManager.cmdFileP.println("Time: " +itsManager.getClockTime() + ": "+ getNeuronName() + " chem-triggers " + itsGen_SN.get(destNeuron).getNeuronName() + " targetActivation: " + targetActivation);
         		}
         	}
         		
@@ -286,6 +277,45 @@ public class Gen_IN extends Gen_Neuron {
         		}
         	}
         		
+        }
+        //#]
+    }
+    
+    //## operation updateDeltaActivation() 
+    public void updateDeltaActivation() {
+        //#[ operation updateDeltaActivation() 
+        int num_of_elec_synapses = 0;
+        double elec_activation = 0.0;
+        int dest_neuron_number;
+        
+        // go through all the interneurons I'm connected to:
+        for (int i = 0; i < itsGen_IN.size(); i++) {  
+        	dest_neuron_number = itsGen_IN.get(i).getNeuronNumber();
+        	if (EJsynWeights[dest_neuron_number-1] != 0) {
+        		elec_activation += EJsynWeights[dest_neuron_number-1]*(itsGen_IN.get(i).getActivation() - getActivation())/2;
+        		num_of_elec_synapses += EJsynWeights[dest_neuron_number-1]; 
+        	}		
+        }
+        
+        // go through all the sensoryneurons I'm connected to:
+        for (int i = 0; i < itsGen_SN.size(); i++) {  
+        	dest_neuron_number = itsGen_SN.get(i).getNeuronNumber();
+        	if (EJsynWeights[dest_neuron_number-1] != 0) {
+        		elec_activation += EJsynWeights[dest_neuron_number-1]*(itsGen_SN.get(i).getActivation() - getActivation())/2;
+        		num_of_elec_synapses += EJsynWeights[dest_neuron_number-1]; 
+        	}		
+        }
+        
+        // go through all the motorneurons I'm connected to:
+        for (int i = 0; i < itsGen_MN.size(); i++) {  
+        	dest_neuron_number = itsGen_MN.get(i).getNeuronNumber();
+        	if (EJsynWeights[dest_neuron_number-1] != 0) {
+        		elec_activation += EJsynWeights[dest_neuron_number-1]*(itsGen_MN.get(i).getActivation() - getActivation())/2;
+        		num_of_elec_synapses += EJsynWeights[dest_neuron_number-1]; 
+        	}		
+        }
+        if (num_of_elec_synapses != 0){
+        	setDeltaActivation(getEJcoeff() * elec_activation / num_of_elec_synapses);  
         }
         //#]
     }
@@ -578,6 +608,14 @@ public class Gen_IN extends Gen_Neuron {
                 {
                     return true;
                 }
+            if(state_12 == state)
+                {
+                    return isIn(GenNeuronSC);
+                }
+            if(state_12_subState == state)
+                {
+                    return true;
+                }
             if(state_2 == state)
                 {
                     return isIn(GenNeuronSC);
@@ -651,6 +689,14 @@ public class Gen_IN extends Gen_Neuron {
                             return res;
                         }
                 }
+            if(state_12_dispatchEvent(id) >= 0)
+                {
+                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+                    if(!isIn(GenNeuronSC))
+                        {
+                            return res;
+                        }
+                }
             if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
                 {
                     res = GenNeuronSC_takeEvent(id);
@@ -661,9 +707,9 @@ public class Gen_IN extends Gen_Neuron {
         //## statechart_method 
         public int state_9_dispatchEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            if(state_9_active == state_10)
+            if(state_9_active == cellBodyLeakage)
                 {
-                    res = state_10_takeEvent(id);
+                    res = cellBodyLeakage_takeEvent(id);
                 }
             return res;
         }
@@ -689,42 +735,27 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
+        public int state_12_dispatchEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(state_12_active == EJCoupling)
+                {
+                    res = EJCoupling_takeEvent(id);
+                }
+            return res;
+        }
+        
+        //## statechart_method 
         public int state_1_dispatchEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             switch (state_1_active) {
-                case state_0:
+                case nonFiringState:
                 {
-                    res = state_0_takeEvent(id);
+                    res = nonFiringState_takeEvent(id);
                 }
                 break;
-                case state_one_EJ:
+                case firingState:
                 {
-                    res = state_one_EJ_takeEvent(id);
-                }
-                break;
-                case cond_state:
-                {
-                    res = cond_state_takeEvent(id);
-                }
-                break;
-                case state_five_Chem:
-                {
-                    res = state_five_Chem_takeEvent(id);
-                }
-                break;
-                case state_two_EJ:
-                {
-                    res = state_two_EJ_takeEvent(id);
-                }
-                break;
-                case state_three_EJ:
-                {
-                    res = state_three_EJ_takeEvent(id);
-                }
-                break;
-                case state_minus:
-                {
-                    res = state_minus_takeEvent(id);
+                    res = firingState_takeEvent(id);
                 }
                 break;
                 default:
@@ -741,49 +772,39 @@ public class Gen_IN extends Gen_Neuron {
             state_9_active = RiJNonState;
             state_2_subState = RiJNonState;
             state_2_active = RiJNonState;
+            state_12_subState = RiJNonState;
+            state_12_active = RiJNonState;
             state_1_subState = RiJNonState;
             state_1_active = RiJNonState;
         }
         
         //## statechart_method 
-        public int cond_state_takeEvent(short id) {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            if(event.isTypeOf(RiJEvent.NULL_EVENT_ID))
-                {
-                    res = cond_stateTakeNull();
-                }
-            
-            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
-                {
-                    res = state_1_takeEvent(id);
-                }
-            return res;
+        public void firingState_entDef() {
+            firingState_enter();
         }
         
         //## statechart_method 
-        public int state_one_EJTakeevTick() {
+        public int nonFiringStateTakeNull() {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            //## transition 10 
-            if(getTransTime() < itsManager.getClockTime())
+            //## transition 8 
+            if((getActivation() >= 0.75))
                 {
-                    state_one_EJ_exit();
-                    state_0_entDef();
+                    nonFiringState_exit();
+                    firingState_entDef();
                     res = RiJStateReactive.TAKE_EVENT_COMPLETE;
                 }
             return res;
         }
         
         //## statechart_method 
-        public int state_two_EJTakeevTick() {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            //## transition 20 
-            if(getTransTime() < itsManager.getClockTime())
-                {
-                    state_two_EJ_exit();
-                    state_0_entDef();
-                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-                }
-            return res;
+        public void nonFiringState_exit() {
+            popNullConfig();
+            nonFiringStateExit();
+        }
+        
+        //## statechart_method 
+        public void nonFiringState_entDef() {
+            nonFiringState_enter();
         }
         
         //## statechart_method 
@@ -810,51 +831,31 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
-        public int state_10TakeevTick() {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            //#[ transition 7 
-            setActivation(getActivation() * getLeakyCoeff());
-            //#]
-            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-            return res;
-        }
-        
-        //## statechart_method 
-        public void state_10_entDef() {
-            state_10_enter();
-        }
-        
-        //## statechart_method 
-        public int state_five_Chem_takeEvent(short id) {
+        public int cellBodyLeakage_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             if(event.isTypeOf(evTick.evTick_Default_id))
                 {
-                    res = state_five_ChemTakeevTick();
+                    res = cellBodyLeakageTakeevTick();
                 }
             
             if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
                 {
-                    res = state_1_takeEvent(id);
+                    res = state_9_takeEvent(id);
                 }
             return res;
         }
         
         //## statechart_method 
-        public int state_minusTakeevTrig() {
+        public int firingStateTakeevTick() {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            state_minus_exit();
-            cond_state_entDef();
-            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+            //## transition 9 
+            if(getTransTime() < itsManager.getClockTime())
+                {
+                    firingState_exit();
+                    nonFiringState_entDef();
+                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+                }
             return res;
-        }
-        
-        //## statechart_method 
-        public void state_minus_exit() {
-            state_minusExit();
-        }
-        
-        //## statechart_method 
-        public void state_two_EJExit() {
         }
         
         //## statechart_method 
@@ -862,10 +863,12 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
-        public void state_10_enter() {
-            state_9_subState = state_10;
-            state_9_active = state_10;
-            state_10Enter();
+        public void cellBodyLeakageExit() {
+        }
+        
+        //## statechart_method 
+        public void cellBodyLeakage_entDef() {
+            cellBodyLeakage_enter();
         }
         
         //## statechart_method 
@@ -874,38 +877,14 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
-        public int state_0_takeEvent(short id) {
+        public int state_12_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            if(event.isTypeOf(evTrig.evTrig_Default_id))
-                {
-                    res = state_0TakeevTrig();
-                }
-            
-            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
-                {
-                    res = state_1_takeEvent(id);
-                }
             return res;
         }
         
         //## statechart_method 
-        public void state_0Enter() {
-            //#[ state ROOT.GenNeuronSC.state_1.state_0.(Entry) 
-            setActivation(0);
-            //#]
-        }
-        
-        //## statechart_method 
-        public int state_minusTakeevTick() {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            //## transition 23 
-            if(getTransTime() < itsManager.getClockTime())
-                {
-                    state_minus_exit();
-                    state_0_entDef();
-                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-                }
-            return res;
+        public void state_12_enter() {
+            state_12Enter();
         }
         
         //## statechart_method 
@@ -915,21 +894,27 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
-        public void state_one_EJEnter() {
-            //#[ state ROOT.GenNeuronSC.state_1.state_one_EJ.(Entry) 
-            setTransTime(itsManager.getClockTime() + getDecayTime());
-            addEJlist();
-            gen(new evSendTrig());
-            //#]
+        public void firingState_enter() {
+            state_1_subState = firingState;
+            state_1_active = firingState;
+            firingStateEnter();
         }
         
         //## statechart_method 
-        public void state_two_EJEnter() {
-            //#[ state ROOT.GenNeuronSC.state_1.state_two_EJ.(Entry) 
-            setTransTime(itsManager.getClockTime() + getDecayTime());
-            addEJlist();
-            gen(new evSendTrig());
+        public int EJCouplingTakeevTick() {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            //#[ transition 11 
+            double targetActivation = getActivation() + getDeltaActivation();
+            if (targetActivation > 1) {targetActivation = 1;}
+            else if (targetActivation < -1) {targetActivation = -1;}
+            setActivation(targetActivation);
             //#]
+            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+            return res;
+        }
+        
+        //## statechart_method 
+        public void EJCouplingEnter() {
         }
         
         //## statechart_method 
@@ -958,74 +943,32 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
+        public int cellBodyLeakageTakeevTick() {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            //#[ transition 7 
+            setActivation(getActivation() * getLeakyCoeff());
+            //#]
+            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
+            return res;
+        }
+        
+        //## statechart_method 
         public int state_9_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             return res;
         }
         
         //## statechart_method 
-        public void cond_state_entDef() {
-            cond_state_enter();
-        }
-        
-        //## statechart_method 
-        public int state_0TakeevTrig() {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            state_0_exit();
-            cond_state_entDef();
-            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-            return res;
-        }
-        
-        //## statechart_method 
-        public int state_five_ChemTakeevTick() {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            //## transition 12 
-            if(getTransTime() < itsManager.getClockTime())
-                {
-                    state_five_Chem_exit();
-                    state_0_entDef();
-                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-                }
-            return res;
-        }
-        
-        //## statechart_method 
         public void state_1_exit() {
             switch (state_1_subState) {
-                case state_0:
+                case nonFiringState:
                 {
-                    state_0_exit();
+                    nonFiringState_exit();
                 }
                 break;
-                case state_one_EJ:
+                case firingState:
                 {
-                    state_one_EJ_exit();
-                }
-                break;
-                case cond_state:
-                {
-                    cond_state_exit();
-                }
-                break;
-                case state_five_Chem:
-                {
-                    state_five_Chem_exit();
-                }
-                break;
-                case state_two_EJ:
-                {
-                    state_two_EJ_exit();
-                }
-                break;
-                case state_three_EJ:
-                {
-                    state_three_EJ_exit();
-                }
-                break;
-                case state_minus:
-                {
-                    state_minus_exit();
+                    firingState_exit();
                 }
                 break;
                 default:
@@ -1042,13 +985,17 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
+        public void EJCoupling_entDef() {
+            EJCoupling_enter();
+        }
+        
+        //## statechart_method 
         public int transmitTrigTakeevTick() {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
             //## transition 4 
-            if(!(CHsignalArrivalsList.isEmpty() && EJsignalArrivalsList.isEmpty()))
+            if(!(CHsignalArrivalsList.isEmpty()))
                 {
                     //#[ transition 4 
-                    sendEJtrigs();
                     sendCHtrigs();
                     //#]
                     res = RiJStateReactive.TAKE_EVENT_COMPLETE;
@@ -1056,7 +1003,7 @@ public class Gen_IN extends Gen_Neuron {
             else
                 {
                     //## transition 5 
-                    if(CHsignalArrivalsList.isEmpty() && EJsignalArrivalsList.isEmpty())
+                    if(CHsignalArrivalsList.isEmpty())
                         {
                             //#[ transition 5 
                             gen(new evNoMoreTrigs());
@@ -1069,47 +1016,25 @@ public class Gen_IN extends Gen_Neuron {
         
         //## statechart_method 
         public void state_9EntDef() {
-            state_10_entDef();
+            cellBodyLeakage_entDef();
         }
         
         //## statechart_method 
-        public void state_0_exit() {
-            state_0Exit();
-        }
-        
-        //## statechart_method 
-        public void state_two_EJ_enter() {
-            state_1_subState = state_two_EJ;
-            state_1_active = state_two_EJ;
-            state_two_EJEnter();
-        }
-        
-        //## statechart_method 
-        public void state_one_EJ_exit() {
-            state_one_EJExit();
-        }
-        
-        //## statechart_method 
-        public void state_three_EJEnter() {
-            //#[ state ROOT.GenNeuronSC.state_1.state_three_EJ.(Entry) 
-            setTransTime(itsManager.getClockTime() + getDecayTime());
-            addEJlist();
-            gen(new evSendTrig());
+        public void state_12EntDef() {
+            //#[ transition 10 
+            setDeltaActivation(0);
             //#]
+            EJCoupling_entDef();
         }
         
         //## statechart_method 
-        public void state_two_EJ_exit() {
-            state_two_EJExit();
+        public void EJCoupling_exit() {
+            EJCouplingExit();
         }
         
         //## statechart_method 
         public void transmitTrig_entDef() {
             transmitTrig_enter();
-        }
-        
-        //## statechart_method 
-        public void state_10Exit() {
         }
         
         //## statechart_method 
@@ -1119,27 +1044,27 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
-        public void state_0Exit() {
-        }
-        
-        //## statechart_method 
-        public void state_five_ChemEnter() {
-            //#[ state ROOT.GenNeuronSC.state_1.state_five_Chem.(Entry) 
-            setTransTime(itsManager.getClockTime() + getDecayTime());
-            addEJlist();
-            addCHlist();
-            gen(new evSendTrig());
-            
-            //#]
-        }
-        
-        //## statechart_method 
-        public void state_five_Chem_entDef() {
-            state_five_Chem_enter();
+        public void nonFiringState_enter() {
+            pushNullConfig();
+            state_1_subState = nonFiringState;
+            state_1_active = nonFiringState;
+            nonFiringStateEnter();
         }
         
         //## statechart_method 
         public void state_1Exit() {
+        }
+        
+        //## statechart_method 
+        public void EJCouplingExit() {
+        }
+        
+        //## statechart_method 
+        public void state_12Exit() {
+        }
+        
+        //## statechart_method 
+        public void state_12Enter() {
         }
         
         //## statechart_method 
@@ -1169,15 +1094,6 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
-        public void state_minusExit() {
-        }
-        
-        //## statechart_method 
-        public void state_three_EJ_exit() {
-            state_three_EJExit();
-        }
-        
-        //## statechart_method 
         public void state_2Exit() {
         }
         
@@ -1191,22 +1107,11 @@ public class Gen_IN extends Gen_Neuron {
             state_1_entDef();
             state_2_entDef();
             state_9_entDef();
+            state_12_entDef();
         }
         
         //## statechart_method 
-        public void state_five_Chem_exit() {
-            state_five_ChemExit();
-        }
-        
-        //## statechart_method 
-        public void state_five_ChemExit() {
-            //#[ state ROOT.GenNeuronSC.state_1.state_five_Chem.(Exit) 
-            setActivation(0);
-            //#]
-        }
-        
-        //## statechart_method 
-        public void state_three_EJExit() {
+        public void firingStateExit() {
         }
         
         //## statechart_method 
@@ -1220,23 +1125,17 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
-        public void state_10Enter() {
-        }
-        
-        //## statechart_method 
         public void GenNeuronSCExit() {
         }
         
         //## statechart_method 
-        public void state_0_enter() {
-            state_1_subState = state_0;
-            state_1_active = state_0;
-            state_0Enter();
-        }
-        
-        //## statechart_method 
-        public void state_minus_entDef() {
-            state_minus_enter();
+        public void state_12_exit() {
+            if(state_12_subState == EJCoupling)
+                {
+                    EJCoupling_exit();
+                }
+            state_12_subState = RiJNonState;
+            state_12Exit();
         }
         
         //## statechart_method 
@@ -1267,15 +1166,36 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
-        public void state_three_EJ_enter() {
-            state_1_subState = state_three_EJ;
-            state_1_active = state_three_EJ;
-            state_three_EJEnter();
+        public int nonFiringState_takeEvent(short id) {
+            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
+            if(event.isTypeOf(RiJEvent.NULL_EVENT_ID))
+                {
+                    res = nonFiringStateTakeNull();
+                }
+            
+            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
+                {
+                    res = state_1_takeEvent(id);
+                }
+            return res;
         }
         
         //## statechart_method 
         public void state_1_enter() {
             state_1Enter();
+        }
+        
+        //## statechart_method 
+        public void EJCoupling_enter() {
+            state_12_subState = EJCoupling;
+            state_12_active = EJCoupling;
+            EJCouplingEnter();
+        }
+        
+        //## statechart_method 
+        public void state_12_entDef() {
+            state_12_enter();
+            state_12EntDef();
         }
         
         //## statechart_method 
@@ -1288,123 +1208,28 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
+        public void cellBodyLeakageEnter() {
+        }
+        
+        //## statechart_method 
         public void state_9_exit() {
-            if(state_9_subState == state_10)
+            if(state_9_subState == cellBodyLeakage)
                 {
-                    state_10_exit();
+                    cellBodyLeakage_exit();
                 }
             state_9_subState = RiJNonState;
             state_9Exit();
         }
         
         //## statechart_method 
-        public int cond_stateTakeNull() {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            //## transition 8 
-            if((getActivation() >= 0.25) && (getActivation() < 0.42))
-                {
-                    cond_state_exit();
-                    state_one_EJ_entDef();
-                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-                }
-            else
-                {
-                    //## transition 9 
-                    if((getActivation() >= 0.75))
-                        {
-                            cond_state_exit();
-                            state_five_Chem_entDef();
-                            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-                        }
-                    else
-                        {
-                            //## transition 14 
-                            if((getActivation() < 0.20))
-                                {
-                                    cond_state_exit();
-                                    state_0_entDef();
-                                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-                                }
-                            else
-                                {
-                                    //## transition 15 
-                                    if((getActivation() >= 0.42) && (getActivation() < 0.59))
-                                        {
-                                            cond_state_exit();
-                                            state_two_EJ_entDef();
-                                            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-                                        }
-                                    else
-                                        {
-                                            //## transition 16 
-                                            if((getActivation() >= 0.59) && (getActivation() < 0.75))
-                                                {
-                                                    cond_state_exit();
-                                                    state_three_EJ_entDef();
-                                                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-                                                }
-                                            else
-                                                {
-                                                    //## transition 21 
-                                                    if(getActivation() < 0)
-                                                        {
-                                                            cond_state_exit();
-                                                            state_minus_entDef();
-                                                            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-                                                        }
-                                                }
-                                        }
-                                }
-                        }
-                }
-            return res;
-        }
-        
-        //## statechart_method 
-        public void cond_stateEnter() {
-        }
-        
-        //## statechart_method 
-        public int state_one_EJ_takeEvent(short id) {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            if(event.isTypeOf(evTrig.evTrig_Default_id))
-                {
-                    res = state_one_EJTakeevTrig();
-                }
-            else if(event.isTypeOf(evTick.evTick_Default_id))
-                {
-                    res = state_one_EJTakeevTick();
-                }
+        public void firingStateEnter() {
+            //#[ state ROOT.GenNeuronSC.state_1.firingState.(Entry) 
+            setTransTime(itsManager.getClockTime() + getDecayTime());
+            //addEJlist();
+            addCHlist();
+            gen(new evSendTrig());
             
-            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
-                {
-                    res = state_1_takeEvent(id);
-                }
-            return res;
-        }
-        
-        //## statechart_method 
-        public int state_three_EJ_takeEvent(short id) {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            if(event.isTypeOf(evTrig.evTrig_Default_id))
-                {
-                    res = state_three_EJTakeevTrig();
-                }
-            else if(event.isTypeOf(evTick.evTick_Default_id))
-                {
-                    res = state_three_EJTakeevTick();
-                }
-            
-            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
-                {
-                    res = state_1_takeEvent(id);
-                }
-            return res;
-        }
-        
-        //## statechart_method 
-        public void state_two_EJ_entDef() {
-            state_two_EJ_enter();
+            //#]
         }
         
         //## statechart_method 
@@ -1424,26 +1249,6 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
-        public int state_10_takeEvent(short id) {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            if(event.isTypeOf(evTick.evTick_Default_id))
-                {
-                    res = state_10TakeevTick();
-                }
-            
-            if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
-                {
-                    res = state_9_takeEvent(id);
-                }
-            return res;
-        }
-        
-        //## statechart_method 
-        public void state_10_exit() {
-            state_10Exit();
-        }
-        
-        //## statechart_method 
         public void GenNeuronSC_enter() {
             rootState_subState = GenNeuronSC;
             rootState_active = GenNeuronSC;
@@ -1451,32 +1256,11 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
-        public void state_one_EJ_enter() {
-            state_1_subState = state_one_EJ;
-            state_1_active = state_one_EJ;
-            state_one_EJEnter();
-        }
-        
-        //## statechart_method 
-        public void state_one_EJ_entDef() {
-            state_one_EJ_enter();
-        }
-        
-        //## statechart_method 
-        public void state_three_EJ_entDef() {
-            state_three_EJ_enter();
-        }
-        
-        //## statechart_method 
-        public int state_two_EJ_takeEvent(short id) {
+        public int firingState_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            if(event.isTypeOf(evTrig.evTrig_Default_id))
+            if(event.isTypeOf(evTick.evTick_Default_id))
                 {
-                    res = state_two_EJTakeevTrig();
-                }
-            else if(event.isTypeOf(evTick.evTick_Default_id))
-                {
-                    res = state_two_EJTakeevTick();
+                    res = firingStateTakeevTick();
                 }
             
             if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
@@ -1484,6 +1268,10 @@ public class Gen_IN extends Gen_Neuron {
                     res = state_1_takeEvent(id);
                 }
             return res;
+        }
+        
+        //## statechart_method 
+        public void nonFiringStateEnter() {
         }
         
         //## statechart_method 
@@ -1499,6 +1287,7 @@ public class Gen_IN extends Gen_Neuron {
             state_1_exit();
             state_2_exit();
             state_9_exit();
+            state_12_exit();
             GenNeuronSCExit();
         }
         
@@ -1507,40 +1296,12 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
-        public void state_0_entDef() {
-            state_0_enter();
-        }
-        
-        //## statechart_method 
-        public void state_five_Chem_enter() {
-            state_1_subState = state_five_Chem;
-            state_1_active = state_five_Chem;
-            state_five_ChemEnter();
-        }
-        
-        //## statechart_method 
-        public void state_minusEnter() {
-            //#[ state ROOT.GenNeuronSC.state_1.state_minus.(Entry) 
-            setTransTime(itsManager.getClockTime() + getDecayTime());
-            //#]
-        }
-        
-        //## statechart_method 
-        public void state_one_EJExit() {
-        }
-        
-        //## statechart_method 
-        public int state_three_EJTakeevTrig() {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            state_three_EJ_exit();
-            cond_state_entDef();
-            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-            return res;
+        public void nonFiringStateExit() {
         }
         
         //## statechart_method 
         public void state_1EntDef() {
-            state_0_entDef();
+            nonFiringState_entDef();
         }
         
         //## statechart_method 
@@ -1559,77 +1320,27 @@ public class Gen_IN extends Gen_Neuron {
         }
         
         //## statechart_method 
-        public void cond_state_exit() {
-            popNullConfig();
-            cond_stateExit();
+        public void cellBodyLeakage_exit() {
+            cellBodyLeakageExit();
         }
         
         //## statechart_method 
-        public void cond_stateExit() {
+        public void firingState_exit() {
+            firingStateExit();
         }
         
         //## statechart_method 
-        public void cond_state_enter() {
-            pushNullConfig();
-            state_1_subState = cond_state;
-            state_1_active = cond_state;
-            cond_stateEnter();
-        }
-        
-        //## statechart_method 
-        public int state_minus_takeEvent(short id) {
+        public int EJCoupling_takeEvent(short id) {
             int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            if(event.isTypeOf(evTrig.evTrig_Default_id))
+            if(event.isTypeOf(evTick.evTick_Default_id))
                 {
-                    res = state_minusTakeevTrig();
-                }
-            else if(event.isTypeOf(evTick.evTick_Default_id))
-                {
-                    res = state_minusTakeevTick();
+                    res = EJCouplingTakeevTick();
                 }
             
             if(res == RiJStateReactive.TAKE_EVENT_NOT_CONSUMED)
                 {
-                    res = state_1_takeEvent(id);
+                    res = state_12_takeEvent(id);
                 }
-            return res;
-        }
-        
-        //## statechart_method 
-        public void state_minus_enter() {
-            state_1_subState = state_minus;
-            state_1_active = state_minus;
-            state_minusEnter();
-        }
-        
-        //## statechart_method 
-        public int state_one_EJTakeevTrig() {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            state_one_EJ_exit();
-            cond_state_entDef();
-            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-            return res;
-        }
-        
-        //## statechart_method 
-        public int state_three_EJTakeevTick() {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            //## transition 19 
-            if(getTransTime() < itsManager.getClockTime())
-                {
-                    state_three_EJ_exit();
-                    state_0_entDef();
-                    res = RiJStateReactive.TAKE_EVENT_COMPLETE;
-                }
-            return res;
-        }
-        
-        //## statechart_method 
-        public int state_two_EJTakeevTrig() {
-            int res = RiJStateReactive.TAKE_EVENT_NOT_CONSUMED;
-            state_two_EJ_exit();
-            cond_state_entDef();
-            res = RiJStateReactive.TAKE_EVENT_COMPLETE;
             return res;
         }
         
@@ -1645,11 +1356,16 @@ public class Gen_IN extends Gen_Neuron {
         //## statechart_method 
         public void state_2EntDef() {
             //#[ transition 2 
-            //signalArrivalsList = new ArrayList<String>();
             CHsignalArrivalsList = new ArrayList<String>();
-            EJsignalArrivalsList = new ArrayList<String>();
             //#]
             noTransmission_entDef();
+        }
+        
+        //## statechart_method 
+        public void cellBodyLeakage_enter() {
+            state_9_subState = cellBodyLeakage;
+            state_9_active = cellBodyLeakage;
+            cellBodyLeakageEnter();
         }
         
         //## statechart_method 
